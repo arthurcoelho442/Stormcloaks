@@ -7,6 +7,16 @@ const config = {
     width: 800,
     height: 600,
     parent: "Tower-Defender",
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: {
+                y: 0,
+                x: 0
+            },
+            debug: true
+        }
+    },
     scene: [
         cenaCarregamento,
         cenaMenu,
