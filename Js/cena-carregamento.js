@@ -25,7 +25,8 @@ export default class cenaCarregamento extends Phaser.Scene{
             this.scene.start("Nivel-1");
         });
 
-        this.load.image("Mapa", "Imagens/Test_map_grid.png");
+        this.load.image("Mapa-Teste", "Imagens/Test_map_grid.png");
         this.load.image("Tropa", "Imagens/Enemy_test.png");
+        this.load.spritesheet("Mapa-1", "Imagens/Mapa_1.png", { frameWidth: 800, frameHeight: 600 });
     }
 }
