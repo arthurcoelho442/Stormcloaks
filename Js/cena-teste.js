@@ -1,4 +1,4 @@
-import Tropa from "./tropa.js";
+import Wave from "./wave.js";
 export default class cenaTeste extends Phaser.Scene{
     constructor(){
         super({
@@ -13,21 +13,18 @@ export default class cenaTeste extends Phaser.Scene{
         this.backgroud = this.add.image(0,0,"Mapa-Teste");
         this.backgroud.setOrigin(0,0);
         
-        //configuração da Wave
-        let distTropas = 100;
-        let qtdTropas  = 5;
-        let velocidade  = 50;
-
-        let wave = new Array(qtdTropas);
-        for(let i=0;i<qtdTropas;i++){
-            wave[i] = new Tropa(this, -80*i, 275);
-            let sprite = wave[i].sprite;
-        }
-        this.wave = wave;
+        //Configuração da wave
+        const vida = 10000;
+        const qtdTropas = 5;
+        const velocidade = 50;
+        const xTropa = 0;
+        const yTropa = 275;
+        //Primeira wave       
+        this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa);
     }
     
     update(){
-        const wave = this.wave;
+        const wave = this.wave.tropas;
         
         for(let i=0; i<wave.length; i++){
             if(wave[i] == null)
@@ -35,7 +32,7 @@ export default class cenaTeste extends Phaser.Scene{
             let tropa = wave[i]
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
-            const velocidade = 50;
+            const velocidade = this.wave.velocidade;
             
             if(pos.x <= 0)
                 sprite.setVelocityX(50);

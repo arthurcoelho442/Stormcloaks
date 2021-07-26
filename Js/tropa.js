@@ -1,9 +1,13 @@
 export default class Tropa{
-    constructor(cena, xTropa, yTropa){
+    constructor(cena, xTropa, yTropa, vida){
         this.xTropa = xTropa;
         this.yTropa = yTropa;
+        this.vida = vida;
         this.cena = cena;
+
         this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, "Tropa");
-        this.vida = 10000;
+    }
+    destroi(){
+        this.sprite.destroy();
     }
 }
