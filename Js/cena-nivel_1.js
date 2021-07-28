@@ -21,7 +21,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
         this.vida = 10;
         //Configuração da Wave
         const qtdTropas  = 5;
-        const velocidade  = 50;
+        const velocidade  = 500;
         const vida = 10000;
         const xTropa = 0;
         const yTropa = 75;
@@ -89,7 +89,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
         }
         //Proximo nivel
         if(cont == 5)
-            this.scene.start("Nivel-2");
+            this.scene.start("Teste");
         //Perdeu
         if(this.vida == 0)
             this.scene.start("Menu");

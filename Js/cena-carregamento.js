@@ -22,7 +22,7 @@ export default class cenaCarregamento extends Phaser.Scene{
 
 
         this.load.on("complete", () => {
-            this.scene.start("Nivel-2");
+            this.scene.start("Nivel-1");
         });
 
         this.load.image("Mapa-Teste", "Imagens/Test_map_grid.png");

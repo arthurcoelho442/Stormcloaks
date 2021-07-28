@@ -14,7 +14,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
         this.backgroud = this.add.image(0,0,"Mapa-2").setOrigin(0,0);
         if(true)
             this.backgroud = this.add.image(0,0,"Grid");
-        
+
             this.backgroud.setOrigin(0,0);
         //Configuração Nivel
         this.pontuacao = 0;
