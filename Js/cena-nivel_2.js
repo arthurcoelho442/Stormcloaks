@@ -57,7 +57,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
             }if(pos.x >= 425 && pos.y <= 75 && this.aux == 0){
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
-                this.aux++;
+                //this.aux++;
             }else if(pos.x >= 425 && pos.y <= 75){
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
