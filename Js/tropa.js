@@ -4,7 +4,7 @@ export default class Tropa{
         this.yTropa = yTropa;
         this.vida = vida;
         this.cena = cena;
-
+        this.loop = false;
         this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, "Tropa");
     }
     destroi(){

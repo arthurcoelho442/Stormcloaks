@@ -18,15 +18,16 @@ export default class cenaNivel_1 extends Phaser.Scene{
             this.backgroud.setOrigin(0,0);
         //Configuração Nivel
         this.pontuacao = 0;
-        this.vida = 10;
+        this.vida = 100;
         //Configuração da Wave
         const qtdTropas  = 5;
-        const velocidade  = 500;
+        const velocidade  = 50;
         const vida = 10000;
         const xTropa = 0;
         const yTropa = 75;
+        const distanciarPelo = "X"
         //Primeira wave       
-        this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa);
+        this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo);
     }
 
     update(){
@@ -59,13 +60,10 @@ export default class cenaNivel_1 extends Phaser.Scene{
             }if(pos.x <= 125 && pos.y >= 375 && pos.y <= 380){
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
-            }if(pos.x >= 670 && pos.y >= 370){
+            }if(pos.x >= 675 && pos.y >= 375){
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(velocidade);
-            }if(pos.x >= 670 && pos.y >= 370){
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-            }if(pos.x >= 670 && pos.y >= 525){
+            }if(pos.x >= 675 && pos.y >= 525){
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
             }
@@ -89,7 +87,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
         }
         //Proximo nivel
         if(cont == 5)
-            this.scene.start("Teste");
+            this.scene.start("Nivel-2");
         //Perdeu
         if(this.vida == 0)
             this.scene.start("Menu");
