@@ -10,7 +10,10 @@ export default class cenaTeste extends Phaser.Scene{
     }
 
     create() {
-        this.backgroud = this.add.image(0,0,"Mapa-Teste");
+        
+        this.backgroud = this.add.image(0,0,"Mapa-Teste").setOrigin(0,0);
+        if(true)
+            this.backgroud = this.add.image(0,0,"Grid");
         this.backgroud.setOrigin(0,0);
         
         //Configuração da wave

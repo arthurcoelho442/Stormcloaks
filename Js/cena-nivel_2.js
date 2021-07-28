@@ -3,7 +3,7 @@ import Wave from "./wave.js";
 export default class cenaNivel_1 extends Phaser.Scene{
     constructor(){
         super({
-            key: "Nivel-1"
+            key: "Nivel-2"
         });
     }
     preload(){
@@ -11,7 +11,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
     }
 
     create() {
-        this.backgroud = this.add.image(0,0,"Mapa-1").setOrigin(0,0);
+        this.backgroud = this.add.image(0,0,"Mapa-2").setOrigin(0,0);
         if(true)
             this.backgroud = this.add.image(0,0,"Grid");
         
@@ -20,13 +20,14 @@ export default class cenaNivel_1 extends Phaser.Scene{
         this.pontuacao = 0;
         this.vida = 10;
         //Configuração da Wave
-        const qtdTropas  = 5;
+        const qtdTropas  = 1;
         const velocidade  = 50;
         const vida = 10000;
-        const xTropa = 0;
-        const yTropa = 75;
+        const xTropa = 125;
+        const yTropa = 0;
         //Primeira wave       
         this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa);
+        this.aux=0;
     }
 
     update(){
@@ -44,22 +45,26 @@ export default class cenaNivel_1 extends Phaser.Scene{
             const velocidade = this.wave.velocidade;
             
             //Movimentação da tropa
-            if(pos.x <= 0 && pos.y == 75){
-                sprite.setVelocityX(velocidade);
-                sprite.setVelocityY(0);
-            }if(pos.x >= 675 && pos.y >= 75){
+            if(pos.x <= 125 && pos.y >= 0){
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(velocidade);
-            }if(pos.x >= 675 && pos.y >= 225){
+            }if(pos.x <= 125 && pos.y >= 225){
+                sprite.setVelocityX(velocidade);
+                sprite.setVelocityY(0);
+            }if(pos.x >= 425 && pos.y >= 225){
+                sprite.setVelocityX(0);
+                sprite.setVelocityY(-velocidade);
+            }if(pos.x >= 425 && pos.y <= 75 && this.aux == 0){
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
-            }if(pos.x <= 125 && pos.y != 75){
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-            }if(pos.x <= 125 && pos.y >= 375 && pos.y <= 380){
+                this.aux++;
+            }else if(pos.x >= 425 && pos.y <= 75){
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
-            }if(pos.x >= 670 && pos.y >= 370){
+            }if(pos.x >= 675 && pos.y <= 75){
+                sprite.setVelocityX(0);
+                sprite.setVelocityY(velocidade);
+            }/*if(pos.x >= 670 && pos.y >= 370){
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(velocidade);
             }if(pos.x >= 670 && pos.y >= 370){
@@ -68,7 +73,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
             }if(pos.x >= 670 && pos.y >= 525){
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
-            }
+            } */
 
             //Diminui a vida e o tamanho da tropa
             //Definir com a implementação das torres
@@ -89,13 +94,13 @@ export default class cenaNivel_1 extends Phaser.Scene{
         }
         //Proximo nivel
         if(cont == 5)
-            this.scene.start("Nivel-2");
+            this.scene.start("Teste");
         //Perdeu
         if(this.vida == 0)
             this.scene.start("Menu");
         //Inicia proxima wave
         else if(cont == wave.length){
-            this.wave = new Wave(this, 20000, 10, 70, 0, 75);
+            this.wave = new Wave(this, 20000, 10, 70, 125, 0);
             cont = 0;
         }
     }
