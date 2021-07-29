@@ -12,7 +12,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
 
     create() {
         this.backgroud = this.add.image(0,0,"Mapa-1").setOrigin(0,0);
-        if(true)
+        if(false)
             this.backgroud = this.add.image(0,0,"Grid");
         
             this.backgroud.setOrigin(0,0);
@@ -26,8 +26,9 @@ export default class cenaNivel_1 extends Phaser.Scene{
         const xTropa = 0;
         const yTropa = 75;
         const distanciarPelo = "X"
+        const imgTropa = "Tropa-1";
         //Primeira wave       
-        this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo);
+        this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
     }
 
     update(){
@@ -74,6 +75,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
                 tropa.vida-=4;
                 sprite.setScale(tropa.vida/10000,tropa.vida/10000);
             }
+
             //Marca pontuação
             if(tropa.vida == 0)
                 this.pontuacao += 100;
@@ -85,15 +87,17 @@ export default class cenaNivel_1 extends Phaser.Scene{
             }else if(tropa.vida == 0)
                 this.wave.destroi(i);
         }
-        //Proximo nivel
-        if(cont == 5)
-            this.scene.start("Nivel-2");
         //Perdeu
         if(this.vida == 0)
             this.scene.start("Menu");
+
+        //Proximo nivel
+        if(cont == 5)
+            this.scene.start("Nivel-2");
+
         //Inicia proxima wave
         else if(cont == wave.length){
-            this.wave = new Wave(this, 20000, 10, 70, 0, 75);
+            this.wave = new Wave(this, 20000, 10, 70, 0, 75, "X", "Tropa-1");
             cont = 0;
         }
     }

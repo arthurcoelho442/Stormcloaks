@@ -59,6 +59,6 @@ export default class cenaTeste extends Phaser.Scene{
         }
         //Proximo nivel
         if(cont == 5)
-            this.scene.start("Nivel-2");
+            this.scene.start("Menu");
     }
 }
