@@ -25,7 +25,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
         const vida = 10000;
         const xTropa = 0;
         const yTropa = 75;
-        const distanciarPelo = "X"
+        const distanciarPelo = "Esquerda"
         const imgTropa = "Tropa-1";
         //Primeira wave       
         this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
@@ -97,7 +97,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
 
         //Inicia proxima wave
         else if(cont == wave.length){
-            this.wave = new Wave(this, 20000, 10, 70, 0, 75, "X", "Tropa-1");
+            this.wave = new Wave(this, 20000, 10, 70, 0, 75, "Esquerda", "Tropa-1");
             cont = 0;
         }
     }

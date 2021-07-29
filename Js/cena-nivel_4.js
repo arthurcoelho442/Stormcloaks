@@ -1,9 +1,9 @@
 import Tropa from "./tropa.js";
 import Wave from "./wave.js";
-export default class cenaNivel_2 extends Phaser.Scene{
+export default class cenaNivel_4 extends Phaser.Scene{
     constructor(){
         super({
-            key: "Nivel-2"
+            key: "Nivel-4"
         });
     }
     preload(){
@@ -25,7 +25,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
         const vida = 10000;
         const xTropa = 125;
         const yTropa = 0;
-        const distanciarPelo = "Cima"
+        const distanciarPelo = "Y"
         const imgTropa = "Tropa-1";
         //Primeira wave       
         this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
@@ -116,7 +116,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
         
         //Inicia proxima wave
         if(cont == wave.length){
-            this.wave = new Wave(this, 20000, 10, 70, 125, 0, "Cima", "Tropa-1");
+            this.wave = new Wave(this, 20000, 10, 70, 125, 0, "Y", "Tropa-1");
             cont = 0;
         }
     }
