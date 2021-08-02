@@ -1,5 +1,6 @@
 import Tropa from "./tropa.js";
 import Wave from "./wave.js";
+import TorreDraggable from "./towerDraggable.js"
 export default class cenaNivel_1 extends Phaser.Scene{
     constructor(){
         super({
@@ -12,10 +13,10 @@ export default class cenaNivel_1 extends Phaser.Scene{
 
     create() {
         this.backgroud = this.add.image(0,0,"Mapa-1").setOrigin(0,0);
-        if(false)
+        if(true)
             this.backgroud = this.add.image(0,0,"Grid");
-        
-            this.backgroud.setOrigin(0,0);
+
+        this.backgroud.setOrigin(0,0);
         //Configuração Nivel
         this.pontuacao = 0;
         this.vida = 100;
@@ -29,9 +30,41 @@ export default class cenaNivel_1 extends Phaser.Scene{
         const imgTropa = "Tropa-1";
         //Primeira wave       
         this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
+
+        // grid
+        // -1 é o caminho das tropas da
+        //  0 é disponivel pra posicionar a torre
+        //  1 é uma torre já existente
+        this.map = [
+            [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0,  0],
+            [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0],
+            [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0],
+            [ 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0,  0],
+            [ 0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+            [ 0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+            [ 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0,  0],
+            [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0],
+            [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0, -1],
+            [ 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  0, -1],
+            [ 0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1]
+        ]
+
+        this.add.text(10, 15, 'Vidas: ' + String(this.vida));
+
+        //torre de compra
+        this.torreCompra = new TorreDraggable({
+            cena: this,
+            x: 775,
+            y: 575,
+            imagem: "Torre-Teste",
+            ondragend: (pointer, gameObject) => {}
+        })
     }
 
     update(){
+        this.torreCompra.update()
+
         const wave = this.wave.tropas;
         
         let cont = 0;
