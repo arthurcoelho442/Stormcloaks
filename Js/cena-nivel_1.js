@@ -1,5 +1,6 @@
 import Tropa from "./tropa.js";
 import Wave from "./wave.js";
+import Torre from "./tower.js";
 import TorreDraggable from "./towerDraggable.js"
 export default class cenaNivel_1 extends Phaser.Scene{
     constructor(){
@@ -20,6 +21,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
         //Configuração Nivel
         this.pontuacao = 0;
         this.vida = 100;
+        this.dinheiro = 1000;
         //Configuração da Wave
         const qtdTropas  = 5;
         const velocidade  = 50;
@@ -50,20 +52,47 @@ export default class cenaNivel_1 extends Phaser.Scene{
             [ 0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1]
         ]
 
-        this.add.text(10, 15, 'Vidas: ' + String(this.vida));
+        this.add.text(20, 15, 'Vidas: ' + String(this.vida));
+        this.add.text(650, 15, 'Odaras: ' + String(this.dinheiro));
 
-        //torre de compra
+        this.listaDeTorres = [];
+
+        // torre de compra (WIP, tentativa e erro até chegar a algum lugar)
+        // provavelmente vou mudar algumas coisas nessa parte (nomes e organização)
         this.torreCompra = new TorreDraggable({
             cena: this,
             x: 775,
             y: 575,
             imagem: "Torre-Teste",
-            ondragend: (pointer, gameObject) => {}
-        })
+            map: this.map,
+            // função chamada sempre que o jogador solta a torre em algum lugar
+            ondragend: (cena, map) => {
+                // converter de coordenadas do canvas para coordenadas do grid
+                const x = (Math.ceil(this.torreCompra.x / 50) - 1).toString()
+                const y = (Math.ceil(this.torreCompra.y / 50) - 1).toString()
+
+                // se for 0 pode colocar, se não for 0 tem caminho ou já tem torre
+                if (map[y][x] == 0) {
+                    map[y][x] = 1; // marca a casa do grid como marcada
+                    
+                    // add nova torre
+                    cena.listaDeTorres.push(new Torre({
+                        cena: cena,
+                        x: this.torreCompra.x,
+                        y: this.torreCompra.y,
+                        imagem: "Torre-Teste"
+                    }))
+                    
+                }
+
+                // snap da torre de compra de volta pro lugar q ela fica
+                this.torreCompra.x = this.torreCompra.originalX
+                this.torreCompra.y = this.torreCompra.originalY
+            }
+        });
     }
 
-    update(){
-        this.torreCompra.update()
+    update(time, delta){
 
         const wave = this.wave.tropas;
         
