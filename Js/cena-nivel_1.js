@@ -80,9 +80,9 @@ export default class cenaNivel_1 extends Phaser.Scene{
                         cena: cena,
                         x: this.torreCompra.x,
                         y: this.torreCompra.y,
-                        imagem: "Torre-Teste"
+                        imagem: "Torre-Teste",
+                        raio: 125
                     }))
-                    
                 }
 
                 // snap da torre de compra de volta pro lugar q ela fica
@@ -93,9 +93,31 @@ export default class cenaNivel_1 extends Phaser.Scene{
     }
 
     update(time, delta){
-
         const wave = this.wave.tropas;
-        
+
+        // pra cada torre procura se tem pelo menos uma tropa no seu alcance
+        this.listaDeTorres.forEach((torre) => {
+            let target = null
+            for(let i=0; i<wave.length; i++){
+                if(wave[i] == null){
+                    continue;
+                }
+                let tropa = wave[i]
+                let sprite = tropa.sprite
+                let pos = sprite.getCenter();
+                const x = torre.x - pos.x 
+                const y = torre.y - pos.y
+                const dist = Math.sqrt(x*x + y*y)
+                if (dist <= torre.raio) {
+                    target = wave[i];
+                    break;  // hoje eu descobri que forEachs não suportam break statements. se suportassem eu não teria usado o for da linha 101
+                }
+            }
+            if (target) {
+                torre.trackEnemy(target.sprite.getCenter().x, target.sprite.getCenter().y);
+            }
+        })
+
         let cont = 0;
         for(let i=0; i<wave.length; i++){
             if(wave[i] == null){
