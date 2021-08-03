@@ -24,7 +24,7 @@ export default class cenaMenu extends Phaser.Scene{
 
         playButton.on('pointerdown', () => {
             //iniciar jogo...
-            this.scene.start("Carregamento");
+            this.scene.start("Nivel-1");
         })
     }
 
