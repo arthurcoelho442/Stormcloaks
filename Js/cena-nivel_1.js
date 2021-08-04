@@ -2,6 +2,7 @@ import Tropa from "./tropa.js";
 import Wave from "./wave.js";
 import Torre from "./tower.js";
 import TorreDraggable from "./towerDraggable.js"
+import Tiro from "./shot.js"
 export default class cenaNivel_1 extends Phaser.Scene{
     constructor(){
         super({
@@ -81,7 +82,7 @@ export default class cenaNivel_1 extends Phaser.Scene{
                         x: this.torreCompra.x,
                         y: this.torreCompra.y,
                         imagem: "Torre-Teste",
-                        raio: 125
+                        raio: 400
                     }))
                 }
 
@@ -90,6 +91,16 @@ export default class cenaNivel_1 extends Phaser.Scene{
                 this.torreCompra.y = this.torreCompra.originalY
             }
         });
+
+        this.tiroTeste = new Tiro({
+            cena: this,
+            x: 100,
+            y: 50,
+            imagem: "Torre-Teste",
+            velocidade: 100,
+            dano: 100,
+            angulo: 0
+        })
     }
 
     update(time, delta){
@@ -115,6 +126,16 @@ export default class cenaNivel_1 extends Phaser.Scene{
             }
             if (target) {
                 torre.trackEnemy(target.sprite.getCenter().x, target.sprite.getCenter().y);
+                new Tiro({
+                    cena: this,
+                    x: torre.x,
+                    y: torre.y,
+                    imagem: "Tiro-Teste",
+                    velocidade: 100,
+                    dano: 100,
+                    angulo: 0
+                })
+                // this.tiroTeste.update(time, delta, target.sprite.getCenter().x, target.sprite.getCenter().y)
             }
         })
 

@@ -10,7 +10,7 @@ export default class Torre extends Phaser.GameObjects.Container{
     }
 
     trackEnemy(x, y) {
-        const angle = Math.atan2(y - this.y, x - this.x) * 180 / Math.PI;
+        const angle = Math.atan2(y - this.y, x - this.x) * 180 / Math.PI; // acha o angulo em deg entre a primeira tropa no raio 
         this.angle = angle + 90;
     }
 }
