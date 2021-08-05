@@ -6,6 +6,7 @@ export default class Tropa{
         this.cena = cena;
         this.loop = false;
         this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, imgTropa);
+        this.sprite.body.setCircle(11) // não alinha com a sprite por algum motivo
     }
     destroi(){
         this.sprite.destroy();
