@@ -15,7 +15,7 @@ export default class cenaNivel_3 extends Phaser.Scene{
         if(true)
             this.backgroud = this.add.image(0,0,"Grid");
 
-            this.backgroud.setOrigin(0,0);
+        this.backgroud.setOrigin(0,0);
         //Configuração Nivel
         this.pontuacao = 0;
         this.vida = 1000;
@@ -25,14 +25,14 @@ export default class cenaNivel_3 extends Phaser.Scene{
         const vida = 10000;
         const xTropa = 0;
         const yTropa = 125;
-        const distanciarPelo = "Esquerda"
         const imgTropa = "Tropa-1";
         //Primeira wave       
-        this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
+        this.wave1 = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, "Esquerda", imgTropa);
+        this.wave2 = new Wave(this, vida, qtdTropas, velocidade, 810, yTropa, "Direita", imgTropa);
     }
 
     update(){
-        const wave = this.wave.tropas;
+        let wave = this.wave1.tropas;
         
         let cont = 0;
         for(let i=0; i<wave.length; i++){
@@ -43,8 +43,8 @@ export default class cenaNivel_3 extends Phaser.Scene{
             let tropa = wave[i]
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
-            const velocidade = this.wave.velocidade;
-            //Movimentação da tropa
+            const velocidade = this.wave1.velocidade;
+            //Movimentação das tropas da Esquerda
             if(pos.x <= 225 && pos.y >= 125 && pos.y <= 130){
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
@@ -77,22 +77,23 @@ export default class cenaNivel_3 extends Phaser.Scene{
 
             //Exclusão da tropa
             if(pos.y >= 600){
-                this.wave.destroi(i);
+                this.wave1.destroi(i);
                 this.vida--;
             }else if(tropa.vida == 0)
-                this.wave.destroi(i);
+                this.wave1.destroi(i);
         }
         //Perdeu
         if(this.vida == 0)
             this.scene.start("Nivel-4");
 
         //Proximo nivel
-        if(cont == 5)
-            this.scene.start("Teste");
+        /* if(cont == 5)
+            this.scene.start("Teste"); */
         
         //Inicia proxima wave
         if(cont == wave.length){
-            this.wave = new Wave(this, 20000, 10, 70, 125, 0, "Esquerda", "Tropa-1");
+            //this.wave = new wave1(this, 20000, 10, 70, 125, 0, "Esquerda", "Tropa-1");
+            wave = this.wave2.tropas;
             cont = 0;
         }
     }
