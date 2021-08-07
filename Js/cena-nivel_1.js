@@ -24,13 +24,13 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.vida = 100;
         this.dinheiro = 1000;
         //Configuração da Wave
-        const qtdTropas = 5;
-        const velocidade = 50;
-        const vida = 10000;
-        const xTropa = 0;
-        const yTropa = 75;
-        const distanciarPelo = "Esquerda"
-        const imgTropa = "Tropa-1";
+        let qtdTropas = 5;
+        let velocidade = 50;
+        let vida = 100;
+        let xTropa = 0;
+        let yTropa = 75;
+        let distanciarPelo = "Esquerda"
+        let imgTropa = "Tropa-1";
         //Primeira wave       
         this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
 
@@ -53,8 +53,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
             [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]
         ]
 
-        this.add.text(20, 15, 'Vidas: ' + String(this.vida));
-        this.add.text(650, 15, 'Odaras: ' + String(this.dinheiro));
+        this.textVidas = this.add.text(20, 15, 'Vidas: ' + String(this.vida));
+        this.textodaras = this.add.text(650, 15, 'Odaras: ' + String(this.dinheiro));
 
         this.listaDeTorres = [];
 
@@ -93,7 +93,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        const wave = this.wave.tropas;
+
+        let wave = this.wave.tropas;
 
         // pra cada torre procura se tem pelo menos uma tropa no seu alcance
         this.listaDeTorres.forEach((torre) => {
@@ -205,17 +206,23 @@ export default class cenaNivel_1 extends Phaser.Scene {
             } else if (tropa.vida == 0)
                 this.wave.destroi(i);
         }
+
         //Perdeu
         if (this.vida == 0)
             this.scene.start("Menu");
 
         //Proximo nivel
-        if (cont == 5)
+        if (this.wave.qtdTropas >= 8)
             this.scene.start("Nivel-2");
 
         //Inicia proxima wave
         else if (cont == wave.length) {
-            this.wave = new Wave(this, 20000, 10, 70, 0, 75, "Esquerda", "Tropa-1");
+            this.wave.velocidade += this.wave.velocidade*0.20; 
+            this.wave.qtdTropas  += parseInt(this.wave.qtdTropas*0.50); 
+            this.wave.vidaTropas += parseInt(this.wave.vidaTropas*0.50);
+            
+            this.wave = new Wave(this, this.wave.vidaTropas, this.wave.qtdTropas, this.wave.velocidade, 0, 75, "Esquerda", "Tropa-1");
+            
             cont = 0;
         }
     }

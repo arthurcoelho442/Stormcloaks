@@ -4,6 +4,8 @@ export default class Wave{
         this.cena = cena;
         this.tropas = new Array(qtdTropas);
         this.velocidade = velocidade;
+        this.qtdTropas = qtdTropas;
+        this.vidaTropas = vida;
         if(distanciarPor == "Esquerda")
             for(let i=0;i<qtdTropas;i++)
                 this.tropas[i] = new Tropa(cena, xTropa-50*i, yTropa, vida, imgTropa);
