@@ -22,7 +22,7 @@ export default class cenaCarregamento extends Phaser.Scene{
 
 
         this.load.on("complete", () => {
-            this.scene.start("Menu");
+            this.scene.start("Nivel-1");
         });
 
         //Carregamento das imagens
@@ -41,6 +41,6 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Coin", "Imagens/OdaraCoin.png");
         this.load.image("Vidas", "Imagens/Vidas.png");
 
-        this.load.spritesheet("Tropa-1", "Imagens/Enemy_test.png", { frameWidth: 23, frameHeight: 23 });
+        this.load.spritesheet("Tropa", "Imagens/Enemy_with_color.png", { frameWidth: 50, frameHeight: 50 });
     }
 }

@@ -37,12 +37,13 @@ export default class cenaNivel_1 extends Phaser.Scene {
             const xTropa = -50;
             const yTropa = 75;
             const distanciarPelo = "Esquerda"
-            const imgTropa = "Tropa-1";
+            const imgTropa = "Tropa";
             
             let waves = [];
-            for (let i = 0; i < this.qtdWave; i++)
-            waves[i] = new Wave(this, vida + i * 200, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa)
-            
+            for (let i = 0; i < this.qtdWave; i++){
+                waves[i] = new Wave(this, vida + i * 200, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
+                waves[i].setColor(i+1);
+            }
             this.waves = waves;
             
             // grid

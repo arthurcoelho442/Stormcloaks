@@ -19,6 +19,13 @@ export default class Wave{
             for(let i=0;i<qtdTropas;i++)
                 this.tropas[i] = new Tropa(cena, xTropa, yTropa+50*i, vida, imgTropa);
     }
+    setColor(i){
+        this.tropas.forEach((tropa) => {
+            const sprite = tropa.sprite
+            const img = 'Tropa-' + i;
+            sprite.anims.play(img, true);
+        });
+    }
     destroi(pos){
         this.tropas[pos].destroi();
         this.tropas[pos] = null;
