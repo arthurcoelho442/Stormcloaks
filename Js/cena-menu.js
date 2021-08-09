@@ -5,7 +5,7 @@ export default class cenaMenu extends Phaser.Scene{
         });
     }
     preload() {
-        this.load.image('backg', 'Imagens/Menu_principal.png')
+        this.load.image('backg', 'Imagens/Menu_principal_sem_torre.png')
         this.load.image('play', 'Imagens/Botao de play_1.png')
         this.load.image('play2', 'Imagens/Botao de play_2.png')
     }
