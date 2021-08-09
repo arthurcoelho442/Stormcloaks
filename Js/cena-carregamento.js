@@ -26,6 +26,10 @@ export default class cenaCarregamento extends Phaser.Scene{
         });
 
         //Carregamento das imagens
+        this.load.image('backg', 'Imagens/Menu_principal_sem_torre.png')
+        this.load.image('play', 'Imagens/Botao de play_1.png')
+        this.load.image('play2', 'Imagens/Botao de play_2.png')
+
         this.load.image("Mapa-Teste", "Imagens/Test_map_grid.png");
         this.load.image("Mapa-1", "Imagens/Mapa_1.png");
         this.load.image("Mapa-2", "Imagens/Mapa_2.png");
