@@ -8,6 +8,14 @@ export default class cenaNivel_1 extends Phaser.Scene {
         super({
             key: "Nivel-1"
         });
+        
+        //Configuração Nivel
+        this.pontuacao = 0;
+        this.vida = 100;
+        this.dinheiro = 1000;
+        this.textVidas = null;
+        this.textDinheiro = null;
+        this.waveCounter = 0;
     }
     preload() {
 
@@ -19,20 +27,23 @@ export default class cenaNivel_1 extends Phaser.Scene {
             this.backgroud = this.add.image(0, 0, "Grid");
 
         this.backgroud.setOrigin(0, 0);
-        //Configuração Nivel
-        this.pontuacao = 0;
-        this.vida = 100;
-        this.dinheiro = 1000;
         //Configuração da Wave
-        let qtdTropas = 5;
-        let velocidade = 50;
-        let vida = 100;
-        let xTropa = 0;
-        let yTropa = 75;
-        let distanciarPelo = "Esquerda"
-        let imgTropa = "Tropa-1";
+        const qtdTropas = 10;
+        const velocidade = 50;
+        const vida = 1000;
+        const xTropa = -50;
+        const yTropa = 75;
+        const distanciarPelo = "Esquerda"
+        const imgTropa = "Tropa-1";
         //Primeira wave       
-        this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
+        // this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
+
+        let waves = [];
+        for (let i = 0; i < 10; i++) {
+            waves[i] = new Wave(this, vida + i * 200, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa)
+        }
+
+        this.waves = waves;
 
         // grid
         // -1 é o caminho das tropas da
@@ -54,7 +65,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         ]
 
         this.textVidas = this.add.text(20, 15, 'Vidas: ' + String(this.vida));
-        this.textodaras = this.add.text(650, 15, 'Odaras: ' + String(this.dinheiro));
+        this.textDinheiro =  this.add.text(650, 15, 'Odaras: ' + String(this.dinheiro));
 
         this.listaDeTorres = [];
 
@@ -73,16 +84,22 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
                 // se for 0 pode colocar, se não for 0 tem caminho ou já tem torre
                 if (map[y][x] == 0) {
-                    map[y][x] = 1; // marca a casa do grid como marcada
-
-                    // add nova torre
-                    cena.listaDeTorres.push(new Torre({
-                        cena: cena,
-                        x: this.torreCompra.x,
-                        y: this.torreCompra.y,
-                        imagem: "Torre-Teste",
-                        raio: 190
-                    }))
+                    
+                    if (this.dinheiro >= 500) {
+                        map[y][x] = 1; // marca a casa do grid como marcada
+                        
+                        this.dinheiro -= 500;
+                        
+                        // add nova torre
+                        cena.listaDeTorres.push(new Torre({
+                            cena: cena,
+                            x: this.torreCompra.x,
+                            y: this.torreCompra.y,
+                            imagem: "Torre-Teste",
+                            raio: 190,
+                            dano: 200
+                        }))
+                    }
                 }
 
                 // snap da torre de compra de volta pro lugar q ela fica
@@ -93,8 +110,11 @@ export default class cenaNivel_1 extends Phaser.Scene {
     }
 
     update(time, delta) {
+        this.textDinheiro.setText('Vidas: ' + String(this.vida))
+        this.textDinheiro.setText('Odaras: ' + String(this.dinheiro))
 
-        let wave = this.wave.tropas;
+        let wave = this.waves[this.waveCounter].tropas;
+        let waveSpeed = this.waves[this.waveCounter].velocidade;
 
         // pra cada torre procura se tem pelo menos uma tropa no seu alcance
         this.listaDeTorres.forEach((torre) => {
@@ -138,6 +158,15 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         let sprite = tropa.sprite
                         // função que cria o overlap
                         this.physics.add.overlap(shot.sprite, sprite, () => {
+                            tropa.vida -= torre.dano
+                            if (tropa.vida <= 0) {
+                                const index = wave.indexOf(tropa);
+                                if (index > -1) {
+                                    wave.splice(index, 1);
+                                }
+                                tropa.destroi(i)
+                                this.dinheiro += 100
+                            }
                             shot.sprite.destroy();
                         })
                     }
@@ -153,39 +182,41 @@ export default class cenaNivel_1 extends Phaser.Scene {
             }
         })
 
-        let cont = 0;
+        let count = 0;
         for (let i = 0; i < wave.length; i++) {
             if (wave[i] == null) {
-                cont++;
+                count++;
                 continue;
             }
             let tropa = wave[i]
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
-            const velocidade = this.wave.velocidade;
+            const velocidade = waveSpeed;
 
-            //Movimentação da tropa
-            if (pos.x <= 0 && pos.y == 75) {
-                sprite.setVelocityX(velocidade);
-                sprite.setVelocityY(0);
-            } if (pos.x >= 675 && pos.y >= 75) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-            } if (pos.x >= 675 && pos.y >= 225) {
-                sprite.setVelocityX(-velocidade);
-                sprite.setVelocityY(0);
-            } if (pos.x <= 125 && pos.y != 75) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-            } if (pos.x <= 125 && pos.y >= 375 && pos.y <= 380) {
-                sprite.setVelocityX(velocidade);
-                sprite.setVelocityY(0);
-            } if (pos.x >= 675 && pos.y >= 375) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-            } if (pos.x >= 675 && pos.y >= 525) {
-                sprite.setVelocityX(-velocidade);
-                sprite.setVelocityY(0);
+            if (sprite && sprite != undefined) {
+                //Movimentação da tropa
+                if (pos.x <= 0 && pos.y == 75) {
+                    sprite.setVelocityX(velocidade);
+                    sprite.setVelocityY(0);
+                } if (pos.x >= 675 && pos.y >= 75) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(velocidade);
+                } if (pos.x >= 675 && pos.y >= 225) {
+                    sprite.setVelocityX(-velocidade);
+                    sprite.setVelocityY(0);
+                } if (pos.x <= 125 && pos.y != 75) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(velocidade);
+                } if (pos.x <= 125 && pos.y >= 375 && pos.y <= 380) {
+                    sprite.setVelocityX(velocidade);
+                    sprite.setVelocityY(0);
+                } if (pos.x >= 675 && pos.y >= 375) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(velocidade);
+                } if (pos.x >= 675 && pos.y >= 525) {
+                    sprite.setVelocityX(-velocidade);
+                    sprite.setVelocityY(0);
+                }
             }
 
             //Diminui a vida e o tamanho da tropa
@@ -210,6 +241,11 @@ export default class cenaNivel_1 extends Phaser.Scene {
         //Perdeu
         if (this.vida == 0)
             this.scene.start("Menu");
+
+        //Inicia proxima wave
+        if (wave.length == 0) {
+            this.waveCounter++;
+        }
 
         //Proximo nivel
         if (this.wave.qtdTropas >= 8)
