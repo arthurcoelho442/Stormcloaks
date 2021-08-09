@@ -35,6 +35,7 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Tiro-Teste", "Imagens/Projectile_test.png")
         this.load.image("Grid", "Imagens/Grid.png");
         this.load.image("Coin", "Imagens/OdaraCoin.png");
+        this.load.image("Vidas", "Imagens/Vidas.png");
 
         this.load.spritesheet("Tropa-1", "Imagens/Enemy_test.png", { frameWidth: 23, frameHeight: 23 });
     }

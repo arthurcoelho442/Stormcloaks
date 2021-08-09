@@ -64,7 +64,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]
             ]
             
-        this.textVidas = this.add.text(20, 15, 'Vidas: ' + String(this.vida));
+        this.backgroud = this.add.image(55, 5, "Vidas").setOrigin(0,0).setScale(0.1, 0.1);
+        this.textVidas = this.add.text(105, 20, String(this.vida));
         this.backgroud = this.add.image(665, 15, "Coin").setOrigin(0,0).setScale(0.028, 0.028);
         this.textDinheiro =  this.add.text(705, 20, String(this.dinheiro));
 
@@ -111,7 +112,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.textVidas.setText('Vidas: ' + String(this.vida))
+        this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
 
         let wave = this.waves[this.waveCounter].tropas;
