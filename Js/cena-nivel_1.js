@@ -169,9 +169,12 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         // função que cria o overlap
                         this.physics.add.overlap(shot.sprite, sprite, () => {
                             tropa.vida -= torre.dano
+
                             if(tropa.vida >= tropa.vidaMax/2){
-                                sprite.setScale(tropa.vida / tropa.vidaMax, tropa.vida / tropa.vidaMax);
+                                let tamanho = tropa.vida / tropa.vidaMax;
+                                sprite.setScale(tamanho , tamanho);
                             }
+                            
                             if (tropa.vida <= 0) {
                                 const index = wave.indexOf(tropa);
                                 if (index > -1) {
