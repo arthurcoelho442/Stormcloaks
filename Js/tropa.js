@@ -3,6 +3,7 @@ export default class Tropa{
         this.xTropa = xTropa;
         this.yTropa = yTropa;
         this.vida = vida;
+        this.vidaMax = vida;
         this.cena = cena;
         this.loop = false;
         this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, imgTropa);

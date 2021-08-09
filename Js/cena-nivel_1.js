@@ -16,6 +16,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.textVidas = null;
         this.textDinheiro = null;
         this.waveCounter = 0;
+        this.qtdWave = 10; //quantidade de waves do nivel
+        this.dificuldade = 0,1; //dificuldade que o nivel vai possuir, no intervalo de (0,1)
     }
     preload() {
 
@@ -35,13 +37,21 @@ export default class cenaNivel_1 extends Phaser.Scene {
         const yTropa = 75;
         const distanciarPelo = "Esquerda"
         const imgTropa = "Tropa-1";
-        //Primeira wave       
-        // this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
+
+        //Inicia proxima wave
+        /* else if (cont == wave.length) {
+            this.wave.velocidade += this.wave.velocidade*0.20; 
+            this.wave.qtdTropas  += parseInt(this.wave.qtdTropas*0.50); 
+            this.wave.vidaTropas += parseInt(this.wave.vidaTropas*0.50);
+            
+            this.wave = new Wave(this, this.wave.vidaTropas, this.wave.qtdTropas, this.wave.velocidade, 0, 75, "Esquerda", "Tropa-1");
+            
+            cont = 0;
+        } */
 
         let waves = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < this.qtdWave; i++)
             waves[i] = new Wave(this, vida + i * 200, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa)
-        }
 
         this.waves = waves;
 
@@ -110,7 +120,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.textDinheiro.setText('Vidas: ' + String(this.vida))
+        this.textVidas.setText('Vidas: ' + String(this.vida))
         this.textDinheiro.setText('Odaras: ' + String(this.dinheiro))
 
         let wave = this.waves[this.waveCounter].tropas;
@@ -159,6 +169,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         // função que cria o overlap
                         this.physics.add.overlap(shot.sprite, sprite, () => {
                             tropa.vida -= torre.dano
+                            sprite.setScale(tropa.vida / tropa.vidaMax, tropa.vida / tropa.vidaMax);
                             if (tropa.vida <= 0) {
                                 const index = wave.indexOf(tropa);
                                 if (index > -1) {
@@ -182,12 +193,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
             }
         })
 
-        let count = 0;
         for (let i = 0; i < wave.length; i++) {
-            if (wave[i] == null) {
-                count++;
+            if (wave[i] == null)
                 continue;
-            }
             let tropa = wave[i]
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
@@ -223,7 +231,6 @@ export default class cenaNivel_1 extends Phaser.Scene {
             //Definir com a implementação das torres
             if (false) {
                 tropa.vida -= 4;
-                sprite.setScale(tropa.vida / 10000, tropa.vida / 10000);
             }
 
             //Marca pontuação
@@ -231,35 +238,25 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 this.pontuacao += 100;
 
             //Exclusão da tropa
-            if (pos.x <= 125 && pos.y >= 600 || tropa.vida == 0) {
-                this.wave.destroi(i);
+            if (pos.y >= 600) {
                 this.vida--;
-            } else if (tropa.vida == 0)
-                this.wave.destroi(i);
+                wave.splice(wave.indexOf(tropa), 1);
+                tropa.destroi(i)
+            } else if (tropa.vida == 0){
+                wave.splice(wave.indexOf(tropa), 1);
+                tropa.destroi(i)
+            }
         }
-
         //Perdeu
         if (this.vida == 0)
             this.scene.start("Menu");
 
         //Inicia proxima wave
-        if (wave.length == 0) {
+        if (wave.length == 0) 
             this.waveCounter++;
-        }
 
         //Proximo nivel
-        if (this.wave.qtdTropas >= 8)
+        if (this.qtdWave == this.waveCounter)
             this.scene.start("Nivel-2");
-
-        //Inicia proxima wave
-        else if (cont == wave.length) {
-            this.wave.velocidade += this.wave.velocidade*0.20; 
-            this.wave.qtdTropas  += parseInt(this.wave.qtdTropas*0.50); 
-            this.wave.vidaTropas += parseInt(this.wave.vidaTropas*0.50);
-            
-            this.wave = new Wave(this, this.wave.vidaTropas, this.wave.qtdTropas, this.wave.velocidade, 0, 75, "Esquerda", "Tropa-1");
-            
-            cont = 0;
-        }
     }
 }
