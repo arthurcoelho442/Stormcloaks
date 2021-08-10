@@ -7,8 +7,7 @@ export default class Tropa{
         this.cena = cena;
         this.loop = false;
         this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, imgTropa, 0);
-        this.sprite.body.setCircle(11) // não alinha com a sprite por algum motivo
-
+        this.sprite.body.setCircle(11,14,14)
 
         cena.anims.create({
             key: 'Tropa-1',
