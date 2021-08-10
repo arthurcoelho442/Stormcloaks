@@ -22,7 +22,7 @@ export default class cenaCarregamento extends Phaser.Scene{
 
 
         this.load.on("complete", () => {
-            this.scene.start("Nivel-1");
+            this.scene.start("Nivel-3");
         });
 
         //Carregamento das imagens
