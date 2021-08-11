@@ -13,7 +13,6 @@ export default class cenaNivel_2 extends Phaser.Scene{
         this.textDinheiro = null;
         this.waveCounter = 0;
         this.qtdWave = 10; //quantidade de waves do nivel
-        this.dificuldade = 0,1; //dificuldade que o nivel vai possuir, no intervalo de (0,1)
     }
     preload(){
 
