@@ -12,7 +12,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
         this.textVidas = null;
         this.textDinheiro = null;
         this.waveCounter = 0;
-        this.qtdWave = 10; //quantidade de waves do nivel
+        this.qtdWave = 12; //quantidade de waves do nivel
     }
     preload(){
 
