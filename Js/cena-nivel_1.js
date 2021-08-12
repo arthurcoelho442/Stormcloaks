@@ -133,7 +133,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 const dist = Math.sqrt(x * x + y * y)
                 if (dist <= torre.raio) {
                     target = wave[i];
-                    break;  // hoje eu descobri que forEachs não suportam break statements. se suportassem eu não teria usado o for da linha 101
+                    break;  // hoje eu descobri que forEachs não suportam break statements
                 }
             }
             if (target) {
@@ -147,7 +147,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         imagem: "Tiro-Teste",
                         velocidade: 700,
                         dano: 100,
-                        angulo: torre.angle
+                        angulo: torre.angle,
+                        target: target
                     })
 
                     // para cada tiro criado, adiciono um overlap entre a tropa e o tiro
