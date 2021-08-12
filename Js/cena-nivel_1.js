@@ -40,7 +40,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
             
             let waves = [];
             for (let i = 0; i < this.qtdWave; i++){
-                waves[i] = new Wave(this, vida + i * 200, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
+                waves[i] = new Wave(this, vida + i * 215, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
                 waves[i].setColor(i+1);
             }
             this.waves = waves;
@@ -174,7 +174,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                                     wave.splice(index, 1);
                                 }
                                 tropa.destroi(i)
-                                this.dinheiro += 100
+                                this.dinheiro += 50
                             }
                             shot.sprite.destroy();
                         })
