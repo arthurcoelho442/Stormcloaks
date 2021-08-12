@@ -16,6 +16,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.textVidas = null;
         this.textDinheiro = null;
         this.waveCounter = 0;
+        this.qtdWave = 10; //quantidade de waves do nivel
     }
     preload() {
 
@@ -26,46 +27,47 @@ export default class cenaNivel_1 extends Phaser.Scene {
         if (true)
             this.backgroud = this.add.image(0, 0, "Grid");
 
-        this.backgroud.setOrigin(0, 0);
-        //Configuração da Wave
-        const qtdTropas = 10;
-        const velocidade = 50;
-        const vida = 1000;
-        const xTropa = -50;
-        const yTropa = 75;
-        const distanciarPelo = "Esquerda"
-        const imgTropa = "Tropa-1";
-        //Primeira wave       
-        // this.wave = new Wave(this, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPelo, imgTropa);
-
-        let waves = [];
-        for (let i = 0; i < 10; i++) {
-            waves[i] = new Wave(this, vida + i * 200, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa)
-        }
-
-        this.waves = waves;
-
-        // grid
-        // -1 é o caminho das tropas da
-        //  0 é disponivel pra posicionar a torre
-        //  1 é uma torre já existente
-        this.map = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1],
-            [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, -1],
-            [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]
-        ]
-
-        this.textVidas = this.add.text(20, 15, 'Vidas: ' + String(this.vida));
-        this.textDinheiro =  this.add.text(650, 15, 'Odaras: ' + String(this.dinheiro));
+            
+            this.backgroud.setOrigin(0, 0);
+            //Configuração da Wave
+            const qtdTropas = 10;
+            const velocidade = 50;
+            const vida = 1000;
+            const xTropa = -50;
+            const yTropa = 75;
+            const distanciarPelo = "Esquerda"
+            const imgTropa = "Tropa";
+            
+            let waves = [];
+            for (let i = 0; i < this.qtdWave; i++){
+                waves[i] = new Wave(this, vida + i * 200, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
+                waves[i].setColor(i+1);
+            }
+            this.waves = waves;
+            
+            // grid
+            // -1 é o caminho das tropas da
+            //  0 é disponivel pra posicionar a torre
+            //  1 é uma torre já existente
+            this.map = [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+                [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+                [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1],
+                [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, -1],
+                [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]
+            ]
+            
+        this.backgroud = this.add.image(55, 5, "Vidas").setOrigin(0,0).setScale(0.1, 0.1);
+        this.textVidas = this.add.text(105, 20, String(this.vida));
+        this.backgroud = this.add.image(665, 15, "Coin").setOrigin(0,0).setScale(0.028, 0.028);
+        this.textDinheiro =  this.add.text(705, 20, String(this.dinheiro));
 
         this.listaDeTorres = [];
 
@@ -110,8 +112,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.textDinheiro.setText('Vidas: ' + String(this.vida))
-        this.textDinheiro.setText('Odaras: ' + String(this.dinheiro))
+        this.textVidas.setText(String(this.vida))
+        this.textDinheiro.setText(String(this.dinheiro))
 
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
@@ -159,6 +161,12 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         // função que cria o overlap
                         this.physics.add.overlap(shot.sprite, sprite, () => {
                             tropa.vida -= torre.dano
+
+                            if(tropa.vida >= tropa.vidaMax/2){
+                                let tamanho = tropa.vida / tropa.vidaMax;
+                                sprite.setScale(tamanho , tamanho);
+                            }
+                            
                             if (tropa.vida <= 0) {
                                 const index = wave.indexOf(tropa);
                                 if (index > -1) {
@@ -182,12 +190,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
             }
         })
 
-        let count = 0;
         for (let i = 0; i < wave.length; i++) {
-            if (wave[i] == null) {
-                count++;
+            if (wave[i] == null)
                 continue;
-            }
             let tropa = wave[i]
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
@@ -219,36 +224,30 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 }
             }
 
-            //Diminui a vida e o tamanho da tropa
-            //Definir com a implementação das torres
-            if (false) {
-                tropa.vida -= 4;
-                sprite.setScale(tropa.vida / 10000, tropa.vida / 10000);
-            }
-
             //Marca pontuação
             if (tropa.vida == 0)
                 this.pontuacao += 100;
 
             //Exclusão da tropa
-            if (pos.x <= 125 && pos.y >= 600 || tropa.vida == 0) {
-                this.wave.destroi(i);
+            if (pos.y >= 600) {
                 this.vida--;
-            } else if (tropa.vida == 0)
-                this.wave.destroi(i);
+                wave.splice(wave.indexOf(tropa), 1);
+                tropa.destroi(i)
+            } else if (tropa.vida == 0){
+                wave.splice(wave.indexOf(tropa), 1);
+                tropa.destroi(i)
+            }
         }
         //Perdeu
         if (this.vida == 0)
             this.scene.start("Menu");
 
         //Inicia proxima wave
-        if (wave.length == 0) {
+        if (wave.length == 0) 
             this.waveCounter++;
-        }
-
+            
         //Proximo nivel
-        if (this.waveCounter == 10)
+        if (this.qtdWave == this.waveCounter)
             this.scene.start("Nivel-2");
-
     }
 }

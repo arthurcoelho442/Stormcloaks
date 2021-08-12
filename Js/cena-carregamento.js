@@ -26,6 +26,10 @@ export default class cenaCarregamento extends Phaser.Scene{
         });
 
         //Carregamento das imagens
+        this.load.image('backg', 'Imagens/Menu_principal_sem_torre.png')
+        this.load.image('play', 'Imagens/Botao de play_1.png')
+        this.load.image('play2', 'Imagens/Botao de play_2.png')
+
         this.load.image("Mapa-Teste", "Imagens/Test_map_grid.png");
         this.load.image("Mapa-1", "Imagens/Mapa_1.png");
         this.load.image("Mapa-2", "Imagens/Mapa_2.png");
@@ -34,7 +38,9 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Torre-Teste", "Imagens/Tower_test.png");
         this.load.image("Tiro-Teste", "Imagens/Projectile_test.png")
         this.load.image("Grid", "Imagens/Grid.png");
+        this.load.image("Coin", "Imagens/OdaraCoin.png");
+        this.load.image("Vidas", "Imagens/Vidas.png");
 
-        this.load.spritesheet("Tropa-1", "Imagens/Enemy_test.png", { frameWidth: 23, frameHeight: 23 });
+        this.load.spritesheet("Tropa", "Imagens/Enemy_with_color.png", { frameWidth: 50, frameHeight: 50 });
     }
 }
