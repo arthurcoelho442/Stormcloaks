@@ -1,6 +1,6 @@
 export default class Tiro {
     constructor(data) {
-        let { cena, x, y, imagem, velocidade, dano, angulo } = data;
+        let { cena, x, y, imagem, velocidade, dano, angulo, target } = data;
         this.sprite = cena.physics.add.sprite(x, y, imagem);
         this.cena = cena;
         this.imagem = imagem;
@@ -9,15 +9,27 @@ export default class Tiro {
         this.tempoDeVida = 600;
         this.sprite.angle = angulo;
         this.alive = true;
+        this.target = target;
     }
 
     // conta tempo pra sumir caso não colida com uma tropa
     update(time, delta) {
-        this.tempoDeVida -= delta;
-
-        if (this.tempoDeVida <= 0) {
-            this.alive = false;
-            this.sprite.destroy();
+        if (this.alive) {
+            if (this.sprite.body && this.sprite.body != undefined) {
+                this.cena.physics.moveToObject(this.sprite, this.target.sprite, this.velocidade);
+                console.log(this.alive)
+                if (this.target.vida <= 0 && this.alive) {
+                    this.alive = false;
+                    this.sprite.destroy();
+                }
+            }
+    
+            this.tempoDeVida -= delta;
+    
+            if (this.tempoDeVida <= 0) {
+                this.alive = false;
+                this.sprite.destroy();
+            }
         }
     }
 }
