@@ -10,7 +10,10 @@ export default class cenaTeste extends Phaser.Scene{
     }
 
     create() {
-        this.backgroud = this.add.image(0,0,"Mapa-Teste");
+        
+        this.backgroud = this.add.image(0,0,"Mapa-Teste").setOrigin(0,0);
+        if(true)
+            this.backgroud = this.add.image(0,0,"Grid");
         this.backgroud.setOrigin(0,0);
         
         //Configuração da wave
@@ -25,10 +28,12 @@ export default class cenaTeste extends Phaser.Scene{
     
     update(){
         const wave = this.wave.tropas;
-        
+        let cont =0;
         for(let i=0; i<wave.length; i++){
-            if(wave[i] == null)
+            if(wave[i] == null){
+                cont++;
                 continue;
+            }
             let tropa = wave[i]
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
@@ -41,12 +46,19 @@ export default class cenaTeste extends Phaser.Scene{
             //      tropa.vida-=10;
             //      sprite.setScale(tropa.vida/10000,tropa.vida/10000);
             
+            //Marca pontuação
+            if(tropa.vida == 0)
+                this.pontuacao += 100;
+
             //Exclusão da tropa
-            if(pos.x >= 800 || tropa.vida == 0){
-                sprite.destroy();
-                tropa = null
-                wave[i] = null;
-            }
+            if(pos.x >= 800 && pos.y >= 275){
+                this.wave.destroi(i);
+                this.vida--;
+            }else if(tropa.vida == 0)
+                this.wave.destroi(i);
         }
+        //Proximo nivel
+        if(cont == 5)
+            this.scene.start("Menu");
     }
 }
