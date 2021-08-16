@@ -254,7 +254,22 @@ export default class cenaNivel_4 extends Phaser.Scene{
             this.scene.start("Menu");
 
         //Perdeu
-        if (this.vida == 0)
-            this.scene.start("Menu");
+        if(this.vida == 0)
+        {
+            this.backgroud = this.add.image(0,0,"Mapa-4").setOrigin(0,0);
+            this.add.text(200, 190, "Game Over!", {fontSize: 60, color: 'red'});
+            const buttonMenu = this.add.text(350,300, "Menu inicial");
+            const buttonScore = this.add.text(350, 350, "Pontuações");
+
+            buttonMenu.setInteractive();
+            buttonScore.setInteractive();
+
+            buttonMenu.on('pointerdown',() => {
+                this.scene.start("Menu");
+            })
+            buttonScore.on('pointerdown',() => {
+            
+            })
+        }
     }
 }

@@ -21,7 +21,20 @@ export default class cenaMenu extends Phaser.Scene{
 
         playButton.on('pointerdown', () => {
             //iniciar jogo...
-            this.scene.start("Nivel-1");
+            this.scene.start("Escolha");
+        })
+
+        const confButton = this.add.text(340, 350, 'Configurações');
+        const scoreButton = this.add.text(340, 400, 'Teste gameover');
+        confButton.setInteractive()
+        scoreButton.setInteractive()
+
+        confButton.on('pointerdown', () => {
+            this.scene.start("Configuracoes");
+        })
+
+        scoreButton.on('pointerdown', () => {
+            this.scene.start("Gameover");
         })
     }
 
