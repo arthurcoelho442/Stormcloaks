@@ -160,6 +160,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 ondragend: ondragend
             });
 
+            //On hover da descrição das torres
             var descricao;
             torreCompra.on('pointerover', () => {
                 descricao = this.add.image(torreCompra.originalX-75, torreCompra.originalY, "Menu-Icon-2");
