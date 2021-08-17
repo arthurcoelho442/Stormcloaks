@@ -52,6 +52,8 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Torre-3", "Imagens/Tower_3.png");
         this.load.image("Torre-4", "Imagens/Tower_4.png");
 
+        this.load.audio('WC3-Orc', "Music/Warcraft 3 Soundtrack (Blackrock & Roll)_160k.mp3")
+
         this.load.spritesheet("Tropa", "Imagens/Enemy_with_color.png", { frameWidth: 50, frameHeight: 50 });
     }
 }

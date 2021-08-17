@@ -28,6 +28,17 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
         this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
 
+        this.music = this.sound.add("WC3-Orc",{
+            mute: false,
+            volume: 0.25,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        });
+        this.music.play();
+
         //Configuração da Wave
         const qtdTropas = 10;
         const velocidade = 50;
