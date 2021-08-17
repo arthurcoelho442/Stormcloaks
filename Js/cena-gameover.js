@@ -27,8 +27,8 @@ export default class cenaGameover extends Phaser.Scene {
         buttonScore.setInteractive();
 
         buttonMenu.on('pointerdown', () => {
-            this.scene.stop();
             this.scene.start("Menu");
+            this.scene.stop();
         })
         buttonScore.on('pointerdown', () => {
 
