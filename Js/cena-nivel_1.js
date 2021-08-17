@@ -24,7 +24,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
     create() {
         this.backgroud = this.add.image(0, 0, "Mapa-1").setOrigin(0, 0);
-        //this.grid = this.add.image(0, 0, "Grid").setOrigin(0, 0);
+        this.grid = this.add.image(0, 0, "Grid").setOrigin(0, 0);
 
         this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
 
@@ -319,12 +319,12 @@ export default class cenaNivel_1 extends Phaser.Scene {
             
             })
         }
-        //Proximo nivel
-        if (this.qtdWave == this.waveCounter)
-            this.scene.start("Nivel-2");
-
         //Inicia proxima wave
         if (wave.length == 0) 
             this.waveCounter++;
+
+        //Proximo nivel
+        if (this.qtdWave == this.waveCounter)
+            this.scene.start("Nivel-2");
     }
 }
