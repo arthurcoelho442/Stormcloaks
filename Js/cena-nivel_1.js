@@ -160,6 +160,13 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 ondragend: ondragend
             });
 
+            var descricao;
+            torreCompra.on('pointerover', () => {
+                descricao = this.add.image(torreCompra.originalX-75, torreCompra.originalY, "Menu-Icon-2");
+            })
+            torreCompra.on('pointerout', () => {
+                descricao.destroy();
+            })
             this.torresDeCompra.push(torreCompra)
         }
     }

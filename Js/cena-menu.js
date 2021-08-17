@@ -8,7 +8,7 @@ export default class cenaMenu extends Phaser.Scene{
     }
 
     create() {
-        this.add.image(400,300,'backg')
+        this.add.image(400,300,'backg').setScale(1.25, 1.2);
         const playButton = this.add.image(400,300,'play')
         playButton.setInteractive()
 
