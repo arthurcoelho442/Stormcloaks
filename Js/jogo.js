@@ -11,8 +11,8 @@ import cenaPontuacao from "./cena-pontuacao.js";
 
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 900,
+    height: 660,
     parent: "Tower-Defender",
     physics: {
         default: 'arcade',

@@ -17,7 +17,6 @@ export default class Tiro {
         if (this.alive) {
             if (this.sprite.body && this.sprite.body != undefined) {
                 this.cena.physics.moveToObject(this.sprite, this.target.sprite, this.velocidade);
-                console.log(this.alive)
                 if (this.target.vida <= 0 && this.alive) {
                     this.alive = false;
                     this.sprite.destroy();

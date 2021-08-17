@@ -41,6 +41,17 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Coin", "Imagens/OdaraCoin.png");
         this.load.image("Vidas", "Imagens/Vidas.png");
 
+        this.load.image("Menu-Lateral", "Imagens/Menu_Lateral.png");
+        this.load.image("Menu-Icon-1", "Imagens/Menu_Icon_1.png");
+        this.load.image("Menu-Icon-2", "Imagens/Menu_Icon_2.png");
+        this.load.image("Menu-Icon-3", "Imagens/Menu_Icon_3.png");
+        this.load.image("Menu-Icon-4", "Imagens/Menu_Icon_4.png");
+
+        this.load.image("Torre-1", "Imagens/Tower_1.png");
+        this.load.image("Torre-2", "Imagens/Tower_2.png");
+        this.load.image("Torre-3", "Imagens/Tower_3.png");
+        this.load.image("Torre-4", "Imagens/Tower_4.png");
+
         this.load.spritesheet("Tropa", "Imagens/Enemy_with_color.png", { frameWidth: 50, frameHeight: 50 });
     }
 }

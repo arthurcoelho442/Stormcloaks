@@ -24,91 +24,133 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
     create() {
         this.backgroud = this.add.image(0, 0, "Mapa-1").setOrigin(0, 0);
-        if (true)
-            this.backgroud = this.add.image(0, 0, "Grid");
+        this.grid = this.add.image(0, 0, "Grid").setOrigin(0, 0);
 
+        this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
+
+        //Configuração da Wave
+        const qtdTropas = 10;
+        const velocidade = 50;
+        const vida = 1000;
+        const xTropa = -50;
+        const yTropa = 75;
+        const distanciarPelo = "Esquerda"
+        const imgTropa = "Tropa";
+        
+        let waves = [];
+        for (let i = 0; i < this.qtdWave; i++){
+            waves[i] = new Wave(this, vida + i * 215, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
+            waves[i].setColor(i+1);
+        }
+        this.waves = waves;
+        
+        // grid
+        // -1 é o caminho das tropas da
+        //  0 é disponivel pra posicionar a torre
+        //  1 é uma torre já existente
+        this.map = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1],
+            [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, -1],
+            [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]
+        ]
             
-            this.backgroud.setOrigin(0, 0);
-            //Configuração da Wave
-            const qtdTropas = 10;
-            const velocidade = 50;
-            const vida = 1000;
-            const xTropa = -50;
-            const yTropa = 75;
-            const distanciarPelo = "Esquerda"
-            const imgTropa = "Tropa";
-            
-            let waves = [];
-            for (let i = 0; i < this.qtdWave; i++){
-                waves[i] = new Wave(this, vida + i * 215, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
-                waves[i].setColor(i+1);
-            }
-            this.waves = waves;
-            
-            // grid
-            // -1 é o caminho das tropas da
-            //  0 é disponivel pra posicionar a torre
-            //  1 é uma torre já existente
-            this.map = [
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-                [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-                [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1],
-                [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, -1],
-                [0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]
-            ]
-            
-        this.backgroud = this.add.image(55, 5, "Vidas").setOrigin(0,0).setScale(0.1, 0.1);
-        this.textVidas = this.add.text(105, 20, String(this.vida));
-        this.backgroud = this.add.image(665, 15, "Coin").setOrigin(0,0).setScale(0.028, 0.028);
-        this.textDinheiro =  this.add.text(705, 20, String(this.dinheiro));
+        this.backgroud = this.add.image(55, 610, "Vidas").setOrigin(0,0).setScale(0.1, 0.1);
+        this.textVidas = this.add.text(105, 622, String(this.vida));
+        this.backgroud = this.add.image(665, 615, "Coin").setOrigin(0,0).setScale(0.028, 0.028);
+        this.textDinheiro =  this.add.text(705, 622, String(this.dinheiro));
 
         this.listaDeTorres = [];
+        this.torresDeCompra = [];
 
-        // provavelmente vou mudar algumas coisas nessa parte (nomes e organização)
-        this.torreCompra = new TorreDraggable({
-            cena: this,
-            x: 775,
-            y: 575,
-            imagem: "Torre-Teste",
-            map: this.map,
-            // função chamada sempre que o jogador solta a torre em algum lugar
-            ondragend: (cena, map) => {
+        // função chamada quando terminamos de arrastar uma torre
+        const ondragend = (cena, map, id) => {
+            let x = this.torresDeCompra[id].x
+            let y = this.torresDeCompra[id].y
+            
+            // checa os limites do canvas
+            if (x < 800 && y < 600) {
                 // converter de coordenadas do canvas para coordenadas do grid
-                const x = (Math.ceil(this.torreCompra.x / 50) - 1).toString()
-                const y = (Math.ceil(this.torreCompra.y / 50) - 1).toString()
+                x = (Math.ceil(this.torresDeCompra[id].x / 50) - 1).toString()
+                y = (Math.ceil(this.torresDeCompra[id].y / 50) - 1).toString() 
 
                 // se for 0 pode colocar, se não for 0 tem caminho ou já tem torre
                 if (map[y][x] == 0) {
-                    
-                    if (this.dinheiro >= 500) {
+                    let custo;
+                    let raio;
+                    let dano;
+                    let fireRate; // tempo entre os tiros, em ms
+
+                    console.log(id)
+
+                    if (id == 0) {  // torre padrão (só precisamos balancear)
+                        custo = 500;
+                        raio = 190;
+                        dano = 100;
+                        fireRate = 480;
+                    } else if (id == 1) { // torre canhão (ainda não funciona)
+                        custo = 750;
+                        raio = 140;
+                        dano = 250;
+                        fireRate = 1280;
+                    } else if (id == 2) { // torre de cola (ainda não funciona)
+                        custo = 500;
+                        raio = 190;
+                        dano = 100;
+                        fireRate = 640;
+                    } else { // torre sniper (só precisamos balancear)
+                        custo = 1000;
+                        raio = 540;
+                        dano = 500;
+                        fireRate = 1280;
+                    }
+
+                    if (this.dinheiro >= custo) {
                         map[y][x] = 1; // marca a casa do grid como marcada
                         
-                        this.dinheiro -= 500;
+                        this.dinheiro -= custo;
                         
                         // add nova torre
                         cena.listaDeTorres.push(new Torre({
                             cena: cena,
-                            x: this.torreCompra.x,
-                            y: this.torreCompra.y,
-                            imagem: "Torre-Teste",
-                            raio: 190,
-                            dano: 200
+                            id: id,
+                            x: this.torresDeCompra[id].x,
+                            y: this.torresDeCompra[id].y,
+                            imagem: "Torre-" + String(id + 1),
+                            raio: raio,
+                            dano: dano,
+                            fireRate: fireRate
                         }))
                     }
                 }
-
-                // snap da torre de compra de volta pro lugar q ela fica
-                this.torreCompra.x = this.torreCompra.originalX
-                this.torreCompra.y = this.torreCompra.originalY
             }
-        });
+
+            // snap da torre de compra de volta pro lugar q ela fica
+            this.torresDeCompra[id].x = this.torresDeCompra[id].originalX
+            this.torresDeCompra[id].y = this.torresDeCompra[id].originalY
+        }
+
+        for (let i = 0; i < 4; i++) {
+            const torreCompra = new TorreDraggable({
+                cena: this,
+                x: 850,
+                y: 100 + 60 * i, // valores das posições das torres são 100, 160, 220, 280 (completamente arbitrário)
+                imagem: "Menu-Icon-" + String(i + 1),
+                map: this.map,
+                id: i,
+                ondragend: ondragend
+            });
+
+            this.torresDeCompra.push(torreCompra)
+        }
     }
 
     update(time, delta) {
@@ -145,8 +187,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         x: torre.x,
                         y: torre.y,
                         imagem: "Tiro-Teste",
-                        velocidade: 700,
-                        dano: 100,
+                        velocidade: 800,
+                        dano: torre.dano,
                         angulo: torre.angle,
                         target: target
                     })
