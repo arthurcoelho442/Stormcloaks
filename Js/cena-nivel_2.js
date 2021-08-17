@@ -20,7 +20,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
 
     create() {
         this.backgroud = this.add.image(0,0,"Mapa-2").setOrigin(0,0);
-        if(false)
+        if(true)
             this.backgroud = this.add.image(0,0,"Grid");
 
             this.backgroud.setOrigin(0,0);
@@ -75,7 +75,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
             }if(pos.x <= 125 && pos.y >= 225){
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
-            }if(pos.x >= 425 && pos.x <= 430 && pos.y >= 225 && pos.y <= 230){
+            }if(pos.x >= 425 && pos.x <= 450 && pos.y >= 225 && pos.y <= 250){
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(-velocidade);
             }if(pos.x >= 425 && pos.y <= 75 && tropa.loop){
@@ -140,12 +140,13 @@ export default class cenaNivel_2 extends Phaser.Scene{
             })
         }
 
+        //Inicia proxima wave
+        if (wave.length == 0) 
+            this.waveCounter++;
+        
         //Proximo nivel
         if (this.qtdWave == this.waveCounter)
             this.scene.start("Nivel-3");
         
-        //Inicia proxima wave
-        if (wave.length == 0) 
-            this.waveCounter++;
     }
 }
