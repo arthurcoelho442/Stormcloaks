@@ -356,12 +356,12 @@ export default class cenaNivel_2 extends Phaser.Scene{
             })
         }
 
+        //Inicia proxima wave
+        if (wave.length == 0)
+            this.waveCounter++;
+
         //Proximo nivel
         if (this.qtdWave == this.waveCounter)
-            this.scene.start("Nivel-3");
-        
-        //Inicia proxima wave
-        if (wave.length == 0) 
-            this.waveCounter++;
+            this.scene.start("Nivel-2");
     }
 }
