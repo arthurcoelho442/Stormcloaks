@@ -148,12 +148,31 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 id: i,
                 ondragend: ondragend
             });
+            torreCompra.descricao = this.add.sprite(200,200,"descricao");
+            torreCompra.on('pointerover',function(pointer){
+                torreCompra.sprite.setVelocityX(-100);
+            })
+            torreCompra.on('pointerout',function(pointer){
+                torreCompra.srite.setVelocityX(0);
+            })
 
             this.torresDeCompra.push(torreCompra)
         }
     }
 
     update(time, delta) {
+
+        for(let i; i < 4; i++){
+            this.torresDeCompra[i];
+            //console.log(this.torresDeCompra[i].image);
+            //var elemento = document.querySelector(this.torresDeCompra[i].image); // escolher o elemento
+            //elemento.addEventListener('mouseover', minhaFuncao); // adicionar o oscultador
+
+            //function minhaFuncao (e){
+            //    console.log("Teste");
+            //}
+        }
+
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
 
@@ -306,5 +325,15 @@ export default class cenaNivel_1 extends Phaser.Scene {
         //Inicia proxima wave
         if (wave.length == 0) 
             this.waveCounter++;
+        
+        function minhaFuncao(e) {
+            e.target.innerHTML = ((e.target.innerHTML || 0) * 1) + 1;
+            console.log("teste");
+        }
+        var elementos = document.querySelectorAll('Menu-Lateral');
+        for (var i = 0; i < elementos.length; i++) {
+            console.log("teste");
+            elementos[i].addEventListener('mouseover', minhaFuncao);
+        }
     }
 }
