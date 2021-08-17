@@ -204,6 +204,13 @@ export default class cenaNivel_2 extends Phaser.Scene{
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
 
+        const pauseButton = this.add.image(850,550,'Pause');
+        pauseButton.setInteractive();
+        pauseButton.on('pointerdown', () => {
+            this.scene.launch("Pause", "Nivel-2");
+            this.scene.pause();
+        })
+
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
@@ -348,8 +355,8 @@ export default class cenaNivel_2 extends Phaser.Scene{
         }
         //Perdeu
         if (this.vida == 0) {
-            this.music.mute = true;
             this.scene.start("Gameover",2);
+            this.scene.stop();
         }
 
         //Inicia proxima wave
@@ -357,8 +364,10 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.waveCounter++;
         
         //Proximo nivel
-        if (this.qtdWave == this.waveCounter)
+        if (this.qtdWave == this.waveCounter){
             this.scene.start("Nivel-3");
+            this.scene.stop();
+        }
         
     }
 }

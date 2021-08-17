@@ -10,7 +10,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         });
         //Configuração Nivel
         this.pontuacao = 0;
-        this.vida = 100;
+        this.vida = 1;
         this.dinheiro = 1000;
         this.textVidas = null;
         this.textDinheiro = null;
@@ -40,7 +40,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
         //Configuração da Wave
         const qtdTropas = 10;
-        const velocidade = 50;
+        const velocidade = 100;
         const vida = 1000;
         const xTropa = -50;
         const yTropa = 75;
@@ -201,6 +201,14 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
 
+        const pauseButton = this.add.image(850,550,'Pause');
+        pauseButton.setInteractive();
+        pauseButton.on('pointerdown', () => {
+            this.scene.launch("Pause", "Nivel-1");
+            this.scene.pause();
+        })
+            
+
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
@@ -327,7 +335,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         }
         //Perdeu
         if (this.vida == 0) {
-            this.music.mute = true;
+            this.scene.stop();
             this.scene.start("Gameover",1);
         }
         //Inicia proxima wave
@@ -335,7 +343,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
             this.waveCounter++;
 
         //Proximo nivel
-        if (this.qtdWave == this.waveCounter)
+        if (this.qtdWave == this.waveCounter){
             this.scene.start("Nivel-2");
+            this.scene.stop();
+        }
     }
 }
