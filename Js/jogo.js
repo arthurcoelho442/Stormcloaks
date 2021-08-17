@@ -21,7 +21,7 @@ const config = {
                 y: 0,
                 x: 0
             },
-            debug: true
+            debug: false
         }
     },
     fps: {
@@ -41,4 +41,4 @@ const config = {
         cenaNivel_4,
     ]
 }
-const jogo = new Phaser.Game(config);
+export const jogo = new Phaser.Game(config);

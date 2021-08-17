@@ -6,7 +6,7 @@ export default class Tiro {
         this.imagem = imagem;
         this.velocidade = velocidade;
         this.dano = dano;
-        this.tempoDeVida = 600;
+        this.tempoDeVida = 1200;
         this.sprite.angle = angulo;
         this.alive = true;
         this.target = target;
