@@ -24,7 +24,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
     create() {
         this.backgroud = this.add.image(0, 0, "Mapa-1").setOrigin(0, 0);
-        this.grid = this.add.image(0, 0, "Grid").setOrigin(0, 0);
+        //this.grid = this.add.image(0, 0, "Grid").setOrigin(0, 0);
 
         this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
 
@@ -170,6 +170,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
             })
             this.torresDeCompra.push(torreCompra)
         }
+        this.backgroud = this.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
     }
 
     update(time, delta) {
@@ -291,7 +292,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 this.pontuacao += 100;
 
             //Exclusão da tropa
-            if (pos.y >= 600) {
+            if (pos.y >= 563) {
                 this.vida--;
                 wave.splice(wave.indexOf(tropa), 1);
                 tropa.destroi(i)
