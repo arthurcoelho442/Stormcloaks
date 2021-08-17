@@ -347,22 +347,9 @@ export default class cenaNivel_2 extends Phaser.Scene{
             }
         }
         //Perdeu
-        if(this.vida == 0)
-        {
-            this.backgroud = this.add.image(0,0,"Mapa-2").setOrigin(0,0);
-            this.add.text(200, 190, "Game Over!", {fontSize: 60, color: 'red'});
-            const buttonMenu = this.add.text(350,300, "Menu inicial");
-            const buttonScore = this.add.text(350, 350, "Pontuações");
-
-            buttonMenu.setInteractive();
-            buttonScore.setInteractive();
-
-            buttonMenu.on('pointerdown',() => {
-                this.scene.start("Menu");
-            })
-            buttonScore.on('pointerdown',() => {
-            
-            })
+        if (this.vida == 0) {
+            this.music.mute = true;
+            this.scene.start("Gameover",2);
         }
 
         //Inicia proxima wave
