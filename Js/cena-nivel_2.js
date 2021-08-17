@@ -183,9 +183,18 @@ export default class cenaNivel_2 extends Phaser.Scene{
                 id: i,
                 ondragend: ondragend
             });
-
+            //On hover da descrição das torres
+            var descricao;
+            torreCompra.on('pointerover', () => {
+                descricao = this.add.image(torreCompra.originalX-75, torreCompra.originalY, "Menu-Icon-"+ String(torreCompra.id + 1));
+            })
+            torreCompra.on('pointerout', () => {
+                descricao.destroy();
+            })
+            this.torresDeCompra.push(torreCompra)
             this.torresDeCompra.push(torreCompra)
         }
+        this.backgroud = this.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
     }
 
     update(time, delta) {
@@ -327,7 +336,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
             if (tropa.vida == 0)
                 this.pontuacao += 100;
             //Exclusão da tropa
-            if (pos.y >= 600) {
+            if (pos.y >= 563) {
                 this.vida--;
                 wave.splice(wave.indexOf(tropa), 1);
                 tropa.destroi(i)
