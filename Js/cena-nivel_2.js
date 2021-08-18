@@ -11,8 +11,10 @@ export default class cenaNivel_2 extends Phaser.Scene{
         });
         //Configuração Nivel
         this.pontuacao = 0;
-        this.vida = 100;
-        this.dinheiro = 1000;
+        this.vidaMax = 100;
+        this.dinheiroMax = 1000;
+        this.vida = this.vidaMax;
+        this.dinheiro = this.dinheiroMax;
         this.textVidas = null;
         this.textDinheiro = null;
         this.waveCounter = 0;
@@ -74,10 +76,10 @@ export default class cenaNivel_2 extends Phaser.Scene{
             [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
 
-        this.backgroud = this.add.image(55, 610, "Vidas").setOrigin(0,0).setScale(0.1, 0.1);
-        this.textVidas = this.add.text(105, 622, String(this.vida));
-        this.backgroud = this.add.image(665, 615, "Coin").setOrigin(0,0).setScale(0.028, 0.028);
-        this.textDinheiro =  this.add.text(705, 622, String(this.dinheiro));
+        this.backgroud = this.add.image(580, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
+        this.textVidas = this.add.text(630, 625, String(this.vida));
+        this.backgroud = this.add.image(440, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
+        this.textDinheiro = this.add.text(490, 625, String(this.dinheiro));
 
         this.listaDeTorres = [];
         this.torresDeCompra = [];
@@ -200,16 +202,56 @@ export default class cenaNivel_2 extends Phaser.Scene{
     update(time, delta) {
         // função pra testar o fps
         // console.log('actual fps:' + String(game.loop.actualFps))
+       
+        //Inicio Pause
+        var button = this.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
+        button.setInteractive();
+        button.once('pointerdown', function () {
+            this.scene.pause();
+            this.scene.launch('Pause', "Nivel-2");
+    
+        }, this);
+        this.events.on('pause', () => {
+            button.setFrame(0);
+            this.music.mute = true;
+        })
+        this.events.on('resume', () => {
+            button.setFrame(1);
+            this.music.mute = false;
+        })
+        //Fim Pause
 
+        //Inicio Reset
+        var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
+        reset.setInteractive();
+        reset.once('pointerdown', function () {
+            this.music.mute = true;
+            this.vida = this.vidaMax;
+            this.dinheiro = this.dinheiroMax;
+            this.pontuacao = 0;
+            this.waveCounter = 0;
+
+            this.scene.restart();
+        }, this);
+        //Fim Reset
+
+        //Inicio Home
+        var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
+        home.setInteractive();
+        home.once('pointerdown', function () {
+            this.scene.start("Menu");
+            this.scene.stop();
+            this.music.mute = true;
+            this.vida = this.vidaMax;
+            this.dinheiro = this.dinheiroMax;
+            this.pontuacao = 0;
+            this.waveCounter = 0;
+        }, this);
+        //Fim Home
+
+        //Atualiza s valores
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
-
-        const pauseButton = this.add.image(850,550,'Pause');
-        pauseButton.setInteractive();
-        pauseButton.on('pointerdown', () => {
-            this.scene.launch("Pause", "Nivel-2");
-            this.scene.pause();
-        })
 
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
@@ -358,22 +400,23 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.scene.start("Gameover",2);
             this.scene.stop();
             this.music.mute = true;
-            this.vida = 100;
+            this.vida = this.vidaMax;
+            this.dinheiro = this.dinheiroMax;
             this.waveCounter = 0;
         }
-
         //Inicia proxima wave
-        if (wave.length == 0) 
+        if (wave.length == 0)
             this.waveCounter++;
-        
+
         //Proximo nivel
         if (this.qtdWave == this.waveCounter){
             this.scene.start("Nivel-3");
             this.scene.stop();
-            this.music.mute = true
-            this.vida = 100;
+
+            this.music.mute = true;
             this.waveCounter = 0;
+            this.vida = this.vidaMax;
+            this.dinheiro = this.dinheiroMax;
         }
-        
     }
 }
