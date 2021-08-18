@@ -10,7 +10,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         });
         //Configuração Nivel
         this.pontuacao = 0;
-        this.vida = 1;
+        this.vida = 100;
         this.dinheiro = 1000;
         this.textVidas = null;
         this.textDinheiro = null;
@@ -40,7 +40,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
         //Configuração da Wave
         const qtdTropas = 10;
-        const velocidade = 100;
+        const velocidade = 50;
         const vida = 1000;
         const xTropa = -50;
         const yTropa = 75;
@@ -338,6 +338,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
         if (this.vida == 0) {
             this.scene.start("Gameover",1);
             this.scene.stop();
+            this.music.mute = true;
+            this.vida = 100;
+            this.waveCounter = 0;
         }
         //Inicia proxima wave
         if (wave.length == 0)
@@ -347,6 +350,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
         if (this.qtdWave == this.waveCounter){
             this.scene.start("Nivel-2");
             this.scene.stop();
+            this.music.mute = true;
+            this.waveCounter = 0;
+            this.vida = 100;
         }
     }
 }

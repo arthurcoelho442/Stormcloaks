@@ -357,6 +357,9 @@ export default class cenaNivel_2 extends Phaser.Scene{
         if (this.vida == 0) {
             this.scene.start("Gameover",2);
             this.scene.stop();
+            this.music.mute = true;
+            this.vida = 100;
+            this.waveCounter = 0;
         }
 
         //Inicia proxima wave
@@ -367,6 +370,9 @@ export default class cenaNivel_2 extends Phaser.Scene{
         if (this.qtdWave == this.waveCounter){
             this.scene.start("Nivel-3");
             this.scene.stop();
+            this.music.mute = true
+            this.vida = 100;
+            this.waveCounter = 0;
         }
         
     }
