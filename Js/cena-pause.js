@@ -29,10 +29,25 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.dinheiro = this.cena.dinheiroMax;
             this.cena.pontuacao = 0;
             this.cena.waveCounter = 0;
+            
             this.cena.scene.start("Menu");
             this.cena.scene.stop();
             this.scene.stop();
         }, this);
         //Fim Home
+        //Inicio Reset
+        var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
+        reset.setInteractive();
+        reset.once('pointerdown', function () {
+            this.cena.music.mute = true;
+            this.cena.vida = this.cena.vidaMax;
+            this.cena.dinheiro = this.cena.dinheiroMax;
+            this.cena.pontuacao = 0;
+            this.cena.waveCounter = 0;
+
+            this.cena.scene.restart();
+            this.scene.stop();
+        }, this);
+        //Fim Reset
     }
 }
