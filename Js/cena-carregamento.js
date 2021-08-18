@@ -22,7 +22,7 @@ export default class cenaCarregamento extends Phaser.Scene{
 
 
         this.load.on("complete", () => {
-            this.scene.start("Menu");
+            this.scene.start("Nivel-1");
         });
 
         //Carregamento das imagens
@@ -37,11 +37,17 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Mapa-2", "Imagens/Mapa_2.png");
         this.load.image("Mapa-3", "Imagens/Mapa_3.png");
         this.load.image("Mapa-4", "Imagens/Mapa_4.png");
+        this.load.image("Grid", "Imagens/Grid.png");
+
         this.load.image("Torre-Teste", "Imagens/Tower_test.png");
         this.load.image("Tiro-Teste", "Imagens/Projectile_test.png")
-        this.load.image("Grid", "Imagens/Grid.png");
+
         this.load.image("Coin", "Imagens/OdaraCoin.png");
-        this.load.image("Vidas", "Imagens/Vidas.png");
+        this.load.image("Vidas", "Imagens/life.png");
+        this.load.image("Home", "Imagens/home_buttom.png");
+        this.load.image("Play", "Imagens/Play_buttom.png");
+        this.load.image("Pause-Barra", "Imagens/pause_buttom.png");
+        this.load.image("Reset", "Imagens/reset_buttom.png");
 
         this.load.image("Menu-Lateral", "Imagens/Menu_Lateral.png");
         this.load.image("Menu-Icon-1", "Imagens/Menu_Icon_1.png");

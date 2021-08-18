@@ -74,10 +74,13 @@ export default class cenaNivel_1 extends Phaser.Scene {
         ]
 
 
-        this.backgroud = this.add.image(55, 610, "Vidas").setOrigin(0, 0).setScale(0.1, 0.1);
-        this.textVidas = this.add.text(105, 622, String(this.vida));
-        this.backgroud = this.add.image(665, 615, "Coin").setOrigin(0, 0).setScale(0.028, 0.028);
-        this.textDinheiro = this.add.text(705, 622, String(this.dinheiro));
+        this.backgroud = this.add.image(580, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
+        this.textVidas = this.add.text(630, 625, String(this.vida));
+        this.backgroud = this.add.image(440, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
+        this.textDinheiro = this.add.text(490, 625, String(this.dinheiro));
+
+        this.backgroud = this.add.image(710, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
+        this.backgroud = this.add.image(830, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
 
         this.listaDeTorres = [];
         this.torresDeCompra = [];
@@ -198,16 +201,20 @@ export default class cenaNivel_1 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.textVidas.setText(String(this.vida))
-        this.textDinheiro.setText(String(this.dinheiro))
+        //this.textVidas.setText(String(this.vida))
+        //this.textDinheiro.setText(String(this.dinheiro))
         this.music.mute = false
 
-        const pauseButton = this.add.image(850,550,'Pause');
+        let pauseButton = this.add.image(770, 610, "Pause-Barra").setOrigin(0, 0).setScale(0.7, 0.7);
         pauseButton.setInteractive();
         pauseButton.on('pointerdown', () => {
+            pauseButton.destroy();
             this.scene.launch("Pause", "Nivel-1");
             this.music.mute = true
             this.scene.pause();
+            
+            /* let pauseButton = this.add.image(770, 610, "Pause-Barra").setOrigin(0, 0).setScale(0.7, 0.7);
+            pauseButton.setInteractive(); */
         })
             
         let wave = this.waves[this.waveCounter].tropas;

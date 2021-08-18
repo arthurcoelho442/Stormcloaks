@@ -9,10 +9,10 @@ export default class cenaPause extends Phaser.Scene{
     }
 
     create(nivel) {
-        const pauseButton = this.add.image(850,550,'Pause');
-        pauseButton.setInteractive();
+        const playButton = this.add.image(770, 610, "Play").setOrigin(0, 0).setScale(0.7, 0.7);
+        playButton.setInteractive();
 
-        pauseButton.on('pointerdown', () => {
+        playButton.on('pointerdown', () => {
             this.scene.resume(nivel);
             this.scene.stop();
         })
