@@ -204,7 +204,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         button.setInteractive();
         button.once('pointerdown', function () {
             this.scene.pause();
-            this.scene.launch('Pause', "Nivel-1");
+            this.scene.launch('Pause', this);
     
         }, this);
         this.events.on('pause', () => {
