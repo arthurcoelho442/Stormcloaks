@@ -188,7 +188,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
             //On hover da descrição das torres
             var descricao;
             torreCompra.on('pointerover', () => {
-                descricao = this.add.image(torreCompra.originalX-75, torreCompra.originalY, "Descricao-Icon-"+ String(torreCompra.id + 1));
+                descricao = this.add.image(torreCompra.originalX-36, torreCompra.originalY-65, "Descricao-"+ String(torreCompra.id + 1));
             })
             torreCompra.on('pointerout', () => {
                 descricao.destroy();
@@ -204,7 +204,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
        
         //Inicio Pause
         var button = this.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
-        button.setInteractive();
+        button.setInteractive({ cursor: 'pointer' });
         button.once('pointerdown', function () {
             this.scene.pause();
             this.scene.launch('Pause', this);
@@ -222,7 +222,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
 
         //Inicio Reset
         var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
-        reset.setInteractive();
+        reset.setInteractive({ cursor: 'pointer' });
         reset.once('pointerdown', function () {
             this.music.mute = true;
             this.vida = this.vidaMax;
@@ -236,7 +236,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
 
         //Inicio Home
         var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
-        home.setInteractive();
+        home.setInteractive({ cursor: 'pointer' });
         home.once('pointerdown', function () {
             this.scene.start("Menu");
             this.scene.stop();

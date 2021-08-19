@@ -10,7 +10,7 @@ export default class cenaPause extends Phaser.Scene{
 
     create(cena) {
         var button = this.add.sprite(770, 610, "Play_Pause", 0).setOrigin(0, 0).setScale(0.7, 0.7);
-        button.setInteractive();
+        button.setInteractive({ cursor: 'pointer' });
 
         button.once('pointerdown', function () {
             this.scene.resume(cena);
@@ -21,7 +21,7 @@ export default class cenaPause extends Phaser.Scene{
         //On hover da descrição das torres
         for (let i = 0; i < 4; i++) {
             let torre = this.add.sprite(850, 100 + 60 * i, "Menu-Icon-" + String(i + 1), 0);
-            torre.setInteractive();
+            torre.setInteractive({ cursor: 'pointer' });
             var descricao;
 
             torre.on('pointerover', () => {
@@ -36,7 +36,7 @@ export default class cenaPause extends Phaser.Scene{
     update() {
         //Inicio Home
         var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
-        home.setInteractive();
+        home.setInteractive({ cursor: 'pointer' });
         home.once('pointerdown', function () {
             this.cena.music.mute = true;
             this.cena.vida = this.cena.vidaMax;
@@ -51,7 +51,7 @@ export default class cenaPause extends Phaser.Scene{
         //Fim Home
         //Inicio Reset
         var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
-        reset.setInteractive();
+        reset.setInteractive({ cursor: 'pointer' });
         reset.once('pointerdown', function () {
             this.cena.music.mute = true;
             this.cena.vida = this.cena.vidaMax;
