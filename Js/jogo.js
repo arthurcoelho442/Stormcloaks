@@ -23,7 +23,7 @@ const config = {
                 y: 0,
                 x: 0
             },
-            debug: false
+            debug: true
         }
     },
     fps: {

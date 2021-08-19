@@ -7,7 +7,10 @@ export default class Tropa{
         this.cena = cena;
         this.loop = false;
         this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, imgTropa, 0);
-        this.sprite.body.setCircle(11,14,14)
+        this.sprite.body.setCircle(11,14,14);
+        this.isSlowed = false;
+        this.slowTimer = 0;
+        this.slowMultiplier = 0;
 
         cena.anims.create({
             key: 'Tropa-1',
@@ -106,6 +109,22 @@ export default class Tropa{
             repeat: -1
         });
     }
+    
+    // conta o próprio tempo slowed 
+    update(time, delta) {
+        if (this.isSlowed) {
+            // this.sprite.anims.play("Tropa-4", true)
+            this.slowTimer -= delta;
+    
+            if (this.slowTimer <= 0) {
+                // this.sprite.anims.play("Tropa-1", true)
+                this.isSlowed = false;
+            }
+        } else {
+            this.slowTimer = 0;
+        }
+    }
+
     destroi(){
         this.sprite.destroy();
     }

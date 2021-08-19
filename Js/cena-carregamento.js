@@ -62,6 +62,8 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Torre-3", "Imagens/Tower_3.png");
         this.load.image("Torre-4", "Imagens/Tower_4.png");
 
+        this.load.image("Slow-Shot", "Imagens/Slow_shot.png");
+
         this.load.audio('WC3-Orc', "Music/Warcraft 3 Soundtrack (Blackrock & Roll)_160k.mp3");
         this.load.audio('WC3-Human', "Music/Warcraft 3 Soundtrack (Lordaeron Fall)_160k.mp3");
         this.load.audio('WC3-NElf', "Music/Warcraft 3 Soundtrack (Night Elf)_160k.mp3");
