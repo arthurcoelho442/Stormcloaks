@@ -351,7 +351,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
             }if(pos.x >= 425 && pos.x <= 450 && pos.y >= 225 && pos.y <= 250){
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(-velocidade);
-            }if(pos.x >= 425 && pos.y <= 75 && tropa.loop){
+            }if(pos.x >= 425 && pos.x <= 450 && pos.y <= 75 && tropa.loop){
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
                 setTimeout(function(){ tropa.loop = false; }, 1000);
