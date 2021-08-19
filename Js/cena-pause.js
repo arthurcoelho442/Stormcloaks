@@ -29,7 +29,7 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.dinheiro = this.cena.dinheiroMax;
             this.cena.pontuacao = 0;
             this.cena.waveCounter = 0;
-            
+
             this.cena.scene.start("Menu");
             this.cena.scene.stop();
             this.scene.stop();
@@ -49,5 +49,17 @@ export default class cenaPause extends Phaser.Scene{
             this.scene.stop();
         }, this);
         //Fim Reset
+
+        //On hover da descrição das torres
+        /* const torres = this.cena.torreCompra;
+        torres.forEach((torreCompra) => {
+            var descricao;
+            torreCompra.on('pointerover', () => {
+                descricao = this.add.image(torreCompra.originalX-36, torreCompra.originalY-65, "Descricao-"+ String(torreCompra.id + 1));
+            })
+            torreCompra.on('pointerout', () => {
+                descricao.destroy();
+            })
+        }) */
     }
 }
