@@ -355,7 +355,6 @@ export default class cenaNivel_1 extends Phaser.Scene {
             if (tropa.isSlowed) {
                 velocidade -= waveSpeed * tropa.slowMultiplier;
                 rotation -= (rotation * tropa.slowMultiplier + 0.0275);
-                sprite.anims.stop();
                 sprite.anims.play('Tropa-3', true);
                 sprite.anims.frameRate = 30;
             }else{
