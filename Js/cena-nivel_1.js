@@ -135,7 +135,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         raio = 140;
                         dano = 250;
                         fireRate = 1200;
-                    } else if (id == 2) { // torre de cola (ainda não funciona)
+                    } else if (id == 2) { // torre de slow (ainda não funciona)
                         custo = 500;
                         raio = 190;
                         dano = 100;
@@ -162,6 +162,11 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             dano: dano,
                             fireRate: fireRate
                         })
+
+                        if (torre.id == 2) {
+                            torre.slowMultiplier = 0.25; // (velocidade - slowMultiplier * velocidade)
+                            torre.slowTimer = 1000; // duração do slow, em ms
+                        }
 
                         torre.sprite.setScale(1.25, 1.25)
                         // add nova torre
@@ -274,12 +279,17 @@ export default class cenaNivel_1 extends Phaser.Scene {
             if (target) {
                 torre.trackEnemy(target.sprite.getCenter().x, target.sprite.getCenter().y);
 
+                let shotPng = "Tiro-Teste"
+                if (torre.id == 2) {
+                    shotPng = "Slow-Shot"
+                }
+
                 if (torre.update(time, delta)) {
                     const shot = new Tiro({
                         cena: this,
                         x: torre.x,
                         y: torre.y,
-                        imagem: "Tiro-Teste",
+                        imagem: shotPng,
                         velocidade: 800,
                         dano: torre.dano,
                         angulo: torre.angle,
@@ -296,7 +306,12 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         let sprite = tropa.sprite
                         // função que cria o overlap
                         this.physics.add.overlap(shot.sprite, sprite, () => {
-                            tropa.vida -= torre.dano
+                            tropa.vida -= torre.dano;
+                            if (torre.id == 2) {
+                                tropa.isSlowed = true;
+                                tropa.slowMultiplier = torre.slowMultiplier;
+                                tropa.slowTimer = torre.slowTimer;
+                            }
 
                             if (tropa.vida >= tropa.vidaMax / 2) {
                                 let tamanho = tropa.vida / tropa.vidaMax;
@@ -330,9 +345,13 @@ export default class cenaNivel_1 extends Phaser.Scene {
             if (wave[i] == null)
                 continue;
             let tropa = wave[i]
+            tropa.update(time, delta)
+            let velocidade = waveSpeed;
+            if (tropa.isSlowed) {
+                velocidade = waveSpeed - waveSpeed * tropa.slowMultiplier;
+            }
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
-            const velocidade = waveSpeed;
 
             if (sprite && sprite != undefined) {
                 //Movimentação da tropa

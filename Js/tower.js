@@ -3,15 +3,17 @@ export default class Torre extends Phaser.GameObjects.Container {
         let { cena, id, x, y, imagem, raio, dano, fireRate } = data;
         let sprite = new Phaser.GameObjects.Sprite(cena, 0, 0, imagem);
         super(cena, x, y, [sprite]);
-        this.cena = cena
+        this.cena = cena;
         this.id = id;
         this.sprite = sprite;
         this.raio = raio;
         this.cena.add.existing(this);
         this.fireRate = fireRate; // o tempo de recarga total
         this.currFireRate = this.fireRate; // o contador do tempo de recarga
-        this.shots = [],
-        this.dano = dano
+        this.shots = [];
+        this.dano = dano;
+        this.slowMultiplier = 0;
+        this.slowTimer = 0;
     }
 
     // acompanha a tropa
