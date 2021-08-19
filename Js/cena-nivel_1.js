@@ -10,7 +10,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         });
         //Configuração Nivel
         this.pontuacao = 0;
-        this.vidaMax = 1;
+        this.vidaMax = 100;
         this.dinheiroMax = 1000;
         this.vida = this.vidaMax;
         this.dinheiro = this.dinheiroMax;
@@ -42,7 +42,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
         //Configuração da Wave
         const qtdTropas = 10;
-        const velocidade = 150;
+        const velocidade = 50;
         const vida = 1000;
         const xTropa = -50;
         const yTropa = 75;
