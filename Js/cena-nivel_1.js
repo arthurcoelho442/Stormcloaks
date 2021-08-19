@@ -347,33 +347,34 @@ export default class cenaNivel_1 extends Phaser.Scene {
             let tropa = wave[i]
             tropa.update(time, delta)
             let velocidade = waveSpeed;
-            if (tropa.isSlowed) {
-                velocidade = waveSpeed - waveSpeed * tropa.slowMultiplier;
-            }
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
 
+            if (tropa.isSlowed) {
+                velocidade = 10//waveSpeed - waveSpeed * tropa.slowMultiplier;
+            }
+
             if (sprite && sprite != undefined) {
                 //Movimentação da tropa
-                if (pos.x <= 0 && pos.y == 75) {
+                if (pos.x < 675 && pos.y == 75) {
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 675 && pos.y >= 75) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 675 && pos.y >= 225) {
+                } if (pos.x > 125 && pos.y >= 225 && pos.y <= 250) {
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x <= 125 && pos.y != 75) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x <= 125 && pos.y >= 375 && pos.y <= 380) {
+                } if (pos.x < 675 && pos.y >= 375 && pos.y <= 380) {
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 675 && pos.y >= 375) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 675 && pos.y >= 525) {
+                } if (pos.x > 125 && pos.y >= 525) {
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 }
