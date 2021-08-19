@@ -6,15 +6,15 @@ export default class Tropa{
         this.vidaMax = vida;
         this.cena = cena;
         this.loop = false;
-        this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, imgTropa, 0);
-        this.sprite.body.setCircle(11,14,14);
+        this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, imgTropa);
+        this.sprite.body.setCircle(11);
         this.isSlowed = false;
         this.slowTimer = 0;
         this.slowMultiplier = 0;
 
         cena.anims.create({
             key: 'Tropa-1',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 0, end: 0 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 0, end: 19 }),
             frameRate: 10,
             repeat: -1
         });
