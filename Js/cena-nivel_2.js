@@ -78,11 +78,11 @@ export default class cenaNivel_2 extends Phaser.Scene{
 
         this.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
         this.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
-        this.bmpText = this.add.bitmapText(50, 622, 'carrier_command','Map 2    Wave',16);
+        this.bmpText = this.add.bitmapText(50, 622, 'carrier_command','Map 2  Wave',16);
         
         this.textVidas = this.add.bitmapText(610, 622, 'carrier_command',String(this.vida),16);
         this.textDinheiro = this.add.bitmapText(450, 622, 'carrier_command',String(this.dinheiro),16);
-        this.textWave = this.add.bitmapText(325, 622, 'carrier_command',String(this.waveCounter+1),16);
+        this.textWave = this.add.bitmapText(270, 622, 'carrier_command',String(this.waveCounter+1),16);
 
         this.bmpText.inputEnabled = true;
         this.textVidas.inputEnabled = true;
@@ -260,8 +260,11 @@ export default class cenaNivel_2 extends Phaser.Scene{
 
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
-        this.textWave.setText(String(this.waveCounter+1))
-
+        if(this.waveCounter+1 > 9)
+            this.textWave.setText(String(this.waveCounter+1)+"/"+String(this.qtdWave))
+        else
+            this.textWave.setText("0"+String(this.waveCounter+1)+"/"+String(this.qtdWave))
+            
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
