@@ -76,10 +76,18 @@ export default class cenaNivel_1 extends Phaser.Scene {
         ]
 
 
-        this.backgroud = this.add.image(580, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
-        this.textVidas = this.add.text(630, 625, String(this.vida));
-        this.backgroud = this.add.image(440, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
-        this.textDinheiro = this.add.text(490, 625, String(this.dinheiro));
+        this.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
+        this.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
+        this.bmpText = this.add.bitmapText(50, 622, 'carrier_command','Map 1    Wave',16);
+        
+        this.textVidas = this.add.bitmapText(610, 622, 'carrier_command',String(this.vida),16);
+        this.textDinheiro = this.add.bitmapText(450, 622, 'carrier_command',String(this.dinheiro),16);
+        this.textWave = this.add.bitmapText(325, 622, 'carrier_command',String(this.waveCounter+1),16);
+
+        this.bmpText.inputEnabled = true;
+        this.textVidas.inputEnabled = true;
+        this.textDinheiro.inputEnabled = true;
+        this.textWave.inputEnabled = true;
 
         this.listaDeTorres = [];
         this.torresDeCompra = [];
@@ -254,6 +262,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         //Atualiza s valores
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
+        this.textWave.setText(String(this.waveCounter+1))
 
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
