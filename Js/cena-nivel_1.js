@@ -319,6 +319,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             }
 
                             if (tropa.vida <= 0) {
+                                sprite.anims.stop();
                                 const index = wave.indexOf(tropa);
                                 if (index > -1) {
                                     wave.splice(index, 1);
@@ -354,6 +355,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
             if (tropa.isSlowed) {
                 velocidade -= waveSpeed * tropa.slowMultiplier;
                 rotation -= (rotation * tropa.slowMultiplier + 0.0275);
+                sprite.anims.stop();
                 sprite.anims.play('Tropa-3', true);
                 sprite.anims.frameRate = 30;
             }else{
@@ -397,9 +399,11 @@ export default class cenaNivel_1 extends Phaser.Scene {
             //Exclusão da tropa
             if (pos.y >= 563) {
                 this.vida--;
+                sprite.anims.stop();
                 wave.splice(wave.indexOf(tropa), 1);
                 tropa.destroi(i)
             } else if (tropa.vida == 0) {
+                sprite.anims.stop();
                 wave.splice(wave.indexOf(tropa), 1);
                 tropa.destroi(i)
             }
