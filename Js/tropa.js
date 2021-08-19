@@ -20,43 +20,43 @@ export default class Tropa{
         });
         cena.anims.create({
             key: 'Tropa-2',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 1, end: 1 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 20, end: 39 }),
             frameRate: 10,
             repeat: -1
         }); 
         cena.anims.create({
             key: 'Tropa-3',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 2, end: 2 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 40, end: 59 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-4',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 3, end: 3 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 60, end: 79 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-5',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 4, end: 4 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 80, end: 99 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-6',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 5, end: 5 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 100, end: 119 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-7',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 6, end: 6 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 120, end: 139 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-8',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 7, end: 7 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 140, end: 159 }),
             frameRate: 10,
             repeat: -1
         });

@@ -52,7 +52,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         let waves = [];
         for (let i = 0; i < this.qtdWave; i++) {
             waves[i] = new Wave(this, vida + i * 180, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
-            waves[i].setColor(i + 1);
+            waves[i].setColor(i+1);
         }
         this.waves = waves;
 
@@ -349,32 +349,42 @@ export default class cenaNivel_1 extends Phaser.Scene {
             let velocidade = waveSpeed;
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
+            let rotation = 0.05;
 
             if (tropa.isSlowed) {
-                velocidade = 10//waveSpeed - waveSpeed * tropa.slowMultiplier;
+                velocidade -= waveSpeed * tropa.slowMultiplier;
+                rotation -= (rotation * tropa.slowMultiplier + 0.0275);
+                sprite.anims.play('Tropa-3', true);
+                sprite.anims.frameRate = 30;
+            }else{
+                sprite.anims.play('Tropa-' + String(this.waveCounter+1), true);
             }
 
             if (sprite && sprite != undefined) {
                 //Movimentação da tropa
                 if (pos.x < 675 && pos.y == 75) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 675 && pos.y >= 75) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
                 } if (pos.x > 125 && pos.y >= 225 && pos.y <= 250) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x <= 125 && pos.y != 75) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
                 } if (pos.x < 675 && pos.y >= 375 && pos.y <= 380) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 675 && pos.y >= 375) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
                 } if (pos.x > 125 && pos.y >= 525) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 }
