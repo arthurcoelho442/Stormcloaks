@@ -69,7 +69,7 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.audio('WC3-NElf', "Music/Warcraft 3 Soundtrack (Night Elf)_160k.mp3");
         this.load.audio('WC3-Undead', "Music/Warcraft 3 Soundtrack - (Undead)_160k.mp3")
 
-        this.load.spritesheet("Tropa", "Imagens/Enemy_sheet_completaV2.png", { frameWidth: 21, frameHeight: 22 });
+        this.load.spritesheet("Tropa", "Imagens/Enemy_sheet_completaV3.png", { frameWidth: 21, frameHeight: 22 });
         this.load.image("Torre-do-Nivel", "Imagens/kings_tower.png");
     }
 }
