@@ -17,6 +17,20 @@ export default class cenaPause extends Phaser.Scene{
             this.scene.stop();
         }, this);
         this.cena = cena;
+        
+        //On hover da descrição das torres
+        for (let i = 0; i < 4; i++) {
+            let torre = this.add.sprite(850, 100 + 60 * i, "Menu-Icon-" + String(i + 1), 0);
+            torre.setInteractive();
+            var descricao;
+
+            torre.on('pointerover', () => {
+                descricao = this.add.image(814, 35 + 60 * i, "Descricao-"+ String(i + 1));
+            })
+            torre.on('pointerout', () => {
+                descricao.destroy();
+            })
+        }
     }
 
     update() {
@@ -49,17 +63,5 @@ export default class cenaPause extends Phaser.Scene{
             this.scene.stop();
         }, this);
         //Fim Reset
-
-        //On hover da descrição das torres
-        /* const torres = this.cena.torreCompra;
-        torres.forEach((torreCompra) => {
-            var descricao;
-            torreCompra.on('pointerover', () => {
-                descricao = this.add.image(torreCompra.originalX-36, torreCompra.originalY-65, "Descricao-"+ String(torreCompra.id + 1));
-            })
-            torreCompra.on('pointerout', () => {
-                descricao.destroy();
-            })
-        }) */
     }
 }
