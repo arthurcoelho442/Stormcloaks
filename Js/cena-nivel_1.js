@@ -379,10 +379,6 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 }
             }
 
-            if (tropa.isSlowed) {
-                console.log(sprite)
-            }
-
             //Marca pontuação
             if (tropa.vida == 0)
                 this.pontuacao += 100;
