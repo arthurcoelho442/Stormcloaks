@@ -31,9 +31,6 @@ export default class cenaPause extends Phaser.Scene{
                 descricao.destroy();
             })
         }
-    }
-
-    update() {
         //Inicio Home
         var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
         home.setInteractive({ cursor: 'pointer' });
@@ -43,7 +40,7 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.dinheiro = this.cena.dinheiroMax;
             this.cena.pontuacao = 0;
             this.cena.waveCounter = 0;
-
+    
             this.cena.scene.start("Menu");
             this.cena.scene.stop();
             this.scene.stop();
@@ -58,10 +55,13 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.dinheiro = this.cena.dinheiroMax;
             this.cena.pontuacao = 0;
             this.cena.waveCounter = 0;
-
+    
             this.cena.scene.restart();
             this.scene.stop();
         }, this);
         //Fim Reset
+    }
+
+    update() {
     }
 }

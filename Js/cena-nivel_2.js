@@ -204,16 +204,10 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.torresDeCompra.push(torreCompra)
         }
         this.backgroud = this.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
-    }
-
-    update(time, delta) {
-        // função pra testar o fps
-        // console.log('actual fps:' + String(game.loop.actualFps))
-       
         //Inicio Pause
         var button = this.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
         button.setInteractive({ cursor: 'pointer' });
-        button.once('pointerdown', function () {
+        button.on('pointerdown', function () {
             this.scene.pause();
             this.scene.launch('Pause', this);
     
@@ -227,7 +221,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.music.mute = false;
         })
         //Fim Pause
-
+    
         //Inicio Reset
         var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
         reset.setInteractive({ cursor: 'pointer' });
@@ -237,11 +231,11 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.dinheiro = this.dinheiroMax;
             this.pontuacao = 0;
             this.waveCounter = 0;
-
+    
             this.scene.restart();
         }, this);
         //Fim Reset
-
+    
         //Inicio Home
         var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
         home.setInteractive({ cursor: 'pointer' });
@@ -255,16 +249,26 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.waveCounter = 0;
         }, this);
         //Fim Home
+    }
+
+    update(time, delta) {
+        // função pra testar o fps
+        // console.log('actual fps:' + String(game.loop.actualFps))
+       
 
         //Atualiza s valores
 
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
-        if(this.waveCounter+1 > 9)
+        if(this.waveCounter+1 > 9 && this.qtdWave > 9)
             this.textWave.setText(String(this.waveCounter+1)+"/"+String(this.qtdWave))
+        else if(this.waveCounter+1 < 9 && this.qtdWave < 9)
+            this.textWave.setText("0"+String(this.waveCounter+1)+"/"+"0"+String(this.qtdWave))
+        else if(this.qtdWave < 9)
+            this.textWave.setText(String(this.waveCounter+1)+"/"+"0"+String(this.qtdWave))
         else
             this.textWave.setText("0"+String(this.waveCounter+1)+"/"+String(this.qtdWave))
-            
+           
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
