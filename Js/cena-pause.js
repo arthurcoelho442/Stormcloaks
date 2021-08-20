@@ -39,8 +39,12 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.vida = this.cena.vidaMax;
             this.cena.dinheiro = this.cena.dinheiroMax;
             this.cena.pontuacao = 0;
+
             this.cena.waveCounter = 0;
-    
+            this.cena.waveCounterEsquerda = 0;
+            this.cena.waveCounterDireita = 0;
+            this.cena.waveCounterCima = 0;
+            
             this.cena.scene.start("Menu");
             this.cena.scene.stop();
             this.scene.stop();
@@ -54,7 +58,11 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.vida = this.cena.vidaMax;
             this.cena.dinheiro = this.cena.dinheiroMax;
             this.cena.pontuacao = 0;
+            
             this.cena.waveCounter = 0;
+            this.cena.waveCounterEsquerda = 0;
+            this.cena.waveCounterDireita = 0;
+            this.cena.waveCounterCima = 0;
     
             this.cena.scene.restart();
             this.scene.stop();

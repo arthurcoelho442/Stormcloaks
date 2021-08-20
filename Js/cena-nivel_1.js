@@ -9,9 +9,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
             key: "Nivel-1"
         });
         //Configuração Nivel
-        this.pontuacao = 0;
         this.vidaMax = 100;
         this.dinheiroMax = 1000;
+        this.pontuacao = 0;
         this.vida = this.vidaMax;
         this.dinheiro = this.dinheiroMax;
         this.textVidas = null;
