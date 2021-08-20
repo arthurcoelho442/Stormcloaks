@@ -260,15 +260,8 @@ export default class cenaNivel_2 extends Phaser.Scene{
 
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
-        if(this.waveCounter+1 > 9 && this.qtdWave > 9)
-            this.textWave.setText(String(this.waveCounter+1)+"/"+String(this.qtdWave))
-        else if(this.waveCounter+1 < 9 && this.qtdWave < 9)
-            this.textWave.setText("0"+String(this.waveCounter+1)+"/"+"0"+String(this.qtdWave))
-        else if(this.qtdWave < 9)
-            this.textWave.setText(String(this.waveCounter+1)+"/"+"0"+String(this.qtdWave))
-        else
-            this.textWave.setText("0"+String(this.waveCounter+1)+"/"+String(this.qtdWave))
-           
+        this.textWave.setText(("00"+String(this.waveCounter+1)).slice(-2)+"/"+("00"+String(this.qtdWave)).slice(-2))
+          
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
