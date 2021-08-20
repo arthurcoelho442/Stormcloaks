@@ -71,6 +71,9 @@ export default class cenaCarregamento extends Phaser.Scene{
 
         this.load.spritesheet("Tropa", "Imagens/Enemy_sheet_completaV3.png", { frameWidth: 21, frameHeight: 22 });
         this.load.image("Torre-do-Nivel", "Imagens/kings_tower.png");
+        
+        this.load.image("Creditos-01", "Imagens/Creditos.png");
+        this.load.image("Creditos-02", "Imagens/Créditos.png");
 
         this.load.bitmapFont('carrier_command', 'Imagens/Fontes/carrier_command.png', 'Imagens/Fontes/carrier_command.xml');
     }

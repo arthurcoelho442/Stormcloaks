@@ -346,7 +346,7 @@ export default class cenaNivel_4 extends Phaser.Scene{
         }
         //Proximo nivel
         if (this.qtdWaveEsquerda == this.waveCounterEsquerda && this.qtdWaveDireita == this.waveCounterDireita && this.qtdWaveCima == this.waveCounterCima){
-            this.scene.start("Menu");
+            this.scene.start("Creditos");
             this.scene.stop();
 
             this.music.mute = true;
