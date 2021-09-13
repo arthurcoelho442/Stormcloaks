@@ -8,15 +8,15 @@ export default class cenaMenu extends Phaser.Scene{
     }
 
     create() {
-        this.add.image(400,300,'backg');
-        const playButton = this.add.image(400,300,'play')
+        this.add.image(0,0,'backg').setOrigin(0, 0);
+        const playButton = this.add.image(460,350,'play')
         playButton.setInteractive()
 
         playButton.on('pointerover', () => {
-            this.add.image(400,300,'play2')
+            this.add.image(460,350,'play2')
         })
         playButton.on('pointerout', () => {
-            this.add.image(400,300,'play')
+            this.add.image(460,350,'play')
         })
 
         playButton.on('pointerdown', () => {
@@ -24,8 +24,8 @@ export default class cenaMenu extends Phaser.Scene{
             this.scene.start("Escolha", this);
         })
 
-        const confButton = this.add.text(340, 350, 'Configurações');
-        const scoreButton = this.add.text(340, 400, 'Teste gameover');
+        const confButton = this.add.text(400, 400, 'Configurações');
+        const scoreButton = this.add.text(395, 450, 'Teste gameover');
         confButton.setInteractive()
         scoreButton.setInteractive()
 
