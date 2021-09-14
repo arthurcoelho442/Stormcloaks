@@ -325,7 +325,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             if (torre.id == 1) {
                                 const explosionSprite = this.physics.add.sprite(sprite.getCenter().x, sprite.getCenter().y, "Explosion");
                                 // set body to a circle
-                                explosionSprite.setCircle(15);
+                                explosionSprite.setCircle(15, 11, 11);
                                 // scale the sprite
                                 explosionSprite.setScale(4, 4);
                                 // add overlaps (todo)
