@@ -140,9 +140,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         fireRate = 500;
                     } else if (id == 1) { // torre canhão (ainda não funciona)
                         custo = 750;
-                        raio = 140;
-                        dano = 250;
-                        fireRate = 1200;
+                        raio = 190;
+                        dano = 175;
+                        fireRate = 1000;
                     } else if (id == 2) { // torre de slow (ainda não funciona)
                         custo = 500;
                         raio = 190;
@@ -315,7 +315,6 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         let sprite = tropa.sprite
                         // função que cria o overlap
                         this.physics.add.overlap(shot.sprite, sprite, () => {
-                            tropa.vida -= torre.dano;
                             if (torre.id == 2) {
                                 tropa.isSlowed = true;
                                 tropa.slowMultiplier = torre.slowMultiplier;
@@ -329,6 +328,22 @@ export default class cenaNivel_1 extends Phaser.Scene {
                                 // scale the sprite
                                 explosionSprite.setScale(4, 4);
                                 // add overlaps (todo)
+                                for (let j = 0; j < wave.length; j++) {
+                                    if (wave[j] == null) {
+                                        continue;
+                                    }
+                                    let expTropa = wave[j]
+                                    let expSprite = expTropa.sprite
+                                    let canTakeExplosionDamage = true;
+
+                                    // função que cria o overlap
+                                    this.physics.add.overlap(explosionSprite, expSprite, () => {
+                                        if (canTakeExplosionDamage) {
+                                            expTropa.vida -= torre.dano;
+                                        }
+                                        canTakeExplosionDamage = false;
+                                    })
+                                }
                                 this.anims.create({
                                     key: 'Explosion-1',
                                     frames: this.anims.generateFrameNumbers("Explosion", { start: 0, end: 9 }),
@@ -337,22 +352,10 @@ export default class cenaNivel_1 extends Phaser.Scene {
                                     hideOnComplete: true
                                 });
                                 explosionSprite.anims.play('Explosion-1');
-                                // try killing it after playing (todo)
-                            }
-
-                            if (tropa.vida >= tropa.vidaMax / 2) {
-                                let tamanho = tropa.vida / tropa.vidaMax;
-                                sprite.setScale(tamanho, tamanho);
-                            }
-
-                            if (tropa.vida <= 0) {
-                                sprite.anims.stop();
-                                const index = wave.indexOf(tropa);
-                                if (index > -1) {
-                                    wave.splice(index, 1);
-                                }
-                                tropa.destroi(i)
-                                this.dinheiro += 50
+                                // kills the sprite after playing
+                                explosionSprite.on('animationcomplete', () => explosionSprite.destroy(), explosionSprite);
+                            } else {
+                                tropa.vida -= torre.dano;
                             }
                             shot.sprite.destroy();
                         })
@@ -428,12 +431,24 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 sprite.anims.stop();
                 wave.splice(wave.indexOf(tropa), 1);
                 tropa.destroi(i)
-            } else if (tropa.vida == 0) {
+            }
+
+            if (tropa.vida >= tropa.vidaMax / 2) {
+                let tamanho = tropa.vida / tropa.vidaMax;
+                sprite.setScale(tamanho, tamanho);
+            }
+
+            if (tropa.vida <= 0) {
                 sprite.anims.stop();
-                wave.splice(wave.indexOf(tropa), 1);
+                const index = wave.indexOf(tropa);
+                if (index > -1) {
+                    wave.splice(index, 1);
+                }
                 tropa.destroi(i)
+                this.dinheiro += 75
             }
         }
+
         //Perdeu
         if (this.vida == 0) {
             this.scene.start("Gameover",1);
