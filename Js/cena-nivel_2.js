@@ -76,10 +76,18 @@ export default class cenaNivel_2 extends Phaser.Scene{
             [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
 
-        this.backgroud = this.add.image(580, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
-        this.textVidas = this.add.text(630, 625, String(this.vida));
-        this.backgroud = this.add.image(440, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
-        this.textDinheiro = this.add.text(490, 625, String(this.dinheiro));
+        this.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
+        this.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
+        this.bmpText = this.add.bitmapText(50, 622, 'carrier_command','Map 2  Wave',16);
+        
+        this.textVidas = this.add.bitmapText(610, 622, 'carrier_command',String(this.vida),16);
+        this.textDinheiro = this.add.bitmapText(450, 622, 'carrier_command',String(this.dinheiro),16);
+        this.textWave = this.add.bitmapText(270, 622, 'carrier_command',String(this.waveCounter+1),16);
+
+        this.bmpText.inputEnabled = true;
+        this.textVidas.inputEnabled = true;
+        this.textDinheiro.inputEnabled = true;
+        this.textWave.inputEnabled = true;
 
         this.listaDeTorres = [];
         this.torresDeCompra = [];
@@ -188,7 +196,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
             //On hover da descrição das torres
             var descricao;
             torreCompra.on('pointerover', () => {
-                descricao = this.add.image(torreCompra.originalX-75, torreCompra.originalY, "Descricao-Icon-"+ String(torreCompra.id + 1));
+                descricao = this.add.image(torreCompra.originalX-36, torreCompra.originalY-65, "Descricao-"+ String(torreCompra.id + 1));
             })
             torreCompra.on('pointerout', () => {
                 descricao.destroy();
@@ -196,16 +204,10 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.torresDeCompra.push(torreCompra)
         }
         this.backgroud = this.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
-    }
-
-    update(time, delta) {
-        // função pra testar o fps
-        // console.log('actual fps:' + String(game.loop.actualFps))
-       
         //Inicio Pause
         var button = this.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
-        button.setInteractive();
-        button.once('pointerdown', function () {
+        button.setInteractive({ cursor: 'pointer' });
+        button.on('pointerdown', function () {
             this.scene.pause();
             this.scene.launch('Pause', this);
     
@@ -219,24 +221,24 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.music.mute = false;
         })
         //Fim Pause
-
+    
         //Inicio Reset
         var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
-        reset.setInteractive();
+        reset.setInteractive({ cursor: 'pointer' });
         reset.once('pointerdown', function () {
             this.music.mute = true;
             this.vida = this.vidaMax;
             this.dinheiro = this.dinheiroMax;
             this.pontuacao = 0;
             this.waveCounter = 0;
-
+    
             this.scene.restart();
         }, this);
         //Fim Reset
-
+    
         //Inicio Home
         var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
-        home.setInteractive();
+        home.setInteractive({ cursor: 'pointer' });
         home.once('pointerdown', function () {
             this.scene.start("Menu");
             this.scene.stop();
@@ -247,11 +249,19 @@ export default class cenaNivel_2 extends Phaser.Scene{
             this.waveCounter = 0;
         }, this);
         //Fim Home
+    }
+
+    update(time, delta) {
+        // função pra testar o fps
+        // console.log('actual fps:' + String(game.loop.actualFps))
+       
 
         //Atualiza s valores
+
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
-
+        this.textWave.setText(("00"+String(this.waveCounter+1)).slice(-2)+"/"+("00"+String(this.qtdWave)).slice(-2))
+          
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
@@ -351,7 +361,7 @@ export default class cenaNivel_2 extends Phaser.Scene{
             }if(pos.x >= 425 && pos.x <= 450 && pos.y >= 225 && pos.y <= 250){
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(-velocidade);
-            }if(pos.x >= 425 && pos.y <= 75 && tropa.loop){
+            }if(pos.x >= 425 && pos.x <= 450 && pos.y <= 75 && tropa.loop){
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
                 setTimeout(function(){ tropa.loop = false; }, 1000);

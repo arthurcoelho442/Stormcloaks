@@ -8,7 +8,7 @@ export default class cenaMenu extends Phaser.Scene{
     }
 
     create() {
-        this.add.image(400,300,'backg').setScale(1.25, 1.2);
+        this.add.image(400,300,'backg');
         const playButton = this.add.image(400,300,'play')
         playButton.setInteractive()
 
@@ -21,7 +21,7 @@ export default class cenaMenu extends Phaser.Scene{
 
         playButton.on('pointerdown', () => {
             //iniciar jogo...
-            this.scene.start("Escolha");
+            this.scene.start("Escolha", this);
         })
 
         const confButton = this.add.text(340, 350, 'Configurações');
@@ -34,8 +34,19 @@ export default class cenaMenu extends Phaser.Scene{
         })
 
         scoreButton.on('pointerdown', () => {
+            this.music.mute = true;
             this.scene.start("Gameover");
         })
+        this.music = this.sound.add("Poke", {
+            mute: false,
+            volume: 0.15,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        });
+        this.music.play();
     }
 
     update() {

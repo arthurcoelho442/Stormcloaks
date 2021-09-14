@@ -6,54 +6,57 @@ export default class Tropa{
         this.vidaMax = vida;
         this.cena = cena;
         this.loop = false;
-        this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, imgTropa, 0);
-        this.sprite.body.setCircle(11,14,14)
+        this.sprite =  cena.physics.add.sprite(this.xTropa, this.yTropa, imgTropa);
+        this.sprite.body.setCircle(11);
+        this.isSlowed = false;
+        this.slowTimer = 0;
+        this.slowMultiplier = 0;
 
         cena.anims.create({
             key: 'Tropa-1',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 0, end: 0 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 0, end: 19 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-2',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 1, end: 1 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 20, end: 39 }),
             frameRate: 10,
             repeat: -1
         }); 
         cena.anims.create({
             key: 'Tropa-3',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 2, end: 2 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 40, end: 59 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-4',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 3, end: 3 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 60, end: 79 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-5',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 4, end: 4 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 80, end: 99 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-6',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 5, end: 5 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 100, end: 119 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-7',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 6, end: 6 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 120, end: 139 }),
             frameRate: 10,
             repeat: -1
         });
         cena.anims.create({
             key: 'Tropa-8',
-            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 7, end: 7 }),
+            frames: cena.anims.generateFrameNumbers(imgTropa, { start: 140, end: 159 }),
             frameRate: 10,
             repeat: -1
         });
@@ -106,6 +109,22 @@ export default class Tropa{
             repeat: -1
         });
     }
+    
+    // conta o próprio tempo slowed 
+    update(time, delta) {
+        if (this.isSlowed) {
+            // this.sprite.anims.play("Tropa-4", true)
+            this.slowTimer -= delta;
+    
+            if (this.slowTimer <= 0) {
+                // this.sprite.anims.play("Tropa-1", true)
+                this.isSlowed = false;
+            }
+        } else {
+            this.slowTimer = 0;
+        }
+    }
+
     destroi(){
         this.sprite.destroy();
     }

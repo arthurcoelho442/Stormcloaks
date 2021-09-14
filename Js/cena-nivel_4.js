@@ -6,9 +6,11 @@ export default class cenaNivel_4 extends Phaser.Scene{
             key: "Nivel-4"
         });
         //Configuração Nivel
+        this.vidaMax = 100;
+        this.dinheiroMax = 1000;
         this.pontuacao = 0;
-        this.vida = 100;
-        this.dinheiro = 1000;
+        this.vida = this.vidaMax;
+        this.dinheiro = this.dinheiroMax;
         this.textVidas = null;
         this.textDinheiro = null;
         this.waveCounterEsquerda = 0;
@@ -24,13 +26,21 @@ export default class cenaNivel_4 extends Phaser.Scene{
 
     create() {
         this.backgroud = this.add.image(0,0,"Mapa-4").setOrigin(0,0);
-        if(true)
-            this.backgroud = this.add.image(0,0,"Grid");
+        this.backgroud = this.add.image(0,0,"Grid");
 
-            this.backgroud.setOrigin(0,0);
-        //Configuração Nivel
-        this.pontuacao = 0;
-        this.vida = 1000;
+        this.backgroud.setOrigin(0,0);
+
+        this.music = this.sound.add("WC3-Undead", {
+            mute: false,
+            volume: 0.15,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        });
+        this.music.play();
+
         //Configuração da Wave
         const qtdTropas  = 5;
         const velocidade  = 50;
@@ -60,15 +70,80 @@ export default class cenaNivel_4 extends Phaser.Scene{
         }
         this.wavesCima = wavesCima;
 
-        this.backgroud = this.add.image(55, 5, "Vidas").setOrigin(0, 0).setScale(0.1, 0.1);
-        this.textVidas = this.add.text(105, 20, String(this.vida));
-        this.backgroud = this.add.image(665, 15, "Coin").setOrigin(0, 0).setScale(0.028, 0.028);
-        this.textDinheiro = this.add.text(705, 20, String(this.dinheiro));
+        this.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
+        this.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
+        this.bmpText = this.add.bitmapText(50, 622, 'carrier_command','Map 4  Wave',16);
+        
+        this.textVidas = this.add.bitmapText(610, 622, 'carrier_command',String(this.vida),16);
+        this.textDinheiro = this.add.bitmapText(450, 622, 'carrier_command',String(this.dinheiro),16);
+        this.textWave = this.add.bitmapText(270, 622, 'carrier_command',String(this.waveCounterDireita+this.wavesEsquerda+2),16);
+
+        this.bmpText.inputEnabled = true;
+        this.textVidas.inputEnabled = true;
+        this.textDinheiro.inputEnabled = true;
+        this.textWave.inputEnabled = true;
+
+
+        //Inicio Pause
+        var button = this.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
+        button.setInteractive({ cursor: 'pointer' });
+        button.on('pointerdown', function () {
+            this.scene.pause();
+            this.scene.launch('Pause', this);
+    
+        }, this);
+        this.events.on('pause', () => {
+            button.setFrame(0);
+            this.music.mute = true;
+        })
+        this.events.on('resume', () => {
+            button.setFrame(1);
+            this.music.mute = false;
+        })
+        //Fim Pause
+    
+        //Inicio Reset
+        var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
+        reset.setInteractive({ cursor: 'pointer' });
+        reset.once('pointerdown', function () {
+            this.music.mute = true;
+            this.vida = this.vidaMax;
+            this.dinheiro = this.dinheiroMax;
+            this.pontuacao = 0;
+            this.waveCounterDireita = 0;
+            this.waveCounterEsquerda = 0;
+            this.waveCounterCima = 0;
+    
+            this.scene.restart();
+        }, this);
+        //Fim Reset
+    
+        //Inicio Home
+        var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
+        home.setInteractive({ cursor: 'pointer' });
+        home.once('pointerdown', function () {
+            this.scene.start("Menu");
+            this.scene.stop();
+            this.music.mute = true;
+            this.vida = this.vidaMax;
+            this.dinheiro = this.dinheiroMax;
+            this.pontuacao = 0;
+            this.waveCounterEsquerda = 0;
+            this.waveCounterDireita = 0;
+            this.waveCounterCima = 0;
+        }, this);
+        //Fim Home
+
+        this.backgroud = this.add.image(270, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
+        this.backgroud = this.add.image(470, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
+        this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
     }
 
     update() {
+        //Atualiza s valores
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
+        this.textWave.setText(("00"+String(this.waveCounterDireita+this.waveCounterEsquerda+this.waveCounterCima+1)).slice(-2)+"/"+("00"+String(this.qtdWaveDireita+this.qtdWaveEsquerda+this.qtdWaveCima)).slice(-2))
 
         if (this.qtdWaveEsquerda > this.waveCounterEsquerda) {
             let waveEsquerda = this.wavesEsquerda[this.waveCounterEsquerda].tropas;
@@ -80,7 +155,8 @@ export default class cenaNivel_4 extends Phaser.Scene{
                 let tropa = waveEsquerda[i]
                 let sprite = tropa.sprite
                 let pos = sprite.getCenter();
-                const velocidade = waveSpeedEsquerda;
+                let velocidade = waveSpeedEsquerda;
+                let rotation = 0.05;
 
                 if (sprite && sprite != undefined) {
                     //Movimentação da tropa
@@ -116,11 +192,13 @@ export default class cenaNivel_4 extends Phaser.Scene{
                 if (tropa.vida == 0)
                     this.pontuacao += 100;
                 //Exclusão da tropa
-                if (pos.y >= 600) {
+                if (pos.y >= 563) {
                     this.vida--;
+                    sprite.anims.stop();
                     waveEsquerda.splice(waveEsquerda.indexOf(tropa), 1);
                     tropa.destroi(i)
                 } else if (tropa.vida == 0) {
+                    sprite.anims.stop();
                     waveEsquerda.splice(waveEsquerda.indexOf(tropa), 1);
                     tropa.destroi(i)
                 }
@@ -140,7 +218,8 @@ export default class cenaNivel_4 extends Phaser.Scene{
                 let tropa = waveDireita[i]
                 let sprite = tropa.sprite
                 let pos = sprite.getCenter();
-                const velocidade = waveSpeedDireita;
+                let velocidade = waveSpeedDireita;
+                let rotation = 0.05;
 
                 if (sprite && sprite != undefined) {
                     //Movimentação da tropa
@@ -176,11 +255,13 @@ export default class cenaNivel_4 extends Phaser.Scene{
                 if (tropa.vida == 0)
                     this.pontuacao += 100;
                 //Exclusão da tropa
-                if (pos.y >= 600) {
+                if (pos.y >= 563) {
                     this.vida--;
+                    sprite.anims.stop();
                     waveDireita.splice(waveDireita.indexOf(tropa), 1);
                     tropa.destroi(i)
                 } else if (tropa.vida == 0) {
+                    sprite.anims.stop();
                     waveDireita.splice(waveDireita.indexOf(tropa), 1);
                     tropa.destroi(i)
                 }
@@ -200,7 +281,8 @@ export default class cenaNivel_4 extends Phaser.Scene{
                 let tropa = waveCima[i]
                 let sprite = tropa.sprite
                 let pos = sprite.getCenter();
-                const velocidade = waveSpeedCima;
+                let velocidade = waveSpeedCima;
+                let rotation = 0.05;
 
                 if (sprite && sprite != undefined) {
                     //Movimentação da tropa
@@ -236,11 +318,13 @@ export default class cenaNivel_4 extends Phaser.Scene{
                 if (tropa.vida == 0)
                     this.pontuacao += 100;
                 //Exclusão da tropa
-                if (pos.y >= 600) {
+                if (pos.y >= 563) {
                     this.vida--;
+                    sprite.anims.stop();
                     waveCima.splice(waveCima.indexOf(tropa), 1);
                     tropa.destroi(i)
                 } else if (tropa.vida == 0) {
+                    sprite.anims.stop();
                     waveCima.splice(waveCima.indexOf(tropa), 1);
                     tropa.destroi(i)
                 }
@@ -249,27 +333,28 @@ export default class cenaNivel_4 extends Phaser.Scene{
             if (waveCima.length == 0)
                 this.waveCounterCima++;
         }
-        //Proximo nivel
-        if (this.qtdWaveEsquerda == this.waveCounterEsquerda && this.qtdWaveDireita == this.waveCounterDireita && this.qtdWaveCima == this.waveCounterCima)
-            this.scene.start("Menu");
-
         //Perdeu
-        if(this.vida == 0)
-        {
-            this.backgroud = this.add.image(0,0,"Mapa-4").setOrigin(0,0);
-            this.add.text(200, 190, "Game Over!", {fontSize: 60, color: 'red'});
-            const buttonMenu = this.add.text(350,300, "Menu inicial");
-            const buttonScore = this.add.text(350, 350, "Pontuações");
+        if(this.vida == 0){
+            this.scene.start("Gameover",4);
+            this.scene.stop();
+            this.music.mute = true;
+            this.vida = this.vidaMax;
+            this.dinheiro = this.dinheiroMax;
+            this.waveCounterEsquerda = 0;
+            this.waveCounterDireita = 0;
+            this.waveCounterCima = 0;
+        }
+        //Proximo nivel
+        if (this.qtdWaveEsquerda == this.waveCounterEsquerda && this.qtdWaveDireita == this.waveCounterDireita && this.qtdWaveCima == this.waveCounterCima){
+            this.scene.start("Creditos");
+            this.scene.stop();
 
-            buttonMenu.setInteractive();
-            buttonScore.setInteractive();
-
-            buttonMenu.on('pointerdown',() => {
-                this.scene.start("Menu");
-            })
-            buttonScore.on('pointerdown',() => {
-            
-            })
+            this.music.mute = true;
+            this.waveCounterEsquerda = 0;
+            this.waveCounterDireita = 0;
+            this.waveCounterCima = 0;
+            this.vida = this.vidaMax;
+            this.dinheiro = this.dinheiroMax;
         }
     }
 }

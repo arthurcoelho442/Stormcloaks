@@ -9,15 +9,15 @@ export default class cenaNivel_1 extends Phaser.Scene {
             key: "Nivel-1"
         });
         //Configuração Nivel
-        this.pontuacao = 0;
         this.vidaMax = 100;
         this.dinheiroMax = 1000;
+        this.pontuacao = 0;
         this.vida = this.vidaMax;
         this.dinheiro = this.dinheiroMax;
         this.textVidas = null;
         this.textDinheiro = null;
         this.waveCounter = 0;
-        this.qtdWave = 10; //quantidade de waves do nivel
+        this.qtdWave = 8; //quantidade de waves do nivel
     }
     preload() {
 
@@ -52,7 +52,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         let waves = [];
         for (let i = 0; i < this.qtdWave; i++) {
             waves[i] = new Wave(this, vida + i * 180, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
-            waves[i].setColor(i + 1);
+            waves[i].setColor(i+1);
         }
         this.waves = waves;
 
@@ -76,10 +76,18 @@ export default class cenaNivel_1 extends Phaser.Scene {
         ]
 
 
-        this.backgroud = this.add.image(580, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
-        this.textVidas = this.add.text(630, 625, String(this.vida));
-        this.backgroud = this.add.image(440, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
-        this.textDinheiro = this.add.text(490, 625, String(this.dinheiro));
+        this.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
+        this.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
+        this.bmpText = this.add.bitmapText(50, 622, 'carrier_command','Map 1  Wave',16);
+        
+        this.textVidas = this.add.bitmapText(610, 622, 'carrier_command',String(this.vida),16);
+        this.textDinheiro = this.add.bitmapText(450, 622, 'carrier_command',String(this.dinheiro),16);
+        this.textWave = this.add.bitmapText(270, 622, 'carrier_command',String(this.waveCounter+1),16);
+
+        this.bmpText.inputEnabled = true;
+        this.textVidas.inputEnabled = true;
+        this.textDinheiro.inputEnabled = true;
+        this.textWave.inputEnabled = true;
 
         this.listaDeTorres = [];
         this.torresDeCompra = [];
@@ -135,7 +143,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         raio = 140;
                         dano = 250;
                         fireRate = 1200;
-                    } else if (id == 2) { // torre de cola (ainda não funciona)
+                    } else if (id == 2) { // torre de slow (ainda não funciona)
                         custo = 500;
                         raio = 190;
                         dano = 100;
@@ -162,6 +170,11 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             dano: dano,
                             fireRate: fireRate
                         })
+
+                        if (torre.id == 2) {
+                            torre.slowMultiplier = 0.25; // (velocidade - slowMultiplier * velocidade)
+                            torre.slowTimer = 1000; // duração do slow, em ms
+                        }
 
                         torre.sprite.setScale(1.25, 1.25)
                         // add nova torre
@@ -197,13 +210,11 @@ export default class cenaNivel_1 extends Phaser.Scene {
             this.torresDeCompra.push(torreCompra)
         }
         this.backgroud = this.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
-    }
-    
-    update(time, delta) {
+        
         //Inicio Pause
         var button = this.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
-        button.setInteractive();
-        button.once('pointerdown', function () {
+        button.setInteractive({ cursor: 'pointer' });
+        button.on('pointerdown', function () {
             this.scene.pause();
             this.scene.launch('Pause', this);
     
@@ -217,24 +228,24 @@ export default class cenaNivel_1 extends Phaser.Scene {
             this.music.mute = false;
         })
         //Fim Pause
-
+    
         //Inicio Reset
         var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
-        reset.setInteractive();
+        reset.setInteractive({ cursor: 'pointer' });
         reset.once('pointerdown', function () {
             this.music.mute = true;
             this.vida = this.vidaMax;
             this.dinheiro = this.dinheiroMax;
             this.pontuacao = 0;
             this.waveCounter = 0;
-
+    
             this.scene.restart();
         }, this);
         //Fim Reset
-
+    
         //Inicio Home
         var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
-        home.setInteractive();
+        home.setInteractive({ cursor: 'pointer' });
         home.once('pointerdown', function () {
             this.scene.start("Menu");
             this.scene.stop();
@@ -245,11 +256,14 @@ export default class cenaNivel_1 extends Phaser.Scene {
             this.waveCounter = 0;
         }, this);
         //Fim Home
-
+    }
+    
+    update(time, delta) {
         //Atualiza s valores
         this.textVidas.setText(String(this.vida))
         this.textDinheiro.setText(String(this.dinheiro))
-
+        this.textWave.setText(("00"+String(this.waveCounter+1)).slice(-2)+"/"+("00"+String(this.qtdWave)).slice(-2))
+        
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
@@ -274,12 +288,17 @@ export default class cenaNivel_1 extends Phaser.Scene {
             if (target) {
                 torre.trackEnemy(target.sprite.getCenter().x, target.sprite.getCenter().y);
 
+                let shotPng = "Tiro-Teste"
+                if (torre.id == 2) {
+                    shotPng = "Slow-Shot"
+                }
+
                 if (torre.update(time, delta)) {
                     const shot = new Tiro({
                         cena: this,
                         x: torre.x,
                         y: torre.y,
-                        imagem: "Tiro-Teste",
+                        imagem: shotPng,
                         velocidade: 800,
                         dano: torre.dano,
                         angulo: torre.angle,
@@ -296,7 +315,12 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         let sprite = tropa.sprite
                         // função que cria o overlap
                         this.physics.add.overlap(shot.sprite, sprite, () => {
-                            tropa.vida -= torre.dano
+                            tropa.vida -= torre.dano;
+                            if (torre.id == 2) {
+                                tropa.isSlowed = true;
+                                tropa.slowMultiplier = torre.slowMultiplier;
+                                tropa.slowTimer = torre.slowTimer;
+                            }
 
                             if (tropa.vida >= tropa.vidaMax / 2) {
                                 let tamanho = tropa.vida / tropa.vidaMax;
@@ -304,6 +328,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             }
 
                             if (tropa.vida <= 0) {
+                                sprite.anims.stop();
                                 const index = wave.indexOf(tropa);
                                 if (index > -1) {
                                     wave.splice(index, 1);
@@ -330,31 +355,46 @@ export default class cenaNivel_1 extends Phaser.Scene {
             if (wave[i] == null)
                 continue;
             let tropa = wave[i]
+            tropa.update(time, delta)
+            let velocidade = waveSpeed;
             let sprite = tropa.sprite
             let pos = sprite.getCenter();
-            const velocidade = waveSpeed;
+            let rotation = 0.05;
+
+            if (tropa.isSlowed) {
+                velocidade -= waveSpeed * tropa.slowMultiplier;
+                rotation -= (rotation * tropa.slowMultiplier + 0.0275);
+                sprite.anims.play('Tropa-3', true);
+                sprite.anims.frameRate = 30;
+            }else{
+                sprite.anims.play('Tropa-' + String(this.waveCounter+1), true);
+            }
 
             if (sprite && sprite != undefined) {
                 //Movimentação da tropa
-                if (pos.x <= 0 && pos.y == 75) {
+                if (pos.x < 675 && pos.y == 75) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 675 && pos.y >= 75) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 675 && pos.y >= 225) {
+                } if (pos.x > 125 && pos.y >= 225 && pos.y <= 250) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x <= 125 && pos.y != 75) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x <= 125 && pos.y >= 375 && pos.y <= 380) {
+                } if (pos.x < 675 && pos.y >= 375 && pos.y <= 380) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 675 && pos.y >= 375) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 675 && pos.y >= 525) {
+                } if (pos.x > 125 && pos.y >= 525) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 }
@@ -367,9 +407,11 @@ export default class cenaNivel_1 extends Phaser.Scene {
             //Exclusão da tropa
             if (pos.y >= 563) {
                 this.vida--;
+                sprite.anims.stop();
                 wave.splice(wave.indexOf(tropa), 1);
                 tropa.destroi(i)
             } else if (tropa.vida == 0) {
+                sprite.anims.stop();
                 wave.splice(wave.indexOf(tropa), 1);
                 tropa.destroi(i)
             }

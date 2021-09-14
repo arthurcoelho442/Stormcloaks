@@ -10,6 +10,7 @@ import cenaGameover from "./cena-gameover.js";
 import cenaEscolha from "./cena-escolha.js";
 import cenaPontuacao from "./cena-pontuacao.js";
 import cenaPause from "./cena-pause.js";
+import cenaCreditos from "./cena-creditos.js";
 
 const config = {
     type: Phaser.AUTO,
@@ -23,7 +24,7 @@ const config = {
                 y: 0,
                 x: 0
             },
-            debug: false
+            debug: true
         }
     },
     fps: {
@@ -42,7 +43,8 @@ const config = {
         cenaNivel_3,
         cenaNivel_4,
         cenaGameover,
-        cenaPause
+        cenaPause,
+        cenaCreditos
     ]
 }
 export const jogo = new Phaser.Game(config);

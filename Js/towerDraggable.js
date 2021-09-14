@@ -12,7 +12,7 @@ export default class TorreDraggable extends Torre {
         this.dragging = false;
         this.ondragend = ondragend;
         this.setSize(this.sprite.width, this.sprite.height);
-        this.setInteractive();
+        this.setInteractive({ cursor: 'pointer' });
         this.cena.input.setDraggable(this);
         this.cena.input.on('drag', (pointer, gameObject, dragX, dragY) => { // função "on drag" do Phaser
             if (!this.draggable) return;

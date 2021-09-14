@@ -11,7 +11,7 @@ export default class cenaEscolha extends Phaser.Scene
 
     }
 
-    create()
+    create(cena)
     {
         this.add.text(200, 80, "Escolha o nível: ", {fontSize: 45, color: 'green'});
 
@@ -27,15 +27,19 @@ export default class cenaEscolha extends Phaser.Scene
 
         nivel1.on('pointerdown', () => {
             this.scene.start("Nivel-1");
+            cena.music.mute = true;
         });
         nivel2.on('pointerdown', () => {
             this.scene.start("Nivel-2");
+            cena.music.mute = true;
         });
         nivel3.on('pointerdown', () => {
             this.scene.start("Nivel-3");
+            cena.music.mute = true;
         });
         nivel4.on('pointerdown', () => {
             this.scene.start("Nivel-4");
+            cena.music.mute = true;
         });
     }
 
