@@ -322,6 +322,24 @@ export default class cenaNivel_1 extends Phaser.Scene {
                                 tropa.slowTimer = torre.slowTimer;
                             }
 
+                            if (torre.id == 1) {
+                                const explosionSprite = this.physics.add.sprite(sprite.getCenter().x, sprite.getCenter().y, "Explosion");
+                                // set body to a circle
+                                explosionSprite.setCircle(15);
+                                // scale the sprite
+                                explosionSprite.setScale(4, 4);
+                                // add overlaps (todo)
+                                this.anims.create({
+                                    key: 'Explosion-1',
+                                    frames: this.anims.generateFrameNumbers("Explosion", { start: 0, end: 9 }),
+                                    frameRate: 45,
+                                    repeat: false,
+                                    hideOnComplete: true
+                                });
+                                explosionSprite.anims.play('Explosion-1');
+                                // try killing it after playing (todo)
+                            }
+
                             if (tropa.vida >= tropa.vidaMax / 2) {
                                 let tamanho = tropa.vida / tropa.vidaMax;
                                 sprite.setScale(tamanho, tamanho);
