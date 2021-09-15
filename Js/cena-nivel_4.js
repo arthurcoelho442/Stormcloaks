@@ -16,9 +16,9 @@ export default class cenaNivel_4 extends Phaser.Scene{
         this.waveCounterEsquerda = 0;
         this.waveCounterDireita = 0;
         this.waveCounterCima = 0;
-        this.qtdWaveEsquerda = 8; //quantidade de waves do nivel
-        this.qtdWaveDireita = 8; //quantidade de waves do nivel
-        this.qtdWaveCima = 8; //quantidade de waves do nivel
+        this.qtdWaveEsquerda = 0; //quantidade de waves do nivel
+        this.qtdWaveDireita = 0; //quantidade de waves do nivel
+        this.qtdWaveCima = 0; //quantidade de waves do nivel
     }
     preload(){
 
