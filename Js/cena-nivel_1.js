@@ -18,8 +18,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.textDinheiro = null;
         this.waveCounter = 0;
         this.qtdWave = 8; //quantidade de waves do nivel
-        this.selectedToweri = -1;
-        this.selectedTowerj = -1;
+        this.selectedTower = null;
     }
     preload() {
 
@@ -29,11 +28,13 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.background = this.physics.add.sprite(0, 0, "Mapa-1").setOrigin(0, 0);
         this.background.setInteractive();
         this.grid = this.add.image(0, 0, "Grid").setOrigin(0, 0);
+        
+        this.selectionSquare = this.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
+        this.selectionSquare.visible = false;
 
         this.background.on('pointerdown', () => {
-            console.log('clicked on the background!');
-            this.selectedToweri = -1;
-            this.selectedTowerj = -1;
+            this.selectedTower = null;
+            this.selectionSquare.visible = false;
         })
 
         this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
@@ -131,6 +132,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
             // checa os limites do canvas
             if (x < 800 && y < 600) {
+                const coordenadaX = x;
+                const coordenadaY = y;
                 // converter de coordenadas do canvas para coordenadas do grid
                 x = (Math.ceil(this.torresDeCompra[id].x / 50) - 1).toString()
                 y = (Math.ceil(this.torresDeCompra[id].y / 50) - 1).toString()
@@ -187,9 +190,10 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
                         torre.sprite.setInteractive()
                         torre.sprite.on('pointerdown', () => {
-                            console.log('clicked on the tower!')
-                            this.selectedToweri = x;
-                            this.selectedTowerj = y;
+                            this.selectedTower = torre;
+                            this.selectionSquare.x = coordenadaX - 25;
+                            this.selectionSquare.y = coordenadaY - 25;
+                            this.selectionSquare.visible = true;
                         })
 
                         torre.sprite.setScale(1.25, 1.25)
@@ -280,8 +284,6 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.textDinheiro.setText(String(this.dinheiro))
         this.textWave.setText(("00"+String(this.waveCounter+1)).slice(-2)+"/"+("00"+String(this.qtdWave)).slice(-2))
         
-
-
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
