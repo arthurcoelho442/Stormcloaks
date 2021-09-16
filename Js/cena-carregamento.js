@@ -62,6 +62,7 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Torre-3", "Imagens/Tower_3.png");
         this.load.image("Torre-4", "Imagens/Tower_4.png");
 
+        this.load.image("Explosive-Shot", "Imagens/Explosive_shot.png");
         this.load.image("Slow-Shot", "Imagens/Slow_shot.png");
 
         this.load.audio('WC3-Orc', "Music/Warcraft 3 Soundtrack (Blackrock & Roll)_160k.mp3");
@@ -77,6 +78,8 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Creditos-02", "Imagens/Créditos.png");
 
         this.load.spritesheet("Explosion", "Imagens/Explosion.png", { frameWidth: 50, frameHeight: 50});
+
+        this.load.image("QuadradoSelecao", "Imagens/selectedTroop.png")
 
         this.load.bitmapFont('carrier_command', 'Imagens/Fontes/carrier_command.png', 'Imagens/Fontes/carrier_command.xml');
     }

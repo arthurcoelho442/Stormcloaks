@@ -309,6 +309,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 torre.trackEnemy(target.sprite.getCenter().x, target.sprite.getCenter().y);
 
                 let shotPng = "Tiro-Teste"
+                if (torre.id == 1) {
+                    shotPng = "Explosive-Shot"
+                }
                 if (torre.id == 2) {
                     shotPng = "Slow-Shot"
                 }
@@ -453,7 +456,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 tropa.destroi(i)
             }
 
-            if (tropa.vida >= tropa.vidaMax / 2) {
+            if (tropa.vida >= tropa.vidaMax / 3) {
                 let tamanho = tropa.vida / tropa.vidaMax;
                 sprite.setScale(tamanho, tamanho);
             }
