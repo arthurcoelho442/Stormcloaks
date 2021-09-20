@@ -32,12 +32,21 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.selectionSquare = this.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
         this.selectionSquare.visible = false;
 
+        this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
+
+        this.sell = this.physics.add.sprite(800, 300, "Menu-Icon-8").setOrigin(0, 0);
+        this.sell.setInteractive();
+        this.sell.visible = false;
+        this.levelUp = this.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
+        this.levelUp.setInteractive();
+        this.levelUp.visible = false;
+
         this.background.on('pointerdown', () => {
             this.selectedTower = null;
             this.selectionSquare.visible = false;
+            this.sell.visible = false;
+            this.levelUp.visible = false;
         })
-
-        this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
 
         this.music = this.sound.add("WC3-Orc", {
             mute: false,
@@ -180,7 +189,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             imagem: "Torre-" + String(id + 1),
                             raio: raio,
                             dano: dano,
-                            fireRate: fireRate
+                            fireRate: fireRate,
+                            totalSpentOn: custo
                         })
 
                         if (torre.id == 2) {
@@ -194,6 +204,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             this.selectionSquare.x = coordenadaX - 25;
                             this.selectionSquare.y = coordenadaY - 25;
                             this.selectionSquare.visible = true;
+                            this.sell.visible = true;
+                            this.levelUp.visible = true;
                         })
 
                         torre.sprite.setScale(1.25, 1.25)
@@ -207,6 +219,22 @@ export default class cenaNivel_1 extends Phaser.Scene {
             this.torresDeCompra[id].x = this.torresDeCompra[id].originalX
             this.torresDeCompra[id].y = this.torresDeCompra[id].originalY
         }
+
+        this.sell.on('pointerdown', () => {
+            if (this.selectedTower) {
+                this.dinheiro += this.selectedTower.totalSpentOn * 0.8;
+                const x = (Math.ceil(this.selectedTower.x / 50) - 1).toString()
+                const y = (Math.ceil(this.selectedTower.y / 50) - 1).toString()
+                this.selectedTower.destroy();
+                this.selectionSquare.visible = false;
+                this.sell.visible = false;
+                this.levelUp.visible = false;
+                this.map[y][x] = 0;
+                const towerIndex = this.listaDeTorres.indexOf(this.selectedTower);
+                this.listaDeTorres.splice(towerIndex, 1);
+                this.selectedTower = null;
+            }
+        })
 
         for (let i = 0; i < 4; i++) {
             const torreCompra = new TorreDraggable({
@@ -309,10 +337,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 torre.trackEnemy(target.sprite.getCenter().x, target.sprite.getCenter().y);
 
                 let shotPng = "Tiro-Teste"
-                if (torre.id == 1) {
+                if (torre.id === 1) {
                     shotPng = "Explosive-Shot"
-                }
-                if (torre.id == 2) {
+                } else if (torre.id === 2) {
                     shotPng = "Slow-Shot"
                 }
 

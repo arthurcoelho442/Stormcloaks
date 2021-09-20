@@ -1,6 +1,6 @@
 export default class Torre extends Phaser.GameObjects.Container {
     constructor(data) {
-        let { cena, id, x, y, imagem, raio, dano, fireRate } = data;
+        let { cena, id, x, y, imagem, raio, dano, fireRate, totalSpentOn } = data;
         let sprite = new Phaser.GameObjects.Sprite(cena, 0, 0, imagem);
         super(cena, x, y, [sprite]);
         this.cena = cena;
@@ -14,6 +14,7 @@ export default class Torre extends Phaser.GameObjects.Container {
         this.dano = dano;
         this.slowMultiplier = 0;
         this.slowTimer = 0;
+        this.totalSpentOn = totalSpentOn; // valor total gasto com a torre (para a venda)
     }
 
     // acompanha a tropa
@@ -31,5 +32,9 @@ export default class Torre extends Phaser.GameObjects.Container {
         } else {
             return false;
         }
+    }
+
+    destroy() {
+        this.sprite.destroy();
     }
 }
