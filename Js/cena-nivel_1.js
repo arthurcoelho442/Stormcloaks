@@ -321,7 +321,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         home.once('pointerdown', function () {
             this.scene.start("Menu");
             this.scene.stop();
-            this.music.mute = true;
+            this.music.destroy();
             this.vida = this.vidaMax;
             this.dinheiro = this.dinheiroMax;
             this.pontuacao = 0;
@@ -527,7 +527,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         if (this.vida == 0) {
             this.scene.start("Gameover",1);
             this.scene.stop();
-            this.music.mute = true;
+            this.music.destroy();
             this.vida = this.vidaMax;
             this.dinheiro = this.dinheiroMax;
             this.waveCounter = 0;
@@ -540,8 +540,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         if (this.qtdWave == this.waveCounter){
             this.scene.start("Nivel-2");
             this.scene.stop();
-
-            this.music.mute = true;
+            this.music.destroy();
             this.waveCounter = 0;
             this.vida = this.vidaMax;
             this.dinheiro = this.dinheiroMax;

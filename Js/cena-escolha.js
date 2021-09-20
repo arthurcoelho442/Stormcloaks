@@ -27,19 +27,23 @@ export default class cenaEscolha extends Phaser.Scene
 
         nivel1.on('pointerdown', () => {
             this.scene.start("Nivel-1");
-            cena.music.mute = true;
+            this.scene.stop();
+            cena.music.destroy();
         });
         nivel2.on('pointerdown', () => {
             this.scene.start("Nivel-2");
-            cena.music.mute = true;
+            this.scene.stop();
+            cena.music.destroy();
         });
         nivel3.on('pointerdown', () => {
             this.scene.start("Nivel-3");
-            cena.music.mute = true;
+            this.scene.stop();
+            cena.music.destroy();
         });
         nivel4.on('pointerdown', () => {
             this.scene.start("Nivel-4");
-            cena.music.mute = true;
+            this.scene.stop();
+            cena.music.destroy();
         });
     }
 
