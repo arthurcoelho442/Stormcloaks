@@ -51,24 +51,28 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Menu-Icon-2", "Imagens/Menu_Icon_2.png");
         this.load.image("Menu-Icon-3", "Imagens/Menu_Icon_3.png");
         this.load.image("Menu-Icon-4", "Imagens/Menu_Icon_4.png");
+        this.load.image("Menu-Icon-8", "Imagens/Menu_Icon_8.png");
+        this.load.image("Menu-Icon-9", "Imagens/Menu_Icon_9.png");
 
         this.load.image("Descricao-1", "Imagens/balão dialogo1.png");
         this.load.image("Descricao-2", "Imagens/balão dialogo2.png");
         this.load.image("Descricao-3", "Imagens/balão dialogo3.png");
         this.load.image("Descricao-4", "Imagens/balão dialogo4.png");
 
-        this.load.image("Torre-1", "Imagens/Tower_1.png");
-        this.load.image("Torre-2", "Imagens/Tower_2.png");
-        this.load.image("Torre-3", "Imagens/Tower_3.png");
-        this.load.image("Torre-4", "Imagens/Tower_4.png");
+        this.load.image("Torre-Default-1", "Imagens/Tower_1.png");
+        this.load.image("Torre-Default-2", "Imagens/Tower_2.png");
+        this.load.image("Torre-Default-3", "Imagens/Tower_3.png");
+        this.load.image("Torre-Default-4", "Imagens/Tower_4.png");
+        this.load.spritesheet("Torre", "Imagens/sheet_Completa_todas_torres.png", {frameWidth: 38, frameHeight: 38});
 
+        this.load.image("Explosive-Shot", "Imagens/Explosive_shot.png");
         this.load.image("Slow-Shot", "Imagens/Slow_shot.png");
 
         this.load.audio('WC3-Orc', "Music/Warcraft 3 Soundtrack (Blackrock & Roll)_160k.mp3");
         this.load.audio('WC3-Human', "Music/Warcraft 3 Soundtrack (Lordaeron Fall)_160k.mp3");
         this.load.audio('WC3-NElf', "Music/Warcraft 3 Soundtrack (Night Elf)_160k.mp3");
-        this.load.audio('WC3-Undead', "Music/Warcraft 3 Soundtrack - (Undead)_160k.mp3")
-        this.load.audio('Pokemon', "Music/Poke & Chill_160k.mp3")
+        this.load.audio('WC3-Undead', "Music/Warcraft 3 Soundtrack - (Undead)_160k.mp3");
+        this.load.audio('Pokemon', "Music/Poke & Chill_160k.mp3");
 
         this.load.spritesheet("Tropa", "Imagens/Enemy_sheet_completaV4.png", { frameWidth: 21, frameHeight: 22 });
         this.load.image("Torre-do-Nivel", "Imagens/kings_tower.png");
@@ -78,6 +82,8 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("End-game", "Imagens/End game.png");
 
         this.load.spritesheet("Explosion", "Imagens/Explosion.png", { frameWidth: 50, frameHeight: 50});
+
+        this.load.image("QuadradoSelecao", "Imagens/selectedTroop.png");
 
         this.load.bitmapFont('carrier_command', 'Imagens/Fontes/carrier_command.png', 'Imagens/Fontes/carrier_command.xml');
     }

@@ -18,16 +18,35 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.textDinheiro = null;
         this.waveCounter = 0;
         this.qtdWave = 8; //quantidade de waves do nivel
+        this.selectedTower = null;
     }
     preload() {
 
     }
 
     create() {
-        this.backgroud = this.add.image(0, 0, "Mapa-1").setOrigin(0, 0);
+        this.background = this.physics.add.sprite(0, 0, "Mapa-1").setOrigin(0, 0);
+        this.background.setInteractive();
         this.grid = this.add.image(0, 0, "Grid").setOrigin(0, 0);
+        
+        this.selectionSquare = this.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
+        this.selectionSquare.visible = false;
 
         this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
+
+        this.sell = this.physics.add.sprite(800, 300, "Menu-Icon-8").setOrigin(0, 0);
+        this.sell.setInteractive();
+        this.sell.visible = false;
+        this.levelUp = this.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
+        this.levelUp.setInteractive();
+        this.levelUp.visible = false;
+
+        this.background.on('pointerdown', () => {
+            this.selectedTower = null;
+            this.selectionSquare.visible = false;
+            this.sell.visible = false;
+            this.levelUp.visible = false;
+        })
 
         this.music = this.sound.add("WC3-Orc", {
             mute: false,
@@ -122,6 +141,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
             // checa os limites do canvas
             if (x < 800 && y < 600) {
+                const coordenadaX = x;
+                const coordenadaY = y;
                 // converter de coordenadas do canvas para coordenadas do grid
                 x = (Math.ceil(this.torresDeCompra[id].x / 50) - 1).toString()
                 y = (Math.ceil(this.torresDeCompra[id].y / 50) - 1).toString()
@@ -132,27 +153,32 @@ export default class cenaNivel_1 extends Phaser.Scene {
                     let raio;
                     let dano;
                     let fireRate; // tempo entre os tiros, em ms
+                    let firstAnimation;
 
-                    if (id == 0) {  // torre padrão (só precisamos balancear)
+                    if (id == 0) {  // torre padrão
                         custo = 500;
                         raio = 190;
                         dano = 125;
                         fireRate = 500;
-                    } else if (id == 1) { // torre canhão (ainda não funciona)
+                        firstAnimation = 4;
+                    } else if (id == 1) { // torre canhão
                         custo = 750;
                         raio = 190;
                         dano = 175;
                         fireRate = 1000;
-                    } else if (id == 2) { // torre de slow (ainda não funciona)
+                        firstAnimation = 9;
+                    } else if (id == 2) { // torre de slow
                         custo = 500;
                         raio = 190;
                         dano = 100;
                         fireRate = 1000;
-                    } else { // torre sniper (só precisamos balancear)
+                        firstAnimation = 14;
+                    } else { // torre sniper
                         custo = 1000;
                         raio = 540;
                         dano = 500;
                         fireRate = 1800;
+                        firstAnimation = 19;
                     }
 
                     if (this.dinheiro >= custo) {
@@ -165,10 +191,12 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             id: id,
                             x: this.torresDeCompra[id].x,
                             y: this.torresDeCompra[id].y,
-                            imagem: "Torre-" + String(id + 1),
+                            imagem: "Torre-Default-" + String(id + 1),
                             raio: raio,
                             dano: dano,
-                            fireRate: fireRate
+                            fireRate: fireRate,
+                            totalSpentOn: custo,
+                            currAnimation: firstAnimation,
                         })
 
                         if (torre.id == 2) {
@@ -176,7 +204,19 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             torre.slowTimer = 1000; // duração do slow, em ms
                         }
 
-                        torre.sprite.setScale(1.25, 1.25)
+                        torre.sprite.play("Torre-" + firstAnimation.toString(), true); // deus sabe pq isso aq não funciona
+                        
+                        torre.sprite.setInteractive()
+                        torre.sprite.on('pointerdown', () => {
+                            this.selectedTower = torre;
+                            this.selectionSquare.x = coordenadaX - 25;
+                            this.selectionSquare.y = coordenadaY - 25;
+                            this.selectionSquare.visible = true;
+                            this.sell.visible = true;
+                            this.levelUp.visible = true;
+                        })
+
+
                         // add nova torre
                         cena.listaDeTorres.push(torre)
                     }
@@ -187,6 +227,39 @@ export default class cenaNivel_1 extends Phaser.Scene {
             this.torresDeCompra[id].x = this.torresDeCompra[id].originalX
             this.torresDeCompra[id].y = this.torresDeCompra[id].originalY
         }
+
+        this.sell.on('pointerdown', () => {
+            if (this.selectedTower) {
+                this.dinheiro += this.selectedTower.totalSpentOn * 0.8;
+                const x = (Math.ceil(this.selectedTower.x / 50) - 1).toString()
+                const y = (Math.ceil(this.selectedTower.y / 50) - 1).toString()
+                this.selectedTower.destroy();
+                this.selectionSquare.visible = false;
+                this.sell.visible = false;
+                this.levelUp.visible = false;
+                this.map[y][x] = 0;
+                const towerIndex = this.listaDeTorres.indexOf(this.selectedTower);
+                this.listaDeTorres.splice(towerIndex, 1);
+                this.selectedTower = null;
+            }
+        })
+
+        this.levelUp.on('pointerdown', () => {
+            if (this.selectedTower) {
+                // todo: balancear isso aq
+                if (this.selectedTower.level != 5) {
+                    // todo: tabelar o preço dos upgrades
+                    if (this.dinheiro >= 100) {
+                        this.dinheiro -= 100;
+                        this.selectedTower.level++;
+                        this.selectedTower.fireRate /= 2;
+                        this.selectedTower.currentAnimation--;
+                        this.selectedTower.sprite.play("Torre-" + this.selectedTower.currentAnimation);
+                        console.log("tower leveled up! current level:", this.selectedTower.level);
+                    }
+                }
+            }
+        })
 
         for (let i = 0; i < 4; i++) {
             const torreCompra = new TorreDraggable({
@@ -209,7 +282,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
             })
             this.torresDeCompra.push(torreCompra)
         }
-        this.backgroud = this.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
+        this.background = this.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
         
         //Inicio Pause
         var button = this.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
@@ -289,7 +362,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 torre.trackEnemy(target.sprite.getCenter().x, target.sprite.getCenter().y);
 
                 let shotPng = "Tiro-Teste"
-                if (torre.id == 2) {
+                if (torre.id === 1) {
+                    shotPng = "Explosive-Shot"
+                } else if (torre.id === 2) {
                     shotPng = "Slow-Shot"
                 }
 
@@ -433,7 +508,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 tropa.destroi(i)
             }
 
-            if (tropa.vida >= tropa.vidaMax / 2) {
+            if (tropa.vida >= tropa.vidaMax / 3) {
                 let tamanho = tropa.vida / tropa.vidaMax;
                 sprite.setScale(tamanho, tamanho);
             }
