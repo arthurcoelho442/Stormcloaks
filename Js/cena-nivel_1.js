@@ -153,27 +153,32 @@ export default class cenaNivel_1 extends Phaser.Scene {
                     let raio;
                     let dano;
                     let fireRate; // tempo entre os tiros, em ms
+                    let firstAnimation;
 
-                    if (id == 0) {  // torre padrão (só precisamos balancear)
+                    if (id == 0) {  // torre padrão
                         custo = 500;
                         raio = 190;
                         dano = 125;
                         fireRate = 500;
-                    } else if (id == 1) { // torre canhão (ainda não funciona)
+                        firstAnimation = 4;
+                    } else if (id == 1) { // torre canhão
                         custo = 750;
                         raio = 190;
                         dano = 175;
                         fireRate = 1000;
-                    } else if (id == 2) { // torre de slow (ainda não funciona)
+                        firstAnimation = 9;
+                    } else if (id == 2) { // torre de slow
                         custo = 500;
                         raio = 190;
                         dano = 100;
                         fireRate = 1000;
-                    } else { // torre sniper (só precisamos balancear)
+                        firstAnimation = 14;
+                    } else { // torre sniper
                         custo = 1000;
                         raio = 540;
                         dano = 500;
                         fireRate = 1800;
+                        firstAnimation = 19;
                     }
 
                     if (this.dinheiro >= custo) {
@@ -186,11 +191,12 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             id: id,
                             x: this.torresDeCompra[id].x,
                             y: this.torresDeCompra[id].y,
-                            imagem: "Torre-" + String(id + 1),
+                            imagem: "Torre-Default-" + String(id + 1),
                             raio: raio,
                             dano: dano,
                             fireRate: fireRate,
-                            totalSpentOn: custo
+                            totalSpentOn: custo,
+                            currAnimation: firstAnimation,
                         })
 
                         if (torre.id == 2) {
@@ -198,6 +204,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             torre.slowTimer = 1000; // duração do slow, em ms
                         }
 
+                        torre.sprite.play("Torre-" + firstAnimation.toString(), true); // deus sabe pq isso aq não funciona
+                        
                         torre.sprite.setInteractive()
                         torre.sprite.on('pointerdown', () => {
                             this.selectedTower = torre;
@@ -208,7 +216,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             this.levelUp.visible = true;
                         })
 
-                        torre.sprite.setScale(1.25, 1.25)
+
                         // add nova torre
                         cena.listaDeTorres.push(torre)
                     }
@@ -233,6 +241,23 @@ export default class cenaNivel_1 extends Phaser.Scene {
                 const towerIndex = this.listaDeTorres.indexOf(this.selectedTower);
                 this.listaDeTorres.splice(towerIndex, 1);
                 this.selectedTower = null;
+            }
+        })
+
+        this.levelUp.on('pointerdown', () => {
+            if (this.selectedTower) {
+                // todo: balancear isso aq
+                if (this.selectedTower.level != 5) {
+                    // todo: tabelar o preço dos upgrades
+                    if (this.dinheiro >= 100) {
+                        this.dinheiro -= 100;
+                        this.selectedTower.level++;
+                        this.selectedTower.fireRate /= 2;
+                        this.selectedTower.currentAnimation--;
+                        this.selectedTower.sprite.play("Torre-" + this.selectedTower.currentAnimation);
+                        console.log("tower leveled up! current level:", this.selectedTower.level);
+                    }
+                }
             }
         })
 
