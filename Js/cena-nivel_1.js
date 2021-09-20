@@ -203,8 +203,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                             torre.slowMultiplier = 0.25; // (velocidade - slowMultiplier * velocidade)
                             torre.slowTimer = 1000; // duração do slow, em ms
                         }
-
-                        torre.sprite.play("Torre-" + firstAnimation.toString(), true); // deus sabe pq isso aq não funciona
+                        torre.sprite.anims.play("Torre-" + firstAnimation.toString(), true); // deus sabe pq isso aq não funciona
                         
                         torre.sprite.setInteractive()
                         torre.sprite.on('pointerdown', () => {
@@ -254,7 +253,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
                         this.selectedTower.level++;
                         this.selectedTower.fireRate /= 2;
                         this.selectedTower.currentAnimation--;
-                        this.selectedTower.sprite.play("Torre-" + this.selectedTower.currentAnimation);
+                        this.selectedTower.sprite.anims.play("Torre-" + this.selectedTower.currentAnimation);
                         console.log("tower leveled up! current level:", this.selectedTower.level);
                     }
                 }
