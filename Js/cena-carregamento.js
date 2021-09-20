@@ -36,6 +36,7 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Mapa-3", "Imagens/Mapa_3.png");
         this.load.image("Mapa-4", "Imagens/Mapa_4.png");
         this.load.image("Grid", "Imagens/Grid.png");
+        this.load.image("GAME-OVER", "Imagens/GAME_OVER.png");
 
         this.load.image("Torre-Teste", "Imagens/Tower_test.png");
         this.load.image("Tiro-Teste", "Imagens/Projectile_test.png")
