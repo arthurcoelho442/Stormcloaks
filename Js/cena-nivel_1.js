@@ -1,8 +1,8 @@
 import Tropa from "./tropa.js";
-import Wave from "./wave.js";
 import Torre from "./tower.js";
 import TorreDraggable from "./towerDraggable.js"
 import Tiro from "./shot.js"
+import { setupStaticSprites, setupMusic, setupGrid, setupWave, setupSell, setupLevelUp, setupPause, setupReset } from './cena-utils.js'
 export default class cenaNivel_1 extends Phaser.Scene {
     constructor() {
         super({
@@ -19,122 +19,21 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.waveCounter = 0;
         this.qtdWave = 8; //quantidade de waves do nivel
         this.selectedTower = null;
-    }
-    preload() {
-
+        this.listaDeTorres = [];
+        this.torresDeCompra = [];
     }
 
     create() {
-        this.background = this.physics.add.sprite(0, 0, "Mapa-1").setOrigin(0, 0);
-        this.background.setInteractive();
-        this.grid = this.add.image(0, 0, "Grid").setOrigin(0, 0);
-        
-        this.selectionSquare = this.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
-        this.selectionSquare.visible = false;
+        setupStaticSprites(this);
 
-        this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
+        setupMusic(this, "WC3-Orc");
 
-        this.sell = this.physics.add.sprite(800, 300, "Menu-Icon-8").setOrigin(0, 0);
-        this.sell.setInteractive();
-        this.sell.visible = false;
-        this.levelUp = this.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
-        this.levelUp.setInteractive();
-        this.levelUp.visible = false;
+        setupGrid(this, 1);
 
-        this.background.on('pointerdown', () => {
-            this.selectedTower = null;
-            this.selectionSquare.visible = false;
-            this.sell.visible = false;
-            this.levelUp.visible = false;
-        })
-
-        this.music = this.sound.add("WC3-Orc", {
-            mute: false,
-            volume: 0.25,
-            rate: 1,
-            detune: 0,
-            seek: 0,
-            loop: true,
-            delay: 0
-        });
-        this.music.play();
-
-        //Configuração da Wave
-        const qtdTropas = 10;
-        const velocidade = 50;
-        const vida = 1000;
-        const xTropa = -50;
-        const yTropa = 75;
-        const distanciarPelo = "Esquerda"
-        const imgTropa = "Tropa";
-
-        let waves = [];
-        for (let i = 0; i < this.qtdWave; i++) {
-            waves[i] = new Wave(this, vida + i * 180, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
-            waves[i].setColor(i+1);
-        }
-        this.waves = waves;
-
-        // grid
-        // -1 é o caminho das tropas da
-        //  0 é disponivel pra posicionar a torre
-        //  1 é uma torre já existente
-        this.map = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ]
-
-
-        this.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
-        this.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
-        this.bmpText = this.add.bitmapText(50, 622, 'carrier_command','Map 1  Wave',16);
-        
-        this.textVidas = this.add.bitmapText(610, 622, 'carrier_command',String(this.vida),16);
-        this.textDinheiro = this.add.bitmapText(450, 622, 'carrier_command',String(this.dinheiro),16);
-        this.textWave = this.add.bitmapText(270, 622, 'carrier_command',String(this.waveCounter+1),16);
-
-        this.bmpText.inputEnabled = true;
-        this.textVidas.inputEnabled = true;
-        this.textDinheiro.inputEnabled = true;
-        this.textWave.inputEnabled = true;
-
-        this.listaDeTorres = [];
-        this.torresDeCompra = [];
-
-
-        // função de debug pra testar o mapeamento (coloca uma torre em todos os lugares possíveis)
-        // for (let i = 0; i < this.map.length; i++) {
-        //     for (let j = 0; j < this.map[i].length; j++) {
-        //         if (!this.map[i][j]) {
-        //             const torre = new Torre({
-        //                 cena: this,
-        //                 id: 0,
-        //                 x: (j * 50) + 25,
-        //                 y: (i * 50) + 25,
-        //                 imagem: "Torre-" + String(0 + 1),
-        //                 raio: 200,
-        //                 dano: 100,
-        //                 fireRate: 300
-        //             })
-
-        //             torre.sprite.setScale(1.25, 1.25)
-        //             // add nova torre
-        //             this.listaDeTorres.push(torre)
-        //         }
-        //     }
-        // }
+        setupWave(this, 1);
 
         // função chamada quando terminamos de arrastar uma torre
+        // deus sabe como eu a gnt vai passar isso pra utils
         const ondragend = (cena, map, id) => {
             let x = this.torresDeCompra[id].x
             let y = this.torresDeCompra[id].y
@@ -227,39 +126,11 @@ export default class cenaNivel_1 extends Phaser.Scene {
             this.torresDeCompra[id].y = this.torresDeCompra[id].originalY
         }
 
-        this.sell.on('pointerdown', () => {
-            if (this.selectedTower) {
-                this.dinheiro += this.selectedTower.totalSpentOn * 0.8;
-                const x = (Math.ceil(this.selectedTower.x / 50) - 1).toString()
-                const y = (Math.ceil(this.selectedTower.y / 50) - 1).toString()
-                this.selectedTower.destroy();
-                this.selectionSquare.visible = false;
-                this.sell.visible = false;
-                this.levelUp.visible = false;
-                this.map[y][x] = 0;
-                const towerIndex = this.listaDeTorres.indexOf(this.selectedTower);
-                this.listaDeTorres.splice(towerIndex, 1);
-                this.selectedTower = null;
-            }
-        })
+        setupSell(this);
 
-        this.levelUp.on('pointerdown', () => {
-            if (this.selectedTower) {
-                // todo: balancear isso aq
-                if (this.selectedTower.level != 5) {
-                    // todo: tabelar o preço dos upgrades
-                    if (this.dinheiro >= 100) {
-                        this.dinheiro -= 100;
-                        this.selectedTower.level++;
-                        this.selectedTower.fireRate /= 2;
-                        this.selectedTower.currentAnimation--;
-                        this.selectedTower.sprite.anims.play("Torre-" + this.selectedTower.currentAnimation);
-                        console.log("tower leveled up! current level:", this.selectedTower.level);
-                    }
-                }
-            }
-        })
+        setupLevelUp(this);
 
+        // parecido com a função "ondragend", deus sabe como a gnt vai passar isso aq pra utils
         for (let i = 0; i < 4; i++) {
             const torreCompra = new TorreDraggable({
                 cena: this,
@@ -281,53 +152,12 @@ export default class cenaNivel_1 extends Phaser.Scene {
             })
             this.torresDeCompra.push(torreCompra)
         }
-        this.background = this.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
-        
-        //Inicio Pause
-        var button = this.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
-        button.setInteractive({ cursor: 'pointer' });
-        button.on('pointerdown', function () {
-            this.scene.pause();
-            this.scene.launch('Pause', this);
-    
-        }, this);
-        this.events.on('pause', () => {
-            button.setFrame(0);
-            this.music.mute = true;
-        })
-        this.events.on('resume', () => {
-            button.setFrame(1);
-            this.music.mute = false;
-        })
-        //Fim Pause
-    
-        //Inicio Reset
-        var reset = this.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
-        reset.setInteractive({ cursor: 'pointer' });
-        reset.once('pointerdown', function () {
-            this.music.mute = true;
-            this.vida = this.vidaMax;
-            this.dinheiro = this.dinheiroMax;
-            this.pontuacao = 0;
-            this.waveCounter = 0;
-    
-            this.scene.restart();
-        }, this);
-        //Fim Reset
-    
-        //Inicio Home
-        var home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
-        home.setInteractive({ cursor: 'pointer' });
-        home.once('pointerdown', function () {
-            this.scene.start("Menu");
-            this.scene.stop();
-            this.music.mute = true;
-            this.vida = this.vidaMax;
-            this.dinheiro = this.dinheiroMax;
-            this.pontuacao = 0;
-            this.waveCounter = 0;
-        }, this);
-        //Fim Home
+
+        setupPause(this);
+
+        setupReset(this);
+
+        setupHome(this);
     }
     
     update(time, delta) {

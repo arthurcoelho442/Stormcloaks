@@ -1,0 +1,215 @@
+'use strict'
+
+import Wave from "./wave.js";
+
+export const setupStaticSprites = (scene) => {
+    scene.background = scene.physics.add.sprite(0, 0, "Mapa-1").setOrigin(0, 0);
+    scene.background.setInteractive();
+    scene.grid = scene.add.image(0, 0, "Grid").setOrigin(0, 0);
+
+    scene.selectionSquare = scene.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
+    scene.selectionSquare.visible = false;
+
+    scene.menuLateral = scene.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
+
+    scene.sell = scene.physics.add.sprite(800, 300, "Menu-Icon-8").setOrigin(0, 0);
+    scene.sell.setInteractive();
+    scene.sell.visible = false;
+    scene.levelUp = scene.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
+    scene.levelUp.setInteractive();
+    scene.levelUp.visible = false;
+
+    scene.background.on('pointerdown', () => {
+        scene.selectedTower = null;
+        scene.selectionSquare.visible = false;
+        scene.sell.visible = false;
+        scene.levelUp.visible = false;
+    })
+
+    scene.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
+    scene.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
+    scene.bmpText = scene.add.bitmapText(50, 622, 'carrier_command','Map 1  Wave',16);
+    
+    scene.textVidas = scene.add.bitmapText(610, 622, 'carrier_command',String(scene.vida),16);
+    scene.textDinheiro = scene.add.bitmapText(450, 622, 'carrier_command',String(scene.dinheiro),16);
+    scene.textWave = scene.add.bitmapText(270, 622, 'carrier_command',String(scene.waveCounter+1),16);
+
+    scene.bmpText.inputEnabled = true;
+    scene.textVidas.inputEnabled = true;
+    scene.textDinheiro.inputEnabled = true;
+    scene.textWave.inputEnabled = true;
+
+    scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
+}
+
+export const setupMusic = (scene, musicName) => {
+    scene.music = scene.sound.add(musicName, {
+        mute: false,
+        volume: 0.25,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: true,
+        delay: 0
+    });
+
+    scene.music.play();
+}
+
+// grid
+// -1 é o caminho das tropas da
+//  0 é disponivel pra posicionar a torre
+//  1 é uma torre já existente
+export const setupGrid = (scene, level) => {
+    if (level === 1) {
+        scene.map = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ];
+    }
+}
+
+export const setupWave = (scene, level) => {
+    let qtdTropas = 20;
+    let velocidade = 50;
+    let vida = 1000;
+    let xTropa = -50;
+    let yTropa = 75;
+    let distanciarPelo = "Esquerda"
+    let imgTropa = "Tropa";
+
+    if (level === 1) {
+        qtdTropas = 10;
+        velocidade = 50;
+        vida = 1000;
+        xTropa = -50;
+        yTropa = 75;
+        distanciarPelo = "Esquerda"
+        imgTropa = "Tropa";
+    }
+
+    let waves = [];
+
+    for (let i = 0; i < scene.qtdWave; i++) {
+        waves[i] = new Wave(scene, vida + i * 180, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
+        waves[i].setColor(i + 1);
+    }
+
+    scene.waves = waves;
+}
+
+export const setupSell = (scene) => {
+    scene.sell.on('pointerdown', () => {
+        if (scene.selectedTower) {
+            scene.dinheiro += scene.selectedTower.totalSpentOn * 0.8;
+            const x = (Math.ceil(scene.selectedTower.x / 50) - 1).toString()
+            const y = (Math.ceil(scene.selectedTower.y / 50) - 1).toString()
+            scene.selectedTower.destroy();
+            scene.selectionSquare.visible = false;
+            scene.sell.visible = false;
+            scene.levelUp.visible = false;
+            scene.map[y][x] = 0;
+            const towerIndex = scene.listaDeTorres.indexOf(scene.selectedTower);
+            scene.listaDeTorres.splice(towerIndex, 1);
+            scene.selectedTower = null;
+        }
+    })
+}
+
+export const setupLevelUp = (scene) => {
+    scene.levelUp.on('pointerdown', () => {
+        if (scene.selectedTower) {
+            // todo: balancear isso aq
+            if (scene.selectedTower.level != 5) {
+                // todo: tabelar o preço dos upgrades
+                if (scene.dinheiro >= 100) {
+                    scene.dinheiro -= 100;
+                    scene.selectedTower.level++;
+                    scene.selectedTower.fireRate /= 2;
+                    scene.selectedTower.currentAnimation--;
+                    scene.selectedTower.sprite.anims.play("Torre-" + scene.selectedTower.currentAnimation);
+                    console.log("tower leveled up! current level:", scene.selectedTower.level);
+                }
+            }
+        }
+    })
+}
+
+export const setupPause = (scene) => {
+    const button = scene.add.sprite(770, 610, "Play_Pause", 1).setOrigin(0, 0).setScale(0.7, 0.7);
+    button.setInteractive({ cursor: 'pointer' });
+    button.on('pointerdown', function () {
+        scene.scene.pause();
+        scene.scene.launch('Pause', scene);
+
+    }, scene);
+    scene.events.on('pause', () => {
+        button.setFrame(0);
+        scene.music.mute = true;
+    })
+    scene.events.on('resume', () => {
+        button.setFrame(1);
+        scene.music.mute = false;
+    })
+}
+
+export const setupReset = (scene) => {
+    const reset = scene.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
+    reset.setInteractive({ cursor: 'pointer' });
+    reset.once('pointerdown', function () {
+        scene.music.mute = true;
+        scene.vida = scene.vidaMax;
+        scene.dinheiro = scene.dinheiroMax;
+        scene.pontuacao = 0;
+        scene.waveCounter = 0;
+
+        scene.scene.restart();
+    }, scene);
+}
+
+export const setupHome = (scene) => {
+    const home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
+    home.setInteractive({ cursor: 'pointer' });
+    home.once('pointerdown', function () {
+        this.scene.start("Menu");
+        this.scene.stop();
+        this.music.mute = true;
+        this.vida = this.vidaMax;
+        this.dinheiro = this.dinheiroMax;
+        this.pontuacao = 0;
+        this.waveCounter = 0;
+    }, this);
+}
+
+
+// função de debug pra testar o mapeamento (coloca uma torre em todos os lugares possíveis)
+// for (let i = 0; i < this.map.length; i++) {
+//     for (let j = 0; j < this.map[i].length; j++) {
+//         if (!this.map[i][j]) {
+//             const torre = new Torre({
+//                 cena: this,
+//                 id: 0,
+//                 x: (j * 50) + 25,
+//                 y: (i * 50) + 25,
+//                 imagem: "Torre-" + String(0 + 1),
+//                 raio: 200,
+//                 dano: 100,
+//                 fireRate: 300
+//             })
+
+//             torre.sprite.setScale(1.25, 1.25)
+//             // add nova torre
+//             this.listaDeTorres.push(torre)
+//         }
+//     }
+// }
