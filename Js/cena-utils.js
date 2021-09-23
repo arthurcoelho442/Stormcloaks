@@ -30,18 +30,18 @@ export const setupStaticSprites = (scene) => {
 
     scene.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
     scene.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
-    scene.bmpText = scene.add.bitmapText(50, 622, 'carrier_command','Map 1  Wave',16);
-    
-    scene.textVidas = scene.add.bitmapText(610, 622, 'carrier_command',String(scene.vida),16);
-    scene.textDinheiro = scene.add.bitmapText(450, 622, 'carrier_command',String(scene.dinheiro),16);
-    scene.textWave = scene.add.bitmapText(270, 622, 'carrier_command',String(scene.waveCounter+1),16);
+    scene.bmpText = scene.add.bitmapText(50, 622, 'carrier_command', 'Map 1  Wave', 16);
+
+    scene.textVidas = scene.add.bitmapText(610, 622, 'carrier_command', String(scene.vida), 16);
+    scene.textDinheiro = scene.add.bitmapText(450, 622, 'carrier_command', String(scene.dinheiro), 16);
+    scene.textWave = scene.add.bitmapText(270, 622, 'carrier_command', String(scene.waveCounter + 1), 16);
 
     scene.bmpText.inputEnabled = true;
     scene.textVidas.inputEnabled = true;
     scene.textDinheiro.inputEnabled = true;
     scene.textWave.inputEnabled = true;
 
-    scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75,0.75);
+    scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75, 0.75);
 }
 
 export const setupMusic = (scene, musicName) => {
@@ -265,7 +265,7 @@ const ondragend = (scene, map, id) => {
                     torre.slowTimer = 1000; // duração do slow, em ms
                 }
                 torre.sprite.anims.play("Torre-" + firstAnimation.toString(), true); // deus sabe pq isso aq não funciona
-                
+
                 torre.sprite.setInteractive()
                 torre.sprite.on('pointerdown', () => {
                     scene.selectedTower = torre;
@@ -303,7 +303,7 @@ export const setupTowerDraggables = (scene) => {
         //On hover da descrição das torres
         var descricao;
         torreCompra.on('pointerover', () => {
-            descricao = scene.add.image(torreCompra.originalX-36, torreCompra.originalY-65, "Descricao-"+ String(torreCompra.id + 1));
+            descricao = scene.add.image(torreCompra.originalX - 36, torreCompra.originalY - 65, "Descricao-" + String(torreCompra.id + 1));
         })
         torreCompra.on('pointerout', () => {
             descricao.destroy();
