@@ -163,6 +163,7 @@ export const setupPause = (scene) => {
     })
 }
 
+// todo: descobrir pq o botão reset quebra a colocação de torres
 export const setupReset = (scene) => {
     const reset = scene.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
     reset.setInteractive({ cursor: 'pointer' });
@@ -177,18 +178,19 @@ export const setupReset = (scene) => {
     }, scene);
 }
 
+// todo: descobrir pq o botão home quebra a colocação de torres
 export const setupHome = (scene) => {
-    const home = this.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
+    const home = scene.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
     home.setInteractive({ cursor: 'pointer' });
     home.once('pointerdown', function () {
-        this.scene.start("Menu");
-        this.scene.stop();
-        this.music.mute = true;
-        this.vida = this.vidaMax;
-        this.dinheiro = this.dinheiroMax;
-        this.pontuacao = 0;
-        this.waveCounter = 0;
-    }, this);
+        scene.scene.start("Menu");
+        scene.scene.stop();
+        scene.music.mute = true;
+        scene.vida = scene.vidaMax;
+        scene.dinheiro = scene.dinheiroMax;
+        scene.pontuacao = 0;
+        scene.waveCounter = 0;
+    }, scene);
 }
 
 
