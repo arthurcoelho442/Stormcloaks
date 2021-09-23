@@ -1,8 +1,5 @@
-import Tropa from "./tropa.js";
-import Torre from "./tower.js";
-import TorreDraggable from "./towerDraggable.js"
 import Tiro from "./shot.js"
-import { setupStaticSprites, setupMusic, setupGrid, setupWave, setupSell, setupLevelUp, setupPause, setupReset } from './cena-utils.js'
+import { setupStaticSprites, setupMusic, setupGrid, setupWave, setupSell, setupTowerDraggables, setupLevelUp, setupPause, setupReset, setupHome } from './cena-utils.js'
 export default class cenaNivel_1 extends Phaser.Scene {
     constructor() {
         super({
@@ -25,138 +22,14 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
     create() {
         setupStaticSprites(this);
-
         setupMusic(this, "WC3-Orc");
-
         setupGrid(this, 1);
-
         setupWave(this, 1);
-
-        // função chamada quando terminamos de arrastar uma torre
-        // deus sabe como eu a gnt vai passar isso pra utils
-        const ondragend = (cena, map, id) => {
-            let x = this.torresDeCompra[id].x
-            let y = this.torresDeCompra[id].y
-
-            // checa os limites do canvas
-            if (x < 800 && y < 600) {
-                const coordenadaX = x;
-                const coordenadaY = y;
-                // converter de coordenadas do canvas para coordenadas do grid
-                x = (Math.ceil(this.torresDeCompra[id].x / 50) - 1).toString()
-                y = (Math.ceil(this.torresDeCompra[id].y / 50) - 1).toString()
-
-                // se for 0 pode colocar, se não for 0 tem caminho ou já tem torre
-                if (map[y][x] == 0) {
-                    let custo;
-                    let raio;
-                    let dano;
-                    let fireRate; // tempo entre os tiros, em ms
-                    let firstAnimation;
-
-                    if (id == 0) {  // torre padrão
-                        custo = 500;
-                        raio = 190;
-                        dano = 125;
-                        fireRate = 500;
-                        firstAnimation = 4;
-                    } else if (id == 1) { // torre canhão
-                        custo = 750;
-                        raio = 190;
-                        dano = 175;
-                        fireRate = 1000;
-                        firstAnimation = 9;
-                    } else if (id == 2) { // torre de slow
-                        custo = 500;
-                        raio = 190;
-                        dano = 100;
-                        fireRate = 1000;
-                        firstAnimation = 14;
-                    } else { // torre sniper
-                        custo = 1000;
-                        raio = 540;
-                        dano = 500;
-                        fireRate = 1800;
-                        firstAnimation = 19;
-                    }
-
-                    if (this.dinheiro >= custo) {
-                        map[y][x] = 1; // marca a casa do grid como marcada
-
-                        this.dinheiro -= custo;
-
-                        const torre = new Torre({
-                            cena: cena,
-                            id: id,
-                            x: this.torresDeCompra[id].x,
-                            y: this.torresDeCompra[id].y,
-                            imagem: "Torre-Default-" + String(id + 1),
-                            raio: raio,
-                            dano: dano,
-                            fireRate: fireRate,
-                            totalSpentOn: custo,
-                            currAnimation: firstAnimation,
-                        })
-
-                        if (torre.id == 2) {
-                            torre.slowMultiplier = 0.25; // (velocidade - slowMultiplier * velocidade)
-                            torre.slowTimer = 1000; // duração do slow, em ms
-                        }
-                        torre.sprite.anims.play("Torre-" + firstAnimation.toString(), true); // deus sabe pq isso aq não funciona
-                        
-                        torre.sprite.setInteractive()
-                        torre.sprite.on('pointerdown', () => {
-                            this.selectedTower = torre;
-                            this.selectionSquare.x = coordenadaX - 25;
-                            this.selectionSquare.y = coordenadaY - 25;
-                            this.selectionSquare.visible = true;
-                            this.sell.visible = true;
-                            this.levelUp.visible = true;
-                        })
-
-
-                        // add nova torre
-                        cena.listaDeTorres.push(torre)
-                    }
-                }
-            }
-
-            // snap da torre de compra de volta pro lugar q ela fica
-            this.torresDeCompra[id].x = this.torresDeCompra[id].originalX
-            this.torresDeCompra[id].y = this.torresDeCompra[id].originalY
-        }
-
         setupSell(this);
-
         setupLevelUp(this);
-
-        // parecido com a função "ondragend", deus sabe como a gnt vai passar isso aq pra utils
-        for (let i = 0; i < 4; i++) {
-            const torreCompra = new TorreDraggable({
-                cena: this,
-                x: 850,
-                y: 100 + 60 * i, // valores das posições das torres são 100, 160, 220, 280 (completamente arbitrário)
-                imagem: "Menu-Icon-" + String(i + 1),
-                map: this.map,
-                id: i,
-                ondragend: ondragend
-            });
-
-            //On hover da descrição das torres
-            var descricao;
-            torreCompra.on('pointerover', () => {
-                descricao = this.add.image(torreCompra.originalX-36, torreCompra.originalY-65, "Descricao-"+ String(torreCompra.id + 1));
-            })
-            torreCompra.on('pointerout', () => {
-                descricao.destroy();
-            })
-            this.torresDeCompra.push(torreCompra)
-        }
-
+        setupTowerDraggables(this);
         setupPause(this);
-
         setupReset(this);
-
         setupHome(this);
     }
     

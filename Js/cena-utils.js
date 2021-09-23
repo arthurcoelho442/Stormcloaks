@@ -1,6 +1,8 @@
 'use strict'
 
 import Wave from "./wave.js";
+import Torre from "./tower.js";
+import TorreDraggable from "./towerDraggable.js"
 
 export const setupStaticSprites = (scene) => {
     scene.background = scene.physics.add.sprite(0, 0, "Mapa-1").setOrigin(0, 0);
@@ -193,6 +195,122 @@ export const setupHome = (scene) => {
     }, scene);
 }
 
+// função chamada quando terminamos de arrastar uma torre
+const ondragend = (scene, map, id) => {
+    let x = scene.torresDeCompra[id].x
+    let y = scene.torresDeCompra[id].y
+
+    // checa os limites do canvas
+    if (x < 800 && y < 600) {
+        const coordenadaX = x;
+        const coordenadaY = y;
+        // converter de coordenadas do canvas para coordenadas do grid
+        x = (Math.ceil(scene.torresDeCompra[id].x / 50) - 1).toString()
+        y = (Math.ceil(scene.torresDeCompra[id].y / 50) - 1).toString()
+
+        // se for 0 pode colocar, se não for 0 tem caminho ou já tem torre
+        if (map[y][x] == 0) {
+            let custo;
+            let raio;
+            let dano;
+            let fireRate; // tempo entre os tiros, em ms
+            let firstAnimation;
+
+            if (id == 0) {  // torre padrão
+                custo = 500;
+                raio = 190;
+                dano = 125;
+                fireRate = 500;
+                firstAnimation = 4;
+            } else if (id == 1) { // torre canhão
+                custo = 750;
+                raio = 190;
+                dano = 175;
+                fireRate = 1000;
+                firstAnimation = 9;
+            } else if (id == 2) { // torre de slow
+                custo = 500;
+                raio = 190;
+                dano = 100;
+                fireRate = 1000;
+                firstAnimation = 14;
+            } else { // torre sniper
+                custo = 1000;
+                raio = 540;
+                dano = 500;
+                fireRate = 1800;
+                firstAnimation = 19;
+            }
+
+            if (scene.dinheiro >= custo) {
+                map[y][x] = 1; // marca a casa do grid como marcada
+
+                scene.dinheiro -= custo;
+
+                const torre = new Torre({
+                    cena: scene,
+                    id: id,
+                    x: scene.torresDeCompra[id].x,
+                    y: scene.torresDeCompra[id].y,
+                    imagem: "Torre-Default-" + String(id + 1),
+                    raio: raio,
+                    dano: dano,
+                    fireRate: fireRate,
+                    totalSpentOn: custo,
+                    currAnimation: firstAnimation,
+                })
+
+                if (torre.id == 2) {
+                    torre.slowMultiplier = 0.25; // (velocidade - slowMultiplier * velocidade)
+                    torre.slowTimer = 1000; // duração do slow, em ms
+                }
+                torre.sprite.anims.play("Torre-" + firstAnimation.toString(), true); // deus sabe pq isso aq não funciona
+                
+                torre.sprite.setInteractive()
+                torre.sprite.on('pointerdown', () => {
+                    scene.selectedTower = torre;
+                    scene.selectionSquare.x = coordenadaX - 25;
+                    scene.selectionSquare.y = coordenadaY - 25;
+                    scene.selectionSquare.visible = true;
+                    scene.sell.visible = true;
+                    scene.levelUp.visible = true;
+                })
+
+
+                // add nova torre
+                scene.listaDeTorres.push(torre)
+            }
+        }
+    }
+
+    // snap da torre de compra de volta pro lugar q ela fica
+    scene.torresDeCompra[id].x = scene.torresDeCompra[id].originalX
+    scene.torresDeCompra[id].y = scene.torresDeCompra[id].originalY
+}
+
+export const setupTowerDraggables = (scene) => {
+    for (let i = 0; i < 4; i++) {
+        const torreCompra = new TorreDraggable({
+            cena: scene,
+            x: 850,
+            y: 100 + 60 * i, // valores das posições das torres são 100, 160, 220, 280 (completamente arbitrário)
+            imagem: "Menu-Icon-" + String(i + 1),
+            map: scene.map,
+            id: i,
+            ondragend: ondragend
+        });
+
+        //On hover da descrição das torres
+        var descricao;
+        torreCompra.on('pointerover', () => {
+            descricao = scene.add.image(torreCompra.originalX-36, torreCompra.originalY-65, "Descricao-"+ String(torreCompra.id + 1));
+        })
+        torreCompra.on('pointerout', () => {
+            descricao.destroy();
+        })
+        scene.torresDeCompra.push(torreCompra)
+    }
+}
 
 // função de debug pra testar o mapeamento (coloca uma torre em todos os lugares possíveis)
 // for (let i = 0; i < this.map.length; i++) {
