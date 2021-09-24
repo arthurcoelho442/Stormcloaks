@@ -197,7 +197,6 @@ export const setupPause = (scene) => {
     })
 }
 
-// todo: descobrir pq o botão reset quebra a colocação de torres
 export const setupReset = (scene) => {
     const reset = scene.add.image(710, 610, "Reset").setOrigin(0, 0).setScale(0.7, 0.7);
     reset.setInteractive({ cursor: 'pointer' });
@@ -207,12 +206,13 @@ export const setupReset = (scene) => {
         scene.dinheiro = scene.dinheiroMax;
         scene.pontuacao = 0;
         scene.waveCounter = 0;
-
+        scene.selectedTower = null;
+        scene.listaDeTorres = [];
+        scene.torresDeCompra = [];
         scene.scene.restart();
     }, scene);
 }
 
-// todo: descobrir pq o botão home quebra a colocação de torres
 export const setupHome = (scene) => {
     const home = scene.add.image(830, 610, "Home").setOrigin(0, 0).setScale(0.7, 0.7);
     home.setInteractive({ cursor: 'pointer' });
@@ -224,6 +224,9 @@ export const setupHome = (scene) => {
         scene.dinheiro = scene.dinheiroMax;
         scene.pontuacao = 0;
         scene.waveCounter = 0;
+        scene.selectedTower = null;
+        scene.listaDeTorres = [];
+        scene.torresDeCompra = [];
     }, scene);
 }
 
@@ -321,6 +324,7 @@ const ondragend = (scene, map, id) => {
 }
 
 export const setupTowerDraggables = (scene) => {
+    console.log('setting up draggable towers')
     for (let i = 0; i < 4; i++) {
         const torreCompra = new TorreDraggable({
             cena: scene,
