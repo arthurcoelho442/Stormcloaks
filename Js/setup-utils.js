@@ -4,8 +4,17 @@ import Wave from "./wave.js";
 import Torre from "./tower.js";
 import TorreDraggable from "./towerDraggable.js"
 
-export const setupStaticSprites = (scene) => {
-    scene.background = scene.physics.add.sprite(0, 0, "Mapa-1").setOrigin(0, 0);
+export const setupStaticSprites = (scene, level) => {
+    let mapa;
+    let mapString;
+    if (level === 1) {
+        mapa = "Mapa-1";
+        mapString = "Map 1 Wave";
+    } else if (level === 2) {
+        mapa = "Mapa-2";
+        mapString = "Map 2 Wave";
+    }
+    scene.background = scene.physics.add.sprite(0, 0, mapa).setOrigin(0, 0);
     scene.background.setInteractive();
     scene.grid = scene.add.image(0, 0, "Grid").setOrigin(0, 0);
 
@@ -30,7 +39,7 @@ export const setupStaticSprites = (scene) => {
 
     scene.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
     scene.add.image(390, 610, "Coin").setOrigin(0, 0).setScale(0.044, 0.044);
-    scene.bmpText = scene.add.bitmapText(50, 622, 'carrier_command', 'Map 1  Wave', 16);
+    scene.bmpText = scene.add.bitmapText(50, 622, 'carrier_command', mapString, 16);
 
     scene.textVidas = scene.add.bitmapText(610, 622, 'carrier_command', String(scene.vida), 16);
     scene.textDinheiro = scene.add.bitmapText(450, 622, 'carrier_command', String(scene.dinheiro), 16);
@@ -78,6 +87,21 @@ export const setupGrid = (scene, level) => {
             [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
             [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ];
+    } else if (level === 2) {
+        scene.map = [
+            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
     }
 }
 
@@ -97,6 +121,14 @@ export const setupWave = (scene, level) => {
         xTropa = -50;
         yTropa = 75;
         distanciarPelo = "Esquerda"
+        imgTropa = "Tropa";
+    } else if (level === 2) {
+        qtdTropas  = 12;
+        velocidade  = 60;
+        vida = 1000;
+        xTropa = 125;
+        yTropa = -10;
+        distanciarPelo = "Cima"
         imgTropa = "Tropa";
     }
 

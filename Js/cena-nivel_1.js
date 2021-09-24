@@ -21,7 +21,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
     }
 
     create() {
-        setupStaticSprites(this);
+        setupStaticSprites(this, 1);
         setupMusic(this, "WC3-Orc");
         setupGrid(this, 1);
         setupWave(this, 1);
@@ -39,7 +39,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
 
         updateBottomBar(this);
         updateTowers(this, time, delta, wave);
-        updateTroops(this, time, delta, wave, waveSpeed);
+        updateTroops(this, 1, time, delta, wave, waveSpeed);
         checkDeath(this);
         
         if (wave.length == 0)
