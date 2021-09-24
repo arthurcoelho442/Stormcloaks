@@ -41,7 +41,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         updateTowers(this, time, delta, wave);
         updateTroops(this, 1, time, delta, wave, waveSpeed);
         checkDeath(this);
-        
+
         if (wave.length == 0)
             this.waveCounter++;
 

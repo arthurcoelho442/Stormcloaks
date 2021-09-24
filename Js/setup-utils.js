@@ -123,8 +123,8 @@ export const setupWave = (scene, level) => {
         distanciarPelo = "Esquerda"
         imgTropa = "Tropa";
     } else if (level === 2) {
-        qtdTropas  = 12;
-        velocidade  = 60;
+        qtdTropas = 12;
+        velocidade = 60;
         vida = 1000;
         xTropa = 125;
         yTropa = -10;
