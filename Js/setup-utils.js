@@ -296,7 +296,7 @@ const ondragend = (scene, map, id) => {
                 })
 
                 if (torre.id == 2) {
-                    torre.slowMultiplier = 0.25; // (velocidade - slowMultiplier * velocidade)
+                    torre.slowMultiplier = 0.35; // (velocidade - slowMultiplier * velocidade)
                     torre.slowTimer = 1000; // duração do slow, em ms
                 }
                 torre.sprite.anims.play("Torre-" + firstAnimation.toString(), true); // deus sabe pq isso aq não funciona

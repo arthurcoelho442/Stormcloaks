@@ -15,6 +15,7 @@ export const updateTowers = (scene, time, delta) => {
 
     scene.listaDeTorres.forEach((torre) => {
         let target = null
+        let targetFallback = null
         for (let i = 0; i < wave.length; i++) {
             if (wave[i] == null) {
                 continue;
@@ -26,11 +27,18 @@ export const updateTowers = (scene, time, delta) => {
             const y = torre.y - pos.y
             const dist = Math.sqrt(x * x + y * y)
             if (dist <= torre.raio) {
-                target = wave[i];
-                break;  // hoje eu descobri que forEachs não suportam break statements
+                if ((torre.id === 2 && !wave[i].isSlowed) || torre.id !== 2) {
+                    target = wave[i];
+                    break;
+                } else {
+                    targetFallback = wave[i];
+                }
             }
         }
-        if (target) {
+        if (target || targetFallback) {
+            if (!target && targetFallback)
+                target = targetFallback
+
             torre.trackEnemy(target.sprite.getCenter().x, target.sprite.getCenter().y);
 
             let shotPng = "Tiro-Teste"
