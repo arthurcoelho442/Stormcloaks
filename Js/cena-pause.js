@@ -44,6 +44,9 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.waveCounterEsquerda = 0;
             this.cena.waveCounterDireita = 0;
             this.cena.waveCounterCima = 0;
+            this.cena.selectedTower = null;
+            this.cena.listaDeTorres = [];
+            this.cena.torresDeCompra = [];
             
             this.cena.scene.start("Menu");
             this.cena.scene.stop();
@@ -63,6 +66,9 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.waveCounterEsquerda = 0;
             this.cena.waveCounterDireita = 0;
             this.cena.waveCounterCima = 0;
+            this.cena.selectedTower = null;
+            this.cena.listaDeTorres = [];
+            this.cena.torresDeCompra = [];
     
             this.cena.scene.restart();
             this.scene.stop();
