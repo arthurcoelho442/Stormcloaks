@@ -51,6 +51,8 @@ export const setupStaticSprites = (scene, level) => {
     scene.textWave.inputEnabled = true;
 
     scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75, 0.75);
+    scene.listaDeTorres = [];
+    scene.torresDeCompra = [];
 }
 
 export const setupMusic = (scene, musicName) => {

@@ -28,9 +28,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
         setupSell(this);
         setupLevelUp(this);
         setupTowerDraggables(this);
+        setupHome(this);
         setupPause(this);
         setupReset(this);
-        setupHome(this);
     }
 
     update(time, delta) {
