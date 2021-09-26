@@ -21,7 +21,6 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.selectedTower = null;
     }
     preload() {
-
     }
 
     create() {
