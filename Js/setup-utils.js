@@ -170,7 +170,7 @@ export const setupWave = (scene, level) => {
     } else if (level === 3) {
         qtdTropas = 3;
         velocidade = 80;
-        vida = 10000;
+        vida = 1000;
         xTropa = [-10, 810]
         yTropa = 125;
         imgTropa = "Tropa";
@@ -178,7 +178,7 @@ export const setupWave = (scene, level) => {
     } else if (level === 4) {
         qtdTropas = 5;
         velocidade = 50;
-        vida = 10000;
+        vida = 1000;
         xTropa = [-10, 810, 175]
         yTropa = [75, 75, -10];
         imgTropa = "Tropa";
@@ -248,9 +248,9 @@ export const setupLevelUp = (scene) => {
         priceUpgradesTorreSniper
     ]
 
-    const valueUpgradesTorreBasica = [450, 400, 350, 300] // fire rate
+    const valueUpgradesTorreBasica = [400, 300, 225, 175] // fire rate
     const valueUpgradesTorreExp = [175, 225, 300, 350] // explosion damage
-    const valueUpgradesTorreSlow = [1200, 1400, 1600, 2000] // slow rate?
+    const valueUpgradesTorreSlow = [1200, 1500, 1800, 2300] // slow rate?
     const valueUpgradesTorreSniper = [[360, 625], [520, 1250], [680, 1875], [840, 2500]]
     const valueUpgrades = [
         valueUpgradesTorreBasica,
