@@ -299,7 +299,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 export const updateLista = (scene, wave) => {
 
     let aux = []
-    for(let i=0; i < 3; i++)
+    for(let i=0; i < 2; i++)
         aux[i] = wave[i].id
     console.log(aux);
 
@@ -311,6 +311,7 @@ export const updateLista = (scene, wave) => {
             let posA = a.sprite.getCenter();
             let posB = b.sprite.getCenter();
 
+            console.log(posA.x, posB.x)
             if(velocidadeA.x == 0 && velocidadeA.y == 0)
                 return 0;
             if(velocidadeA.x > 0 && velocidadeA.y == 0){
