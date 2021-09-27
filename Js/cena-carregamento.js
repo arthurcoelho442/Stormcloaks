@@ -29,6 +29,7 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image('backg', 'Imagens/Menu_principal_sem_torre.png')
         this.load.image('play', 'Imagens/Botao de play_1.png')
         this.load.image('play2', 'Imagens/Botao de play_2.png')
+        this.load.spritesheet("Play3", "Imagens/Play_buttom3.png", { frameWidth: 270, frameHeight: 92 });
 
         this.load.image("Mapa-Teste", "Imagens/Test_map_grid.png");
         this.load.image("Mapa-1", "Imagens/Mapa_1.png");

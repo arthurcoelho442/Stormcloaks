@@ -17,14 +17,14 @@ export default class cenaMenu extends Phaser.Scene{
             this.vol = Math.trunc(((volume*10)/this.volMax)+0.1);
 
         this.add.image(0,0,'backg').setOrigin(0, 0);
-        const playButton = this.add.image(460,350,'play')
+        const playButton = this.add.image(450, 400, 'Play3').setFrame(0);
         playButton.setInteractive({ cursor: 'pointer' })
 
         playButton.on('pointerover', () => {
-            this.add.image(460,350,'play2')
+            playButton.setFrame(1)
         })
         playButton.on('pointerout', () => {
-            this.add.image(460,350,'play')
+            playButton.setFrame(0)
         })
 
         playButton.on('pointerdown', () => {
@@ -33,8 +33,8 @@ export default class cenaMenu extends Phaser.Scene{
             this.scene.stop();
         })
 
-        const confButton = this.add.text(400, 385, 'Configurações');
-        const scoreButton = this.add.text(420, 410, 'Creditos');
+        const confButton = this.add.text(330, 460, 'Configurações do volume');
+        const scoreButton = this.add.text(400, 490, 'Creditos');
         confButton.setInteractive({ cursor: 'pointer' })
         scoreButton.setInteractive({ cursor: 'pointer' })
 
