@@ -17,15 +17,22 @@ export default class TorreDraggable extends Torre {
         this.cena.input.on('drag', (pointer, gameObject, dragX, dragY) => { // função "on drag" do Phaser
             if (!this.draggable) return;
             this.dragging = true;
-
+            
             if (dragX < 800 && dragY < 600) {   // só faz o snap dentro do canvas
                 dragX = Math.ceil(dragX / 50) * 50 - 25
                 dragY = Math.ceil(dragY / 50) * 50 - 25
+            }
+            if (this.id === gameObject.id) {
+                console.log(this.id)
+                this.imagemRaio.visible = true;
+                this.imagemRaio.x = dragX;
+                this.imagemRaio.y = dragY;
             }
             gameObject.x = dragX;
             gameObject.y = dragY;
         })
         this.cena.input.on('dragend', (pointer, gameObject) => { // função "on drag end" do Phaser (que chama a nossa função ondragend)
+            this.imagemRaio.visible = false;
             this.dragging = false;
             gameObject.ondragend(this.cena, this.map, this.id);
         })

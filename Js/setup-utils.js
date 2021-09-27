@@ -30,6 +30,7 @@ export const setupStaticSprites = (scene, level) => {
     scene.levelUp.visible = false;
 
     scene.background.on('pointerdown', () => {
+        scene.selectedTower.imagemRaio.visible = false;
         scene.selectedTower = null;
         scene.selectionSquare.visible = false;
         scene.sell.visible = false;
@@ -58,6 +59,13 @@ export const setupStaticSprites = (scene, level) => {
 
     scene.listaDeTorres = [];
     scene.torresDeCompra = [];
+
+    for (let i = 3; i < 8; i++) {
+        scene.anims.create({
+            key: 'Range-' + i.toString(),
+            frames: scene.anims.generateFrameNumbers("Range-Sniper", { start: i, end: i }),
+        });
+    }
 }
 
 export const setupMusic = (scene, musicName, volume) => {
@@ -427,22 +435,23 @@ const ondragend = (scene, map, id) => {
             let dano;
             let fireRate; // tempo entre os tiros, em ms
             let firstAnimation;
+            let imagemRaio;
 
             if (id == 0) {  // torre padrão
                 custo = 500;
-                raio = 190;
+                raio = 200;
                 dano = 125;
                 fireRate = 500;
                 firstAnimation = 4;
             } else if (id == 1) { // torre canhão
                 custo = 750;
-                raio = 190;
+                raio = 135;
                 dano = 125;
                 fireRate = 1000;
                 firstAnimation = 9;
             } else if (id == 2) { // torre de slow
                 custo = 650;
-                raio = 190;
+                raio = 250;
                 dano = 100;
                 fireRate = 1000;
                 firstAnimation = 14;
@@ -466,6 +475,7 @@ const ondragend = (scene, map, id) => {
                     y: scene.torresDeCompra[id].y,
                     imagem: "Torre-Default-" + String(id + 1),
                     raio: raio,
+                    imagemRaio: "Range-" + id.toString(),
                     dano: dano,
                     fireRate: fireRate,
                     totalSpentOn: custo,
@@ -485,11 +495,11 @@ const ondragend = (scene, map, id) => {
                     scene.selectedTower = torre;
                     scene.selectionSquare.x = coordenadaX - 25;
                     scene.selectionSquare.y = coordenadaY - 25;
+                    torre.imagemRaio.visible = true;
                     scene.selectionSquare.visible = true;
                     scene.sell.visible = true;
                     scene.levelUp.visible = true;
                 })
-
 
                 // add nova torre
                 scene.listaDeTorres.push(torre)
@@ -512,6 +522,7 @@ export const setupTowerDraggables = (scene) => {
             imagem: "Menu-Icon-" + String(i + 1),
             map: scene.map,
             id: i,
+            imagemRaio: "Range-" + i.toString(),
             ondragend: ondragend
         });
 
