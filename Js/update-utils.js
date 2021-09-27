@@ -238,16 +238,19 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(velocidade);
             } if (pos.x <= 125 && pos.y >= 225) {
+                sprite.rotation += rotation;
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
             } if (pos.x >= 425 && pos.x <= 450 && pos.y >= 225 && pos.y <= 250) {
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(-velocidade);
             } if (pos.x >= 425 && pos.x <= 450 && pos.y <= 75 && tropa.loop) {
+                sprite.rotation -= rotation;
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
                 setTimeout(function () { tropa.loop = false; }, 1000);
             } else if (pos.x >= 425 && pos.y <= 75) {
+                sprite.rotation += rotation;
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
                 setTimeout(function () { tropa.loop = true; }, 300000 / velocidade);
@@ -255,6 +258,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(velocidade);
             } if (pos.x >= 675 && pos.y >= 525) {
+                sprite.rotation -= rotation;
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
             } if (pos.x <= 375 && pos.y >= 525 && tropa.loop) {
@@ -262,9 +266,11 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 sprite.setVelocityY(-velocidade);
                 setTimeout(function () { tropa.loop = false; }, 1000);
             } else if (pos.x <= 375 && pos.y >= 525) {
+                sprite.rotation -= rotation;
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
             } if (pos.x <= 375 && pos.y >= 375 && pos.y <= 380) {
+                sprite.rotation += rotation;
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
             } if (pos.x <= 125 && pos.y >= 375) {
@@ -528,12 +534,14 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             if (sprite && sprite != undefined) {
                 //Movimentação da tropa
                 if (pos.x <= 0 && pos.y <= 75) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 175 && pos.x <= 180 && pos.y <= 600) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
                 } if (pos.x >= 175 && pos.x <= 180 && pos.y >= 425 && pos.y <= 430) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 625 && pos.y >= 425 && pos.y <= 430) {
@@ -544,9 +552,11 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
                 } if (pos.x >= 625 && pos.y <= 175) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 625 && pos.y >= 525) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x <= 325 && pos.y >= 525) {
