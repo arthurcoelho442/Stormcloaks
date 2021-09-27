@@ -20,14 +20,15 @@ export const setupStaticSprites = (scene, level) => {
 
     scene.selectionSquare = scene.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
     scene.selectionSquare.visible = false;
-
+    
+    
     scene.menuLateral = scene.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
-
+    
     scene.sell = scene.physics.add.sprite(800, 300, "Menu-Icon-8").setOrigin(0, 0);
-    scene.sell.setInteractive();
+    scene.sell.setInteractive({ cursor: 'pointer' });
     scene.sell.visible = false;
     scene.levelUp = scene.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
-    scene.levelUp.setInteractive();
+    scene.levelUp.setInteractive({ cursor: 'pointer' });
     scene.levelUp.visible = false;
 
     scene.background.on('pointerdown', () => {
@@ -135,7 +136,6 @@ export const setupWave = (scene, level) => {
     }
 
     let waves = [];
-
     for (let i = 0; i < scene.qtdWave; i++) {
         waves[i] = new Wave(scene, vida + i * 180, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
         waves[i].setColor(i + 1);
@@ -163,9 +163,23 @@ export const setupSell = (scene) => {
 }
 
 export const setupLevelUp = (scene) => {
+
+    let descricao;
+    scene.levelUp.on('pointerover', () => {
+        if(scene.selectedTower.level != 5){
+            descricao =scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
+            descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id*4));
+        }
+    })
+    scene.levelUp.on('pointerout', () => {
+        if(scene.selectedTower.level != 5)
+            descricao.destroy();
+    })
+
     scene.levelUp.on('pointerdown', () => {
         if (scene.selectedTower) {
             // todo: balancear isso aq
+            descricao.destroy();
             if (scene.selectedTower.level != 5) {
                 // todo: tabelar o preço dos upgrades
                 if (scene.dinheiro >= 100) {
@@ -175,6 +189,10 @@ export const setupLevelUp = (scene) => {
                     scene.selectedTower.currentAnimation--;
                     scene.selectedTower.sprite.anims.play("Torre-" + scene.selectedTower.currentAnimation);
                     console.log("tower leveled up! current level:", scene.selectedTower.level);
+                }
+                if(scene.selectedTower.level != 5){
+                    descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
+                    descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id*4));
                 }
             }
         }

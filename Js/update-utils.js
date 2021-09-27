@@ -296,6 +296,46 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
     }
 }
 
+export const updateLista = (scene, wave) => {
+    wave.sort(function(a, b) {
+        let velocidadeA = a.sprite.body.velocity;
+        let velocidadeB = b.sprite.body.velocity;
+
+        if(velocidadeA == velocidadeB){
+            let posA = a.sprite.getCenter();
+            let posB = b.sprite.getCenter();
+
+            if(velocidadeA.x == 0 && velocidadeA.y == 0)
+                return 0;
+            if(velocidadeA.x > 0 && velocidadeA.y == 0){
+                if(posA.x >= posB.x)
+                    return -1;
+                else if(posA.x < posB.x)
+                    return 1;
+            }
+            if(velocidadeA.x < 0 && velocidadeA.y == 0){
+                if(posA.x > posB.x)
+                    return 1;
+                else if(posA.x <= posB.x)
+                    return -1;
+            }
+            if(velocidadeA.x == 0 && velocidadeA.y > 0){
+                if(posA.y >= posB.y)
+                    return -1;
+                else if(posA.y < posB.y)
+                    return 1;
+            }
+            if(velocidadeA.x == 0 && velocidadeA.y < 0){
+                if(posA.y > posB.y)
+                    return 1;
+                else if(posA.y <= posB.y)
+                    return -1;
+            }
+        }else
+            return 0;
+    });
+}
+
 export const checkDeath = (scene) => {
     if (scene.vida == 0) {
         scene.scene.start("Gameover", 1);

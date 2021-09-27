@@ -65,6 +65,7 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Torre-Default-3", "Imagens/Tower_3.png");
         this.load.image("Torre-Default-4", "Imagens/Tower_4.png");
         this.load.spritesheet("Torre", "Imagens/sheet_Completa_todas_torres.png", {frameWidth: 38, frameHeight: 38});
+        this.load.spritesheet("Descricao-Update-Torre", "Imagens/Upgrade_info.png", {frameWidth: 100, frameHeight: 61});
 
         this.load.image("Explosive-Shot", "Imagens/Explosive_shot.png");
         this.load.image("Slow-Shot", "Imagens/Slow_shot.png");
