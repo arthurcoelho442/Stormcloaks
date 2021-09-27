@@ -122,7 +122,7 @@ export default class cenaNivel_3 extends Phaser.Scene {
         }, this);
         //Fim Home
 
-        this.backgroud = this.add.image(300, 560, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33,1);
+        this.backgroud = this.add.image(300, 550, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33,1);
         this.menuLateral = this.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
     }
 
