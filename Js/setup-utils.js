@@ -33,6 +33,8 @@ export const setupStaticSprites = (scene, level) => {
     scene.endLeveling.visible = false;
 
     scene.background.on('pointerdown', () => {
+        if (scene.selectedTower)
+            scene.selectedTower.imagemRaio.visible = false;
         scene.selectedTower = null;
         scene.selectionSquare.visible = false;
         scene.sell.visible = false;
@@ -62,6 +64,13 @@ export const setupStaticSprites = (scene, level) => {
 
     scene.listaDeTorres = [];
     scene.torresDeCompra = [];
+
+    for (let i = 3; i < 8; i++) {
+        scene.anims.create({
+            key: 'Range-' + i.toString(),
+            frames: scene.anims.generateFrameNumbers("Range-Sniper", { start: i, end: i }),
+        });
+    }
 }
 
 export const setupMusic = (scene, musicName, volume) => {
@@ -438,6 +447,7 @@ const ondragend = (scene, map, id) => {
             let dano;
             let fireRate; // tempo entre os tiros, em ms
             let firstAnimation;
+            let imagemRaio;
 
             if (id == 0) {  // torre padrão
                 custo = 500;
@@ -459,9 +469,9 @@ const ondragend = (scene, map, id) => {
                 firstAnimation = 14;
             } else { // torre sniper
                 custo = 1000;
-                raio = 540;
+                raio = 200;
                 dano = 500;
-                fireRate = 2500;
+                fireRate = 1500;
                 firstAnimation = 19;
             }
 
@@ -477,6 +487,7 @@ const ondragend = (scene, map, id) => {
                     y: scene.torresDeCompra[id].y,
                     imagem: "Torre-Default-" + String(id + 1),
                     raio: raio,
+                    imagemRaio: "Range-" + id.toString(),
                     dano: dano,
                     fireRate: fireRate,
                     totalSpentOn: custo,
@@ -496,6 +507,7 @@ const ondragend = (scene, map, id) => {
                     scene.selectedTower = torre;
                     scene.selectionSquare.x = coordenadaX - 25;
                     scene.selectionSquare.y = coordenadaY - 25;
+                    torre.imagemRaio.visible = true;
                     scene.selectionSquare.visible = true;
                     scene.sell.visible = true;
                     if(scene.selectedTower.level == 5)
@@ -503,7 +515,6 @@ const ondragend = (scene, map, id) => {
                     else
                         scene.levelUp.visible = true;
                 })
-
 
                 // add nova torre
                 scene.listaDeTorres.push(torre)
@@ -526,6 +537,7 @@ export const setupTowerDraggables = (scene) => {
             imagem: "Menu-Icon-" + String(i + 1),
             map: scene.map,
             id: i,
+            imagemRaio: "Range-" + i.toString(),
             ondragend: ondragend
         });
 
