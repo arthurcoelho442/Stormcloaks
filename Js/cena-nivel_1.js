@@ -20,9 +20,9 @@ export default class cenaNivel_1 extends Phaser.Scene {
     preload() {
     }
 
-    create() {
+    create(volume) {
         setupStaticSprites(this, 1);
-        setupMusic(this, "WC3-Orc");
+        setupMusic(this, "WC3-Orc", volume);
         setupGrid(this, 1);
         setupWave(this, 1);
         setupSell(this);

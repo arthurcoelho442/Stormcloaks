@@ -7,7 +7,16 @@ export default class cenaMenu extends Phaser.Scene{
     preload() {
     }
 
-    create() {
+    create(volume) {
+        this.volMax = 0.15
+        this.vol = 10
+
+        if(!(volume >=0 && volume <= 1))
+        volume = this.volMax;
+        else
+            this.vol = Math.trunc(((volume*10)/this.volMax)+0.1);    
+        console.log(this.vol, volume);
+
         this.add.image(0,0,'backg').setOrigin(0, 0);
         const playButton = this.add.image(460,350,'play')
         playButton.setInteractive({ cursor: 'pointer' })
@@ -31,19 +40,18 @@ export default class cenaMenu extends Phaser.Scene{
         scoreButton.setInteractive({ cursor: 'pointer' })
 
         confButton.on('pointerdown', () => {
-            this.scene.start("Configuracoes");
+            this.scene.start("Configuracoes", this);
             this.scene.stop();
-            this.music.destroy();
         })
 
         scoreButton.on('pointerdown', () => {
-            this.scene.start("Creditos");
+            this.scene.start("Creditos", this.music.volume);
             this.scene.stop();
             this.music.destroy();
         })
         this.music = this.sound.add("Pokemon", {
             mute: false,
-            volume: 0.15,
+            volume: volume,
             rate: 1,
             detune: 0,
             seek: 0,

@@ -56,10 +56,10 @@ export const setupStaticSprites = (scene, level) => {
     scene.torresDeCompra = [];
 }
 
-export const setupMusic = (scene, musicName) => {
+export const setupMusic = (scene, musicName, volume) => {
     scene.music = scene.sound.add(musicName, {
         mute: false,
-        volume: 0.25,
+        volume: volume,
         rate: 1,
         detune: 0,
         seek: 0,

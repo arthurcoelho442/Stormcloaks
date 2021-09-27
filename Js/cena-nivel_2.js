@@ -20,9 +20,9 @@ export default class cenaNivel_2 extends Phaser.Scene {
         this.torresDeCompra = [];
     }
 
-    create() {
+    create(volume) {
         setupStaticSprites(this, 2);
-        setupMusic(this, "WC3-Human");
+        setupMusic(this, "WC3-Human", volume);
         setupGrid(this, 2);
         setupWave(this, 2);
         setupSell(this);
