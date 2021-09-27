@@ -9,7 +9,7 @@ export default class Wave{
         const distTropas = 50;
 
         vida = 10000;
-        qtdTropas = 3;
+        qtdTropas = 2;
         if(distanciarPor == "Esquerda")
             for(let i=0;i<qtdTropas;i++)
                 this.tropas[i] = new Tropa(cena, xTropa-distTropas*i, yTropa, vida, imgTropa, i);
