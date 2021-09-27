@@ -52,9 +52,9 @@ export const setupStaticSprites = (scene, level) => {
     if (level <= 2)
         scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75, 0.75);
     else if (level == 3)
-        scene.backgroud = scene.add.image(300, 550, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33, 1);
+        scene.backgroud = scene.add.image(300, 549, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33, 1);
     else if (level == 4)
-        scene.backgroud = scene.add.image(300, 555, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.68, 1);
+        scene.backgroud = scene.add.image(300, 551, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.68, 1);
 
     scene.listaDeTorres = [];
     scene.torresDeCompra = [];
@@ -382,10 +382,13 @@ export const setupReset = (scene) => {
         scene.vida = scene.vidaMax;
         scene.dinheiro = scene.dinheiroMax;
         scene.pontuacao = 0;
-        scene.waveCounter = 0;
         scene.selectedTower = null;
         scene.listaDeTorres = [];
         scene.torresDeCompra = [];
+        scene.waveCounter = 0;
+        scene.waveCounterEsquerda = 0;
+        scene.waveCounterDireita = 0;
+        scene.waveCounterCima = 0;
         scene.scene.restart();
     }, scene);
 }
