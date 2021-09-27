@@ -10,7 +10,7 @@ export default class Torre extends Phaser.GameObjects.Container {
         this.raio = raio;
         this.cena.add.existing(this);
         this.fireRate = fireRate; // o tempo de recarga total
-        this.currFireRate = this.fireRate; // o contador do tempo de recarga
+        this.currFireRate = 500; // o contador do tempo de recarga
         this.shots = [];
         this.dano = dano;
         this.slowMultiplier = 0;

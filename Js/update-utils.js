@@ -54,7 +54,7 @@ export const updateTowers = (scene, time, delta) => {
                     x: torre.x,
                     y: torre.y,
                     imagem: shotPng,
-                    velocidade: 800,
+                    velocidade: 1000,
                     dano: torre.dano,
                     angulo: torre.angle,
                     target: target
@@ -189,7 +189,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             tropa.destroi(i)
         }
 
-        if (tropa.vida >= tropa.vidaMax / 3) {
+        if (tropa.vida >= tropa.vidaMax / 2) {
             let tamanho = tropa.vida / tropa.vidaMax;
             sprite.setScale(tamanho, tamanho);
         }
@@ -278,7 +278,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 tropa.destroi(i)
             }
 
-            if (tropa.vida >= tropa.vidaMax / 3.5) {
+            if (tropa.vida >= tropa.vidaMax / 2) {
                 let tamanho = tropa.vida / tropa.vidaMax;
                 sprite.setScale(tamanho, tamanho);
             }
