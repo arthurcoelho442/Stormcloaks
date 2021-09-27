@@ -28,13 +28,16 @@ export const setupStaticSprites = (scene, level) => {
     scene.levelUp = scene.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
     scene.levelUp.setInteractive({ cursor: 'pointer' });
     scene.levelUp.visible = false;
-    //var endLeveling = scene.physics.add.image(850,390,"Menu-Icon-10");
-    //endLeveling.visible = false;
+    scene.endLeveling = scene.physics.add.image(850,390,"Menu-Icon-10");
+    scene.levelUp.setInteractive();
+    scene.endLeveling.visible = false;
+
     scene.background.on('pointerdown', () => {
         scene.selectedTower = null;
         scene.selectionSquare.visible = false;
         scene.sell.visible = false;
         scene.levelUp.visible = false;
+        scene.endLeveling.visible = false;
     })
 
     scene.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
@@ -266,9 +269,6 @@ export const setupLevelUp = (scene) => {
             descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
             descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id * 4));
         }
-        else{
-            descricao = scene.physics.add.image(800, 420, "Descricao-Update-Torre2").setOrigin(0, 0);
-        }
     })
     scene.levelUp.on('pointerout', () => {
         if (scene.selectedTower.level != 5)
@@ -357,7 +357,7 @@ export const setupLevelUp = (scene) => {
                     descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
                     descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id * 4));
                 } else{
-                    descricao = scene.physics.add.image(800, 420, "Descricao-Update-Torre2").setOrigin(0, 0);
+                    scene.endLeveling.visible = true;
                 }
             }
         }
@@ -498,7 +498,10 @@ const ondragend = (scene, map, id) => {
                     scene.selectionSquare.y = coordenadaY - 25;
                     scene.selectionSquare.visible = true;
                     scene.sell.visible = true;
-                    scene.levelUp.visible = true;
+                    if(scene.selectedTower.level == 5)
+                        scene.endLeveling.visible = true;
+                    else
+                        scene.levelUp.visible = true;
                 })
 
 
