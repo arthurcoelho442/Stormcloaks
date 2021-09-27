@@ -88,8 +88,8 @@ export default class cenaCarregamento extends Phaser.Scene {
         this.load.image("QuadradoSelecao", "Imagens/selectedTroop.png");
         this.load.image("Borda", "Imagens/Borda_Level.png");
 
-        this.load.spritesheet("plusMine", "Imagens/Volume_Buttom.png", { frameWidth: 60, frameHeight: 60 });
-        this.load.spritesheet("Regulagem-Volume", "Imagens/Volume_Bottom2.png", { frameWidth: 410, frameHeight: 60 });
+        this.load.spritesheet("plusMine", "Imagens/Volume_Bottom.png", { frameWidth: 60, frameHeight: 60});
+        this.load.spritesheet("Regulagem-Volume", "Imagens/Volume_Bottom2.png", { frameWidth: 410, frameHeight: 60});
 
         this.load.bitmapFont('carrier_command', 'Imagens/Fontes/carrier_command.png', 'Imagens/Fontes/carrier_command.xml');
     }
