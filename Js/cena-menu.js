@@ -33,10 +33,24 @@ export default class cenaMenu extends Phaser.Scene{
             this.scene.stop();
         })
 
-        const confButton = this.add.text(330, 460, 'Configurações do volume');
-        const scoreButton = this.add.text(400, 490, 'Creditos');
+        var confButton = this.add.text(340, 480, 'Configurações do volume');
+        var scoreButton = this.add.text(400, 520, 'Creditos');
         confButton.setInteractive({ cursor: 'pointer' })
         scoreButton.setInteractive({ cursor: 'pointer' })
+
+        confButton.on('pointerover', () => {
+            confButton.setTint(0x000000);
+        })
+        confButton.on('pointerout', () => {
+            confButton.setTint(0xffffff);
+        })
+
+        scoreButton.on('pointerover', () => {
+            scoreButton.setTint(0x000000);
+        })
+        scoreButton.on('pointerout', () => {
+            scoreButton.setTint(0xffffff);
+        })
 
         confButton.on('pointerdown', () => {
             this.scene.start("Configuracoes", this);
