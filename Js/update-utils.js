@@ -296,50 +296,46 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
     }
 }
 
-export const updateLista = (scene, wave) => {
+export const updateLista = (wave) => {
 
     let aux = []
-    for(let i=0; i < 2; i++)
+    for(let i=0; i < wave.length; i++)
         aux[i] = wave[i].id
-    console.log(aux);
 
     wave.sort(function(a, b) {
         let velocidadeA = a.sprite.body.velocity;
         let velocidadeB = b.sprite.body.velocity;
 
-        if(velocidadeA.x == velocidadeB.x && velocidadeA.y == velocidadeB.y ){
-            let posA = a.sprite.getCenter();
-            let posB = b.sprite.getCenter();
 
-            console.log(posA.x, posB.x)
-            if(velocidadeA.x == 0 && velocidadeA.y == 0)
-                return 0;
-            if(velocidadeA.x > 0 && velocidadeA.y == 0){
-                if(posA.x >= posB.x)
-                    return -1;
-                else if(posA.x < posB.x)
-                    return 1;
-            }
-            if(velocidadeA.x < 0 && velocidadeA.y == 0){
-                if(posA.x > posB.x)
-                    return 1;
-                else if(posA.x <= posB.x)
-                    return -1;
-            }
-            if(velocidadeA.x == 0 && velocidadeA.y > 0){
-                if(posA.y >= posB.y)
-                    return -1;
-                else if(posA.y < posB.y)
-                    return 1;
-            }
-            if(velocidadeA.x == 0 && velocidadeA.y < 0){
-                if(posA.y > posB.y)
-                    return 1;
-                else if(posA.y <= posB.y)
-                    return -1;
-            }
-        }else
+        let posA = a.sprite.getCenter();
+        let posB = b.sprite.getCenter();
+            
+        if(velocidadeA.x == 0 && velocidadeA.y == 0 && velocidadeB.x == 0 && velocidadeB.y == 0)
             return 0;
+        if(velocidadeA.x > 0 && velocidadeA.y == 0 && velocidadeB.x > 0 && velocidadeB.y == 0){
+            if(posA.x >= posB.x)
+                return -1;
+            else if(posA.x < posB.x)
+                return 1;
+        }
+        if(velocidadeA.x < 0 && velocidadeA.y == 0 && velocidadeB.x < 0 && velocidadeB.y == 0){
+            if(posA.x > posB.x)
+                return 1;
+            else if(posA.x <= posB.x)
+                return -1;
+        }
+        if(velocidadeA.x == 0 && velocidadeA.y > 0 && velocidadeB.x == 0 && velocidadeB.y > 0){
+            if(posA.y >= posB.y)
+                return -1;
+            else if(posA.y < posB.y)
+                return 1;
+        }
+        if(velocidadeA.x == 0 && velocidadeA.y < 0 && velocidadeB.x == 0 && velocidadeB.y < 0){
+            if(posA.y > posB.y)
+                return 1;
+            else if(posA.y <= posB.y)
+                return -1;
+        }
     });
 }
 

@@ -37,7 +37,7 @@ export default class cenaNivel_1 extends Phaser.Scene {
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
-        updateLista(this, wave);
+        updateLista(wave);
         updateBottomBar(this);
         updateTowers(this, time, delta, wave);
         updateTroops(this, 1, time, delta, wave, waveSpeed);

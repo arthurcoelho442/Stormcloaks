@@ -14,8 +14,7 @@ export default class cenaMenu extends Phaser.Scene{
         if(!(volume >=0 && volume <= 1))
         volume = this.volMax;
         else
-            this.vol = Math.trunc(((volume*10)/this.volMax)+0.1);    
-        console.log(this.vol, volume);
+            this.vol = Math.trunc(((volume*10)/this.volMax)+0.1);
 
         this.add.image(0,0,'backg').setOrigin(0, 0);
         const playButton = this.add.image(460,350,'play')
@@ -49,7 +48,7 @@ export default class cenaMenu extends Phaser.Scene{
             this.scene.stop();
             this.music.destroy();
         })
-        this.music = this.sound.add("Zelda-1", {
+        this.music = this.sound.add("Pokemon", {
             mute: false,
             volume: volume,
             rate: 1,
