@@ -20,10 +20,10 @@ export default class cenaEscolha extends Phaser.Scene
         const nivel3 = this.add.text(350, 400, "Nível 3", {fontSize: 30});
         const nivel4 = this.add.text(350, 500, "Nível 4", {fontSize: 30});
 
-        nivel1.setInteractive();
-        nivel2.setInteractive();
-        nivel3.setInteractive();
-        nivel4.setInteractive();
+        nivel1.setInteractive({ cursor: 'pointer' });
+        nivel2.setInteractive({ cursor: 'pointer' });
+        nivel3.setInteractive({ cursor: 'pointer' });
+        nivel4.setInteractive({ cursor: 'pointer' });
 
         nivel1.on('pointerdown', () => {
             this.scene.start("Nivel-1");

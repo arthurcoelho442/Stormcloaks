@@ -5,41 +5,25 @@ export default class cenaConfiguracoes extends Phaser.Scene{
         });
     }
 
-    preload()
-    {
-        this.load.image('backg', 'Imagens/Menu_principal_sem_torre.png')
+    preload(){
     }
     
-    create()
-    {
-        this.add.image(400,300,'backg');
+    create(){
+        this.add.image(0,0,'backg').setOrigin(0, 0);
 
-        this.add.text(350, 300, 'Volume principal');
-        const plusVp = this.add.text(400, 350, '+');
-        const minusVp = this.add.text(450, 350, '-');
-        this.add.text(350, 400, 'Volume dos efeitos');
-        const plusVe = this.add.text(400, 450, '+');
-        const minusVe = this.add.text(450, 450, '-');
-        const back =  this.add.text(400,500, 'Voltar');
+        this.add.text(315, 400, 'Volume principal', {font: '600 25px Poppins'});
 
-        plusVp.setInteractive();
-        minusVp.setInteractive();
-        plusVe.setInteractive();
-        minusVe.setInteractive();
+        const reg = this.add.image(400, 450, 'Regulagem-Volume');
+        const plus = this.add.image(665, 450, 'plusMine').setScale(0.75, 0.75);
+        const Mine = this.add.image(715, 450, 'plusMine').setScale(0.75, 0.75).setFrame(1);
+
+        const back =  this.add.text(450,575, 'Voltar', {font: '600 25px Poppins'});
+
+        Mine.setInteractive({ cursor: 'pointer' });
+        plus.setInteractive({ cursor: 'pointer' });
+
         back.setInteractive();
 
-        plusVp.on('pointerdown',() => {
-
-        })
-        minusVp.on('pointerdown',() => {
-            
-        })
-        plusVe.on('pointerdown',() => {
-            
-        })
-        minusVe.on('pointerdown',() => {
-            
-        })
         back.on('pointerdown', () => {
             this.scene.start("Menu");
         })
