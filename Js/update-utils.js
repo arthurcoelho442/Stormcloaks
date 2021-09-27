@@ -299,7 +299,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 export const updateLista = (scene, wave) => {
 
     let aux = []
-    for(let i=0; i < wave.length; i++)
+    for(let i=0; i < 3; i++)
         aux[i] = wave[i].id
     console.log(aux);
 

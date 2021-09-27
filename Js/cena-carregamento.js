@@ -74,7 +74,7 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.audio('WC3-Human', "Music/Warcraft 3 Soundtrack (Lordaeron Fall)_160k.mp3");
         this.load.audio('WC3-NElf', "Music/Warcraft 3 Soundtrack (Night Elf)_160k.mp3");
         this.load.audio('WC3-Undead', "Music/Warcraft 3 Soundtrack - (Undead)_160k.mp3");
-        this.load.audio('Pokemon', "Music/Poke & Chill_160k.mp3");
+        //this.load.audio('Pokemon', "Music/Poke & Chill_160k.mp3");
         this.load.audio('Zelda-1', "Music/Zelda _ Chill_160k.mp3");
 
         this.load.spritesheet("Tropa", "Imagens/Enemy_sheet_completaV4.png", { frameWidth: 21, frameHeight: 22 });

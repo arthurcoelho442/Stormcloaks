@@ -49,7 +49,7 @@ export default class cenaMenu extends Phaser.Scene{
             this.scene.stop();
             this.music.destroy();
         })
-        this.music = this.sound.add("Pokemon", {
+        this.music = this.sound.add("Zelda-1", {
             mute: false,
             volume: volume,
             rate: 1,
