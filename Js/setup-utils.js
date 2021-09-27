@@ -28,7 +28,8 @@ export const setupStaticSprites = (scene, level) => {
     scene.levelUp = scene.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
     scene.levelUp.setInteractive({ cursor: 'pointer' });
     scene.levelUp.visible = false;
-
+    //var endLeveling = scene.physics.add.image(850,390,"Menu-Icon-10");
+    //endLeveling.visible = false;
     scene.background.on('pointerdown', () => {
         scene.selectedTower = null;
         scene.selectionSquare.visible = false;
@@ -265,9 +266,14 @@ export const setupLevelUp = (scene) => {
             descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
             descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id * 4));
         }
+        else{
+            descricao = scene.physics.add.image(800, 420, "Descricao-Update-Torre2").setOrigin(0, 0);
+        }
     })
     scene.levelUp.on('pointerout', () => {
         if (scene.selectedTower.level != 5)
+            descricao.destroy();
+        else
             descricao.destroy();
     })
 
@@ -350,6 +356,8 @@ export const setupLevelUp = (scene) => {
                 if (scene.selectedTower.level != 5) {
                     descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
                     descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id * 4));
+                } else{
+                    descricao = scene.physics.add.image(800, 420, "Descricao-Update-Torre2").setOrigin(0, 0);
                 }
             }
         }

@@ -53,6 +53,7 @@ export default class cenaCarregamento extends Phaser.Scene {
         this.load.image("Menu-Icon-4", "Imagens/Menu_Icon_4.png");
         this.load.image("Menu-Icon-8", "Imagens/Menu_Icon_8.png");
         this.load.image("Menu-Icon-9", "Imagens/Menu_Icon_9.png");
+        this.load.image("Menu-Icon-10", "Imagens/Menu_Icon_10.png");
 
         this.load.image("Descricao-1", "Imagens/balão dialogo1.png");
         this.load.image("Descricao-2", "Imagens/balão dialogo2.png");
@@ -63,8 +64,9 @@ export default class cenaCarregamento extends Phaser.Scene {
         this.load.image("Torre-Default-2", "Imagens/Tower_2.png");
         this.load.image("Torre-Default-3", "Imagens/Tower_3.png");
         this.load.image("Torre-Default-4", "Imagens/Tower_4.png");
-        this.load.spritesheet("Torre", "Imagens/sheet_Completa_todas_torres.png", { frameWidth: 38, frameHeight: 38 });
-        this.load.spritesheet("Descricao-Update-Torre", "Imagens/Upgrade_info.png", { frameWidth: 100, frameHeight: 61 });
+        this.load.spritesheet("Torre", "Imagens/sheet_Completa_todas_torres.png", {frameWidth: 38, frameHeight: 38});
+        this.load.spritesheet("Descricao-Update-Torre", "Imagens/Upgrade_info.png", {frameWidth: 100, frameHeight: 61});
+        this.load.image("Descricao-Update-Torre2", "Imagens/Upgrade_info2.png");
 
         this.load.image("Explosive-Shot", "Imagens/Explosive_shot.png");
         this.load.image("Slow-Shot", "Imagens/Slow_shot.png");
