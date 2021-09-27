@@ -16,8 +16,8 @@ export default class cenaNivel_1 extends Phaser.Scene {
         this.waveCounter = 0;
         this.qtdWave = 8; //quantidade de waves do nivel
         this.selectedTower = null;
-        this.listaDeTorres = [];
-        this.torresDeCompra = [];
+    }
+    preload() {
     }
 
     create() {
