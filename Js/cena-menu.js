@@ -1,5 +1,5 @@
-export default class cenaMenu extends Phaser.Scene{
-    constructor(){
+export default class cenaMenu extends Phaser.Scene {
+    constructor() {
         super({
             key: "Menu"
         });
@@ -11,20 +11,20 @@ export default class cenaMenu extends Phaser.Scene{
         this.volMax = 0.15
         this.vol = 10
 
-        if(!(volume >=0 && volume <= 1))
-        volume = this.volMax;
+        if (!(volume >= 0 && volume <= 1))
+            volume = this.volMax;
         else
-            this.vol = Math.trunc(((volume*10)/this.volMax)+0.1);
+            this.vol = Math.trunc(((volume * 10) / this.volMax) + 0.1);
 
-        this.add.image(0,0,'backg').setOrigin(0, 0);
-        const playButton = this.add.image(460,350,'play')
+        this.add.image(0, 0, 'backg').setOrigin(0, 0);
+        const playButton = this.add.image(450, 400, 'Play3').setFrame(0);
         playButton.setInteractive({ cursor: 'pointer' })
 
         playButton.on('pointerover', () => {
-            this.add.image(460,350,'play2')
+            playButton.setFrame(1)
         })
         playButton.on('pointerout', () => {
-            this.add.image(460,350,'play')
+            playButton.setFrame(0)
         })
 
         playButton.on('pointerdown', () => {
@@ -33,10 +33,24 @@ export default class cenaMenu extends Phaser.Scene{
             this.scene.stop();
         })
 
-        const confButton = this.add.text(400, 385, 'Configurações');
-        const scoreButton = this.add.text(420, 410, 'Creditos');
+        var confButton = this.add.text(340, 480, 'Configurações do volume');
+        var scoreButton = this.add.text(400, 520, 'Creditos');
         confButton.setInteractive({ cursor: 'pointer' })
         scoreButton.setInteractive({ cursor: 'pointer' })
+
+        confButton.on('pointerover', () => {
+            confButton.setTint(0x000000);
+        })
+        confButton.on('pointerout', () => {
+            confButton.setTint(0xffffff);
+        })
+
+        scoreButton.on('pointerover', () => {
+            scoreButton.setTint(0x000000);
+        })
+        scoreButton.on('pointerout', () => {
+            scoreButton.setTint(0xffffff);
+        })
 
         confButton.on('pointerdown', () => {
             this.scene.start("Configuracoes", this);
@@ -48,7 +62,7 @@ export default class cenaMenu extends Phaser.Scene{
             this.scene.stop();
             this.music.destroy();
         })
-        this.music = this.sound.add("Pokemon", {
+        this.music = this.sound.add("Bleach", {
             mute: false,
             volume: volume,
             rate: 1,

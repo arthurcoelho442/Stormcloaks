@@ -22,9 +22,9 @@ export default class Tiro {
                     this.sprite.destroy();
                 }
             }
-    
+
             this.tempoDeVida -= delta;
-    
+
             if (this.tempoDeVida <= 0) {
                 this.alive = false;
                 this.sprite.destroy();

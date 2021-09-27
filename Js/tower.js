@@ -20,11 +20,11 @@ export default class Torre extends Phaser.GameObjects.Container {
         this.currentAnimation = currAnimation;
         this.level = 1;
 
-        for (let i = 4; i <= 20; i+=5) {
+        for (let i = 4; i <= 20; i += 5) {
             for (let j = i; j >= i - 4; j--) {
                 cena.anims.create({
                     key: 'Torre-' + j.toString(),
-                    frames: cena.anims.generateFrameNumbers("Torre", { start: j * 12, end: j * 12 + 11}),
+                    frames: cena.anims.generateFrameNumbers("Torre", { start: j * 12, end: j * 12 + 11 }),
                     frameRate: 10,
                     repeat: -1
                 });

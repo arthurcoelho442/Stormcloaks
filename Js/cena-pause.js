@@ -1,4 +1,4 @@
-export default class cenaPause extends Phaser.Scene{
+export default class cenaPause extends Phaser.Scene {
     constructor() {
         super({
             key: "Pause"
@@ -17,7 +17,7 @@ export default class cenaPause extends Phaser.Scene{
             this.scene.stop();
         }, this);
         this.cena = cena;
-        
+
         //On hover da descrição das torres
         for (let i = 0; i < 4; i++) {
             let torre = this.add.sprite(850, 100 + 60 * i, "Menu-Icon-" + String(i + 1), 0);
@@ -25,7 +25,7 @@ export default class cenaPause extends Phaser.Scene{
             var descricao;
 
             torre.on('pointerover', () => {
-                descricao = this.add.image(814, 35 + 60 * i, "Descricao-"+ String(i + 1));
+                descricao = this.add.image(814, 35 + 60 * i, "Descricao-" + String(i + 1));
             })
             torre.on('pointerout', () => {
                 descricao.destroy();
@@ -47,7 +47,7 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.selectedTower = null;
             this.cena.listaDeTorres = [];
             this.cena.torresDeCompra = [];
-            
+
             this.cena.scene.start("Menu");
             this.cena.scene.stop();
             this.scene.stop();
@@ -61,7 +61,7 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.vida = this.cena.vidaMax;
             this.cena.dinheiro = this.cena.dinheiroMax;
             this.cena.pontuacao = 0;
-            
+
             this.cena.waveCounter = 0;
             this.cena.waveCounterEsquerda = 0;
             this.cena.waveCounterDireita = 0;
@@ -69,7 +69,7 @@ export default class cenaPause extends Phaser.Scene{
             this.cena.selectedTower = null;
             this.cena.listaDeTorres = [];
             this.cena.torresDeCompra = [];
-    
+
             this.cena.scene.restart();
             this.scene.stop();
         }, this);
