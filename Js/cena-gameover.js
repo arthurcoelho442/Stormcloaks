@@ -16,8 +16,20 @@ export default class cenaGameover extends Phaser.Scene {
 
         buttonMenu.on('pointerdown', () => {
             this.scene.start("Menu");
+            this.music.destroy();
             this.scene.stop();
         })
+
+        this.music = this.sound.add("Zelda-1", {
+            mute: false,
+            volume: 0.25,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        });
+        this.music.play();
     }
 
     update() {
