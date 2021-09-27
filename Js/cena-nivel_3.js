@@ -16,6 +16,9 @@ export default class cenaNivel_3 extends Phaser.Scene {
         this.waveCounterEsquerda = 0;
         this.waveCounterDireita = 0;
         this.qtdWave = 8;
+        this.selectedTower = null;
+        this.listaDeTorres = [];
+        this.torresDeCompra = [];
     }
     preload() {
 
@@ -49,11 +52,13 @@ export default class cenaNivel_3 extends Phaser.Scene {
 
         let wave = [waveEsquerda, waveDireita];
         let waveSpeed = [waveSpeedEsquerda, waveSpeedDireita];
+        let waveConcat = waveEsquerda.concat(waveDireita);
 
         for (let i = 0; i < wave.length; i++)
             updateLista(wave[i]);
         updateBottomBar(this, 3);
-        //updateTowers(this, time, delta, wave);
+        updateTowers(this, time, delta, waveConcat);
+            
         updateTroops(this, 3, time, delta, wave, waveSpeed);
         checkDeath(this);
 

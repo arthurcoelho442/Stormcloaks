@@ -56,11 +56,13 @@ export default class cenaNivel_4 extends Phaser.Scene {
         }
         let wave = [waveEsquerda, waveDireita, waveCima];
         let waveSpeed = [waveSpeedEsquerda, waveSpeedDireita, waveSpeedCima];
+        let waveConcat = waveEsquerda.concat(waveDireita);
+        waveConcat = waveConcat.concat(waveCima)
 
         for (let i = 0; i < wave.length; i++)
             updateLista(wave[i]);
         updateBottomBar(this, 4);
-        //updateTowers(this, time, delta, wave);
+        updateTowers(this, time, delta, waveConcat);
         updateTroops(this, 4, time, delta, wave, waveSpeed);
         checkDeath(this);
 
