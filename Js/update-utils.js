@@ -77,6 +77,7 @@ export const updateTowers = (scene, time, delta) => {
                         }
 
                         if (torre.id == 1) {
+                            tropa.vida
                             const explosionSprite = scene.physics.add.sprite(sprite.getCenter().x, sprite.getCenter().y, "Explosion");
                             // set body to a circle
                             explosionSprite.setCircle(15, 11, 11);
@@ -94,7 +95,7 @@ export const updateTowers = (scene, time, delta) => {
                                 // função que cria o overlap
                                 scene.physics.add.overlap(explosionSprite, expSprite, () => {
                                     if (canTakeExplosionDamage) {
-                                        expTropa.vida -= torre.dano;
+                                        expTropa.vida -= torre.danoExp;
                                     }
                                     canTakeExplosionDamage = false;
                                 })
@@ -109,9 +110,8 @@ export const updateTowers = (scene, time, delta) => {
                             explosionSprite.anims.play('Explosion-1');
                             // kills the sprite after playing
                             explosionSprite.on('animationcomplete', () => explosionSprite.destroy(), explosionSprite);
-                        } else {
-                            tropa.vida -= torre.dano;
-                        }
+                        } 
+                        tropa.vida -= torre.dano;
                         shot.sprite.destroy();
                     })
                 }

@@ -363,7 +363,7 @@ const ondragend = (scene, map, id) => {
             } else if (id == 1) { // torre canhão
                 custo = 750;
                 raio = 190;
-                dano = 175;
+                dano = 125;
                 fireRate = 1000;
                 firstAnimation = 9;
             } else if (id == 2) { // torre de slow
@@ -398,7 +398,9 @@ const ondragend = (scene, map, id) => {
                     currAnimation: firstAnimation,
                 })
 
-                if (torre.id == 2) {
+                if (torre.id === 1) {
+                    torre.danoExp = 125;
+                } else if (torre.id === 2) {
                     torre.slowMultiplier = 0.35; // (velocidade - slowMultiplier * velocidade)
                     torre.slowTimer = 1000; // duração do slow, em ms
                 }
