@@ -1,5 +1,5 @@
 import { setupStaticSprites, setupMusic, setupGrid, setupWave, setupSell, setupTowerDraggables, setupLevelUp, setupPause, setupReset, setupHome } from './setup-utils.js'
-import { updateBottomBar, updateTowers, updateTroops, checkDeath, checkNextLevel } from "./update-utils.js";
+import { updateBottomBar, updateTowers, updateTroops, checkDeath, checkNextLevel, updateLista } from "./update-utils.js";
 export default class cenaNivel_2 extends Phaser.Scene {
     constructor() {
         super({
@@ -36,6 +36,7 @@ export default class cenaNivel_2 extends Phaser.Scene {
         let wave = this.waves[this.waveCounter].tropas;
         let waveSpeed = this.waves[this.waveCounter].velocidade;
 
+        updateLista(wave);
         updateBottomBar(this, 2);
         updateTowers(this, time, delta, wave);
         updateTroops(this, 2, time, delta, wave, waveSpeed);

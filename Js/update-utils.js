@@ -298,112 +298,110 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
         }
     }
     
-    let waveEsquerda = wave[0];
-    let waveDireita = wave[1];
-    let waveSpeedEsquerda = waveSpeed[0];
-    let waveSpeedDireita = waveSpeed[1];
-    for (let i = 0; i < waveEsquerda.length && scene.qtdWave > scene.waveCounterEsquerda && level === 3; i++) {
-        if (waveEsquerda[i] == null)
-            continue;
-        let tropa = waveEsquerda[i]
-        let sprite = tropa.sprite
-        let pos = sprite.getCenter();
-        let velocidade = waveSpeedEsquerda;
-        let rotation = 0.05;
+    if( level === 3){
+        let waveEsquerda = wave[0];
+        let waveDireita = wave[1];
+        let waveSpeedEsquerda = waveSpeed[0];
+        let waveSpeedDireita = waveSpeed[1];
+        for (let i = 0; i < waveEsquerda.length && scene.qtdWave > scene.waveCounterEsquerda; i++) {
+            if (waveEsquerda[i] == null)
+                continue;
+            let tropa = waveEsquerda[i]
+            let sprite = tropa.sprite
+            let pos = sprite.getCenter();
+            let velocidade = waveSpeedEsquerda;
+            let rotation = 0.05;
 
-        if (sprite && sprite != undefined) {
-            //Movimentação das tropas da Esquerda
-            if (pos.x <= 575 && pos.y >= 125 && pos.y <= 130) {
-                sprite.rotation += rotation;
-                sprite.setVelocityX(velocidade);
-                sprite.setVelocityY(0);
-            } if (pos.x >= 575 && pos.y <= 130) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-            } if (pos.x >= 225 && pos.y >= 475 && pos.y <= 500) {
-                sprite.rotation -= rotation;
-                sprite.setVelocityX(-velocidade);
-                sprite.setVelocityY(0);
-            } if (pos.x <= 225 && pos.y >= 475) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(-velocidade);
-                setTimeout(function () { tropa.loop = true; }, 1000);
-            } else if (pos.x <= 475 && pos.y >= 475 && tropa.loop) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-                setTimeout(function () { tropa.loop = false; }, 1000);
+            if (sprite && sprite != undefined) {
+                //Movimentação das tropas da Esquerda
+                if (pos.x <= 575 && pos.y >= 125 && pos.y <= 130) {
+                    sprite.rotation += rotation;
+                    sprite.setVelocityX(velocidade);
+                    sprite.setVelocityY(0);
+                } if (pos.x >= 575 && pos.y <= 130) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(velocidade);
+                } if (pos.x >= 225 && pos.y >= 475 && pos.y <= 500) {
+                    sprite.rotation -= rotation;
+                    sprite.setVelocityX(-velocidade);
+                    sprite.setVelocityY(0);
+                } if (pos.x <= 225 && pos.y >= 475) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(-velocidade);
+                    setTimeout(function () { tropa.loop = true; }, 1000);
+                } else if (pos.x <= 475 && pos.y >= 475 && tropa.loop) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(velocidade);
+                    setTimeout(function () { tropa.loop = false; }, 1000);
+                }
+            }
+
+            //Marca pontuação
+            if (tropa.vida == 0)
+                scene.pontuacao += 100;
+            //Exclusão da tropa
+            if (pos.y >= 563) {
+                scene.vida--;
+                sprite.anims.stop();
+                waveEsquerda.splice(waveEsquerda.indexOf(tropa), 1);
+                tropa.destroi(i)
+            } else if (tropa.vida == 0) {
+                sprite.anims.stop();
+                waveEsquerda.splice(waveEsquerda.indexOf(tropa), 1);
+                tropa.destroi(i)
             }
         }
+        for (let i = 0; i < waveDireita.length && scene.qtdWave > scene.waveCounterDireita && scene.waveCounterEsquerda >= 2; i++) {
+            if (waveDireita[i] == null)
+                continue;
+            let tropa = waveDireita[i]
+            let sprite = tropa.sprite
+            let pos = sprite.getCenter();
+            let velocidade = waveSpeedDireita;
+            let rotation = 0.05;
 
-        //Marca pontuação
-        if (tropa.vida == 0)
-            scene.pontuacao += 100;
-        //Exclusão da tropa
-        if (pos.y >= 563) {
-            scene.vida--;
-            sprite.anims.stop();
-            waveEsquerda.splice(waveEsquerda.indexOf(tropa), 1);
-            tropa.destroi(i)
-        } else if (tropa.vida == 0) {
-            sprite.anims.stop();
-            waveEsquerda.splice(waveEsquerda.indexOf(tropa), 1);
-            tropa.destroi(i)
-        }
-    }for (let i = 0; i < waveDireita.length && scene.qtdWave > scene.waveCounterDireita && scene.waveCounterEsquerda >= 2 && level === 3; i++) {
-        if (waveDireita[i] == null)
-            continue;
-        let tropa = waveDireita[i]
-        let sprite = tropa.sprite
-        let pos = sprite.getCenter();
-        let velocidade = waveSpeedDireita;
-        let rotation = 0.05;
-
-        if (sprite && sprite != undefined) {
-            //Movimentação das tropas da Esquerda
-            if (pos.x >= 225 && pos.y >= 125 && pos.y <= 130) {
-                sprite.rotation -= rotation;
-                sprite.setVelocityX(-velocidade);
-                sprite.setVelocityY(0);
-            } if (pos.x <= 225 && pos.y >= 120 && pos.y <= 130) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-            } if (pos.x >= 200 && pos.y >= 475 && pos.y <= 500) {
-                sprite.rotation += rotation;
-                sprite.setVelocityX(velocidade);
-                sprite.setVelocityY(0);
-            } if (pos.x >= 575 && pos.y >= 475) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(-velocidade);
-                setTimeout(function () { tropa.loop = true; }, 1000);
-            } else if (pos.x >= 325 && pos.y >= 475 && tropa.loop) {
-                sprite.setVelocityX(0);
-                sprite.setVelocityY(velocidade);
-                setTimeout(function () { tropa.loop = false; }, 1000);
+            if (sprite && sprite != undefined) {
+                //Movimentação das tropas da Esquerda
+                if (pos.x >= 225 && pos.y >= 125 && pos.y <= 130) {
+                    sprite.rotation -= rotation;
+                    sprite.setVelocityX(-velocidade);
+                    sprite.setVelocityY(0);
+                } if (pos.x <= 225 && pos.y >= 120 && pos.y <= 130) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(velocidade);
+                } if (pos.x >= 200 && pos.y >= 475 && pos.y <= 500) {
+                    sprite.rotation += rotation;
+                    sprite.setVelocityX(velocidade);
+                    sprite.setVelocityY(0);
+                } if (pos.x >= 575 && pos.y >= 475) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(-velocidade);
+                    setTimeout(function () { tropa.loop = true; }, 1000);
+                } else if (pos.x >= 325 && pos.y >= 475 && tropa.loop) {
+                    sprite.setVelocityX(0);
+                    sprite.setVelocityY(velocidade);
+                    setTimeout(function () { tropa.loop = false; }, 1000);
+                }
             }
-        }
-        //Marca pontuação
-        if (tropa.vida == 0)
-            scene.pontuacao += 100;
-        //Exclusão da tropa
-        if (pos.y >= 563) {
-            scene.vida--;
-            sprite.anims.stop();
-            waveDireita.splice(waveDireita.indexOf(tropa), 1);
-            tropa.destroi(i)
-        } else if (tropa.vida == 0) {
-            sprite.anims.stop();
-            waveDireita.splice(waveDireita.indexOf(tropa), 1);
-            tropa.destroi(i)
+            //Marca pontuação
+            if (tropa.vida == 0)
+                scene.pontuacao += 100;
+            //Exclusão da tropa
+            if (pos.y >= 563) {
+                scene.vida--;
+                sprite.anims.stop();
+                waveDireita.splice(waveDireita.indexOf(tropa), 1);
+                tropa.destroi(i)
+            } else if (tropa.vida == 0) {
+                sprite.anims.stop();
+                waveDireita.splice(waveDireita.indexOf(tropa), 1);
+                tropa.destroi(i)
+            }
         }
     }
 }
 
 export const updateLista = (wave) => {
-
-    let aux = []
-    for(let i=0; i < wave.length; i++)
-        aux[i] = wave[i].id
-
     wave.sort(function(a, b) {
         let velocidadeA = a.sprite.body.velocity;
         let velocidadeB = b.sprite.body.velocity;
@@ -443,27 +441,30 @@ export const updateLista = (wave) => {
 
 export const checkDeath = (scene) => {
     if (scene.vida == 0) {
-        scene.scene.start("Gameover", 1);
+        scene.scene.start("Gameover", scene.music.volume);
         scene.scene.stop();
         scene.music.mute = true;
         scene.vida = scene.vidaMax;
         scene.dinheiro = scene.dinheiroMax;
         scene.waveCounter = 0;
-        scene.waveCounterEsquerda = 0;
-        scene.waveCounterDireita = 0;
+        if(level == 3){
+            scene.waveCounterEsquerda = 0;
+            scene.waveCounterDireita = 0;
+        }
     }
 }
 
 export const checkNextLevel = (scene, level) => {
     if (scene.qtdWave == scene.waveCounter) {
-        scene.scene.start("Nivel-"+String(level));
+        scene.scene.start("Nivel-"+String(level), scene.music.volume);
         scene.scene.stop();
 
         scene.music.mute = true;
         scene.waveCounter = 0;
-        scene.waveCounterEsquerda = 0;
-        scene.waveCounterDireita = 0;
         scene.vida = scene.vidaMax;
         scene.dinheiro = scene.dinheiroMax;
+
+        scene.waveCounterEsquerda = 0;
+        scene.waveCounterDireita = 0;
     }
 }
