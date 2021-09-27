@@ -1,5 +1,5 @@
 export default class Tropa{
-    constructor(cena, xTropa, yTropa, vida, imgTropa){
+    constructor(cena, xTropa, yTropa, vida, imgTropa, id){
         this.xTropa = xTropa;
         this.yTropa = yTropa;
         this.vida = vida;
@@ -11,7 +11,7 @@ export default class Tropa{
         this.isSlowed = false;
         this.slowTimer = 0;
         this.slowMultiplier = 0;
-
+        this.id = id;
         for(let i = 0; i <= 7; i++){
             cena.anims.create({
                 key: 'Tropa-'+ (i+1).toString(),

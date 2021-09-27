@@ -297,11 +297,17 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 }
 
 export const updateLista = (scene, wave) => {
+
+    let aux = []
+    for(let i=0; i < wave.length; i++)
+        aux[i] = wave[i].id
+    console.log(aux);
+
     wave.sort(function(a, b) {
         let velocidadeA = a.sprite.body.velocity;
         let velocidadeB = b.sprite.body.velocity;
 
-        if(velocidadeA == velocidadeB){
+        if(velocidadeA.x == velocidadeB.x && velocidadeA.y == velocidadeB.y ){
             let posA = a.sprite.getCenter();
             let posB = b.sprite.getCenter();
 

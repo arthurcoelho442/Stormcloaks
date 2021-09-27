@@ -9,16 +9,16 @@ export default class Wave{
         const distTropas = 50;
         if(distanciarPor == "Esquerda")
             for(let i=0;i<qtdTropas;i++)
-                this.tropas[i] = new Tropa(cena, xTropa-distTropas*i, yTropa, vida, imgTropa);
+                this.tropas[i] = new Tropa(cena, xTropa-distTropas*i, yTropa, vida, imgTropa, i);
         else if(distanciarPor == "Direita")
             for(let i=0;i<qtdTropas;i++)
-                this.tropas[i] = new Tropa(cena, xTropa+distTropas*i, yTropa, vida, imgTropa);
+                this.tropas[i] = new Tropa(cena, xTropa+distTropas*i, yTropa, vida, imgTropa, i);
         else if(distanciarPor == "Cima")
             for(let i=0;i<qtdTropas;i++)
-                this.tropas[i] = new Tropa(cena, xTropa, yTropa-distTropas*i, vida, imgTropa);
+                this.tropas[i] = new Tropa(cena, xTropa, yTropa-distTropas*i, vida, imgTropa, i);
         else if(distanciarPor == "Baixo")
             for(let i=0;i<qtdTropas;i++)
-                this.tropas[i] = new Tropa(cena, xTropa, yTropa+distTropas*i, vida, imgTropa);
+                this.tropas[i] = new Tropa(cena, xTropa, yTropa+distTropas*i, vida, imgTropa, i);
     }
     setColor(i){
         this.tropas.forEach((tropa) => {
