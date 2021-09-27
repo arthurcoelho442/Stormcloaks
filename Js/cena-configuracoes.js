@@ -14,8 +14,8 @@ export default class cenaConfiguracoes extends Phaser.Scene{
         this.add.text(280, 370, 'Volume principal', {font: '600 35px Poppins'});
 
         const reg = this.add.image(400, 470, 'Regulagem-Volume').setFrame(cena.vol);
-        const plus = this.add.image(665, 470, 'plusMine').setScale(0.75, 0.75);
-        const mine = this.add.image(715, 470, 'plusMine').setScale(0.75, 0.75).setFrame(1);
+        const mine = this.add.image(665, 470, 'plusMine').setScale(0.75, 0.75);
+        const plus = this.add.image(715, 470, 'plusMine').setScale(0.75, 0.75).setFrame(1);
 
         const back =  this.add.text(380,550, 'Voltar', {font: '600 25px Poppins'});
 
