@@ -388,7 +388,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             }
         }
         for (let i = 0; i < waveDireita.length && scene.qtdWave > scene.waveCounterDireita && scene.waveCounterEsquerda >= 1; i++) {
-            let danoVida = scene.waveDireita+1;
+            let danoVida = scene.waveCounterDireita+1;
             if (waveDireita[i] == null)
                 continue;
             let tropa = waveDireita[i]
@@ -469,7 +469,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
         let waveSpeedDireita = waveSpeed[1];
         let waveSpeedCima = waveSpeed[2];
         for (let i = 0; i < waveEsquerda.length && scene.qtdWave > scene.waveCounterEsquerda; i++) {
-            let danoVida = scene.waveEsquerda+1;
+            let danoVida = scene.waveCounterEsquerda+1;
             if (waveEsquerda[i] == null)
                 continue;
             let tropa = waveEsquerda[i]
