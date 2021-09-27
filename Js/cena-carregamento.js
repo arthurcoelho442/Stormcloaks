@@ -1,10 +1,10 @@
-export default class cenaCarregamento extends Phaser.Scene{
-    constructor(){
+export default class cenaCarregamento extends Phaser.Scene {
+    constructor() {
         super({
             key: "Carregamento"
         });
     }
-    preload(){
+    preload() {
         const larguraJogo = this.sys.canvas.width;
         const barraDeProgresso = this.add.graphics();
 
@@ -63,8 +63,8 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("Torre-Default-2", "Imagens/Tower_2.png");
         this.load.image("Torre-Default-3", "Imagens/Tower_3.png");
         this.load.image("Torre-Default-4", "Imagens/Tower_4.png");
-        this.load.spritesheet("Torre", "Imagens/sheet_Completa_todas_torres.png", {frameWidth: 38, frameHeight: 38});
-        this.load.spritesheet("Descricao-Update-Torre", "Imagens/Upgrade_info.png", {frameWidth: 100, frameHeight: 61});
+        this.load.spritesheet("Torre", "Imagens/sheet_Completa_todas_torres.png", { frameWidth: 38, frameHeight: 38 });
+        this.load.spritesheet("Descricao-Update-Torre", "Imagens/Upgrade_info.png", { frameWidth: 100, frameHeight: 61 });
 
         this.load.image("Explosive-Shot", "Imagens/Explosive_shot.png");
         this.load.image("Slow-Shot", "Imagens/Slow_shot.png");
@@ -78,18 +78,18 @@ export default class cenaCarregamento extends Phaser.Scene{
 
         this.load.spritesheet("Tropa", "Imagens/Enemy_sheet_completaV4.png", { frameWidth: 21, frameHeight: 22 });
         this.load.image("Torre-do-Nivel", "Imagens/kings_tower.png");
-        
+
         this.load.image("Creditos-01", "Imagens/Creditos1.png");
         this.load.image("Creditos-02", "Imagens/Creditos2.png");
         this.load.image("End-game", "Imagens/End game.png");
 
-        this.load.spritesheet("Explosion", "Imagens/Explosion.png", { frameWidth: 50, frameHeight: 50});
+        this.load.spritesheet("Explosion", "Imagens/Explosion.png", { frameWidth: 50, frameHeight: 50 });
 
         this.load.image("QuadradoSelecao", "Imagens/selectedTroop.png");
         this.load.image("Borda", "Imagens/Borda_Level.png");
 
-        this.load.spritesheet("plusMine", "Imagens/Volume_Buttom.png", { frameWidth: 60, frameHeight: 60});
-        this.load.spritesheet("Regulagem-Volume", "Imagens/Volume_Bottom2.png", { frameWidth: 410, frameHeight: 60});
+        this.load.spritesheet("plusMine", "Imagens/Volume_Buttom.png", { frameWidth: 60, frameHeight: 60 });
+        this.load.spritesheet("Regulagem-Volume", "Imagens/Volume_Bottom2.png", { frameWidth: 410, frameHeight: 60 });
 
         this.load.bitmapFont('carrier_command', 'Imagens/Fontes/carrier_command.png', 'Imagens/Fontes/carrier_command.xml');
     }

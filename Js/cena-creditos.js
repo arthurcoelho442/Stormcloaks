@@ -1,4 +1,4 @@
-export default class cenaCreditos extends Phaser.Scene{
+export default class cenaCreditos extends Phaser.Scene {
     constructor() {
         super({
             key: "Creditos"
@@ -27,8 +27,8 @@ export default class cenaCreditos extends Phaser.Scene{
     }
 
     update() {
-        if(this.creditoOn){
-            this.alpha+=0.009
+        if (this.creditoOn) {
+            this.alpha += 0.009
             this.creditos.setAlpha(this.alpha);
 
             this.button.once('pointerdown', function () {

@@ -1,6 +1,6 @@
 import Tropa from "./tropa.js";
-export default class Wave{
-    constructor(cena, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPor, imgTropa){
+export default class Wave {
+    constructor(cena, vida, qtdTropas, velocidade, xTropa, yTropa, distanciarPor, imgTropa) {
         this.cena = cena;
         this.tropas = new Array(qtdTropas);
         this.velocidade = velocidade;
@@ -8,27 +8,27 @@ export default class Wave{
         this.vidaTropas = vida;
         const distTropas = 50;
 
-        if(distanciarPor == "Esquerda")
-            for(let i=0;i<qtdTropas;i++)
-                this.tropas[i] = new Tropa(cena, xTropa-distTropas*i, yTropa, vida, imgTropa, i);
-        else if(distanciarPor == "Direita")
-            for(let i=0;i<qtdTropas;i++)
-                this.tropas[i] = new Tropa(cena, xTropa+distTropas*i, yTropa, vida, imgTropa, i);
-        else if(distanciarPor == "Cima")
-            for(let i=0;i<qtdTropas;i++)
-                this.tropas[i] = new Tropa(cena, xTropa, yTropa-distTropas*i, vida, imgTropa, i);
-        else if(distanciarPor == "Baixo")
-            for(let i=0;i<qtdTropas;i++)
-                this.tropas[i] = new Tropa(cena, xTropa, yTropa+distTropas*i, vida, imgTropa, i);
+        if (distanciarPor == "Esquerda")
+            for (let i = 0; i < qtdTropas; i++)
+                this.tropas[i] = new Tropa(cena, xTropa - distTropas * i, yTropa, vida, imgTropa, i);
+        else if (distanciarPor == "Direita")
+            for (let i = 0; i < qtdTropas; i++)
+                this.tropas[i] = new Tropa(cena, xTropa + distTropas * i, yTropa, vida, imgTropa, i);
+        else if (distanciarPor == "Cima")
+            for (let i = 0; i < qtdTropas; i++)
+                this.tropas[i] = new Tropa(cena, xTropa, yTropa - distTropas * i, vida, imgTropa, i);
+        else if (distanciarPor == "Baixo")
+            for (let i = 0; i < qtdTropas; i++)
+                this.tropas[i] = new Tropa(cena, xTropa, yTropa + distTropas * i, vida, imgTropa, i);
     }
-    setColor(i){
+    setColor(i) {
         this.tropas.forEach((tropa) => {
             const sprite = tropa.sprite
             const img = 'Tropa-' + i;
             sprite.anims.play(img, true);
         });
     }
-    destroi(pos){
+    destroi(pos) {
         this.tropas[pos].destroi();
         this.tropas[pos] = null;
     }

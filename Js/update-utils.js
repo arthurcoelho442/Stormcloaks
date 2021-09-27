@@ -619,7 +619,7 @@ export const checkDeath = (scene) => {
         scene.vida = scene.vidaMax;
         scene.dinheiro = scene.dinheiroMax;
         scene.waveCounter = 0;
-        
+
         scene.waveCounterEsquerda = 0;
         scene.waveCounterDireita = 0;
         scene.waveCounterCima = 0;
@@ -639,7 +639,7 @@ export const checkNextLevel = (scene, level) => {
         scene.waveCounterEsquerda = 0;
         scene.waveCounterDireita = 0;
         scene.waveCounterCima = 0;
-    }else if(level == 4 && scene.qtdWave == scene.waveCounterEsquerda && scene.qtdWave == scene.waveCounterDireita){
+    } else if (level == 4 && scene.qtdWave == scene.waveCounterEsquerda && scene.qtdWave == scene.waveCounterDireita) {
         scene.scene.start("Nivel-" + String(level), scene.music.volume);
         scene.scene.stop();
 
@@ -651,7 +651,7 @@ export const checkNextLevel = (scene, level) => {
         scene.waveCounterEsquerda = 0;
         scene.waveCounterDireita = 0;
         scene.waveCounterCima = 0;
-    }else if(level == 5 && scene.qtdWave == scene.waveCounterEsquerda && scene.qtdWave == scene.waveCounterCima){
+    } else if (level == 5 && scene.qtdWave == scene.waveCounterEsquerda && scene.qtdWave == scene.waveCounterCima) {
         scene.scene.start("Creditos");
         scene.scene.stop();
 
