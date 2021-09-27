@@ -80,8 +80,8 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.spritesheet("Tropa", "Imagens/Enemy_sheet_completaV4.png", { frameWidth: 21, frameHeight: 22 });
         this.load.image("Torre-do-Nivel", "Imagens/kings_tower.png");
         
-        this.load.image("Creditos-01", "Imagens/Creditos.png");
-        this.load.image("Creditos-02", "Imagens/Créditos.png");
+        this.load.image("Creditos-01", "Imagens/Creditos1.png");
+        this.load.image("Creditos-02", "Imagens/Creditos2.png");
         this.load.image("End-game", "Imagens/End game.png");
 
         this.load.spritesheet("Explosion", "Imagens/Explosion.png", { frameWidth: 50, frameHeight: 50});
@@ -89,7 +89,7 @@ export default class cenaCarregamento extends Phaser.Scene{
         this.load.image("QuadradoSelecao", "Imagens/selectedTroop.png");
 
         this.load.spritesheet("plusMine", "Imagens/Volume_Buttom.png", { frameWidth: 60, frameHeight: 60});
-        this.load.spritesheet("Regulagem-Volume", "Imagens/Volume_Bottom2.png", { frameWidth: 400, frameHeight: 60});
+        this.load.spritesheet("Regulagem-Volume", "Imagens/Volume_Bottom2.png", { frameWidth: 410, frameHeight: 60});
 
         this.load.bitmapFont('carrier_command', 'Imagens/Fontes/carrier_command.png', 'Imagens/Fontes/carrier_command.xml');
     }
