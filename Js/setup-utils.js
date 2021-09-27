@@ -30,7 +30,8 @@ export const setupStaticSprites = (scene, level) => {
     scene.levelUp.visible = false;
 
     scene.background.on('pointerdown', () => {
-        scene.selectedTower.imagemRaio.visible = false;
+        if (scene.selectedTower)
+            scene.selectedTower.imagemRaio.visible = false;
         scene.selectedTower = null;
         scene.selectionSquare.visible = false;
         scene.sell.visible = false;
@@ -439,27 +440,27 @@ const ondragend = (scene, map, id) => {
 
             if (id == 0) {  // torre padrão
                 custo = 500;
-                raio = 200;
+                raio = 190;
                 dano = 125;
                 fireRate = 500;
                 firstAnimation = 4;
             } else if (id == 1) { // torre canhão
                 custo = 750;
-                raio = 135;
+                raio = 125;
                 dano = 125;
                 fireRate = 1000;
                 firstAnimation = 9;
             } else if (id == 2) { // torre de slow
                 custo = 650;
-                raio = 250;
+                raio = 240;
                 dano = 100;
                 fireRate = 1000;
                 firstAnimation = 14;
             } else { // torre sniper
                 custo = 1000;
-                raio = 540;
+                raio = 200;
                 dano = 500;
-                fireRate = 1800;
+                fireRate = 1500;
                 firstAnimation = 19;
             }
 
