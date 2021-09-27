@@ -367,7 +367,7 @@ const ondragend = (scene, map, id) => {
                 fireRate = 1000;
                 firstAnimation = 9;
             } else if (id == 2) { // torre de slow
-                custo = 500;
+                custo = 650;
                 raio = 190;
                 dano = 100;
                 fireRate = 1000;
