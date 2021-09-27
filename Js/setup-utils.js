@@ -7,13 +7,10 @@ import TorreDraggable from "./towerDraggable.js"
 export const setupStaticSprites = (scene, level) => {
     let mapa;
     let mapString;
-    if (level === 1) {
-        mapa = "Mapa-1";
-        mapString = "Map 1 Wave";
-    } else if (level === 2) {
-        mapa = "Mapa-2";
-        mapString = "Map 2 Wave";
-    }
+
+    mapa = "Mapa-" + String(level);
+    mapString = "Map " + String(level) + " Wave";
+
     scene.background = scene.physics.add.sprite(0, 0, mapa).setOrigin(0, 0);
     scene.background.setInteractive();
     scene.grid = scene.add.image(0, 0, "Grid").setOrigin(0, 0);
@@ -21,6 +18,7 @@ export const setupStaticSprites = (scene, level) => {
     scene.selectionSquare = scene.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
     scene.selectionSquare.visible = false;
     
+    setupWave(scene, level);
     
     scene.menuLateral = scene.add.image(800, 0, "Menu-Lateral").setOrigin(0, 0);
     
@@ -51,7 +49,11 @@ export const setupStaticSprites = (scene, level) => {
     scene.textDinheiro.inputEnabled = true;
     scene.textWave.inputEnabled = true;
 
-    scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75, 0.75);
+    if(level <= 2)
+        scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75, 0.75);
+    else if(level == 3)
+        scene.backgroud = scene.add.image(300, 550, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33,1);
+    
     scene.listaDeTorres = [];
     scene.torresDeCompra = [];
 }
@@ -105,6 +107,21 @@ export const setupGrid = (scene, level) => {
             [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
             [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
+    }else if (level === 3) {
+        scene.map = [
+            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
     }
 }
 
@@ -133,15 +150,35 @@ export const setupWave = (scene, level) => {
         yTropa = -10;
         distanciarPelo = "Cima"
         imgTropa = "Tropa";
+    } else if (level === 3) {
+        qtdTropas = 3;
+        velocidade = 80;
+        vida = 10000;
+        xTropa = [-10, 810]
+        yTropa = 125;
+        imgTropa = "Tropa";
+        distanciarPelo = ["Esquerda", "Direita"];
     }
 
     let waves = [];
-    for (let i = 0; i < scene.qtdWave; i++) {
-        waves[i] = new Wave(scene, vida + i * 180, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
-        waves[i].setColor(i + 1);
+    if(level <= 2){
+        for (let i = 0; i < scene.qtdWave; i++) {
+            waves[i] = new Wave(scene, vida + i * 180, qtdTropas + i, velocidade + i * 7, xTropa, yTropa, distanciarPelo, imgTropa);
+            waves[i].setColor(i + 1);
+        }
+        scene.waves = waves;
+    } else {
+        for (let i = 0; i < distanciarPelo.length; i++){
+            let tropas = [];
+            for (let j = 0; j < scene.qtdWave; j++) {
+                tropas[j] = new Wave(scene, vida + j * 180, qtdTropas + j, velocidade + j * 7, xTropa[i], yTropa, distanciarPelo[i], imgTropa);
+                tropas[j].setColor(j + 1);
+            }
+            waves[i] = tropas;
+        }
+        scene.wavesEsquerda = waves[0];
+        scene.wavesDireita  = waves[1];
     }
-
-    scene.waves = waves;
 }
 
 export const setupSell = (scene) => {
