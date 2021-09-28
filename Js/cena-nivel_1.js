@@ -1,5 +1,5 @@
 import { setupStaticSprites, setupMusic, setupGrid, setupWave, setupSell, setupTowerDraggables, setupLevelUp, setupPause, setupReset, setupHome } from './setup-utils.js'
-import { updateBottomBar, updateTowers, updateTroops, checkDeath, checkNextLevel , updateLista} from "./update-utils.js";
+import { updateBottomBar, updateTowers, updateTroops, checkDeath, checkNextLevel, updateLista } from "./update-utils.js";
 export default class cenaNivel_1 extends Phaser.Scene {
     constructor() {
         super({

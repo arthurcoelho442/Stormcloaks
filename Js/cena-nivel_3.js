@@ -16,6 +16,9 @@ export default class cenaNivel_3 extends Phaser.Scene {
         this.waveCounterEsquerda = 0;
         this.waveCounterDireita = 0;
         this.qtdWave = 8;
+        this.selectedTower = null;
+        this.listaDeTorres = [];
+        this.torresDeCompra = [];
     }
     preload() {
 
@@ -34,29 +37,31 @@ export default class cenaNivel_3 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        let waveEsquerda =[];
+        let waveEsquerda = [];
         let waveSpeedEsquerda = [];
         let waveDireita = [];
         let waveSpeedDireita = [];
-        if(this.waveCounterEsquerda < this.qtdWave){
+        if (this.waveCounterEsquerda < this.qtdWave) {
             waveEsquerda = this.wavesEsquerda[this.waveCounterEsquerda].tropas;
             waveSpeedEsquerda = this.wavesEsquerda[this.waveCounterEsquerda].velocidade;
         }
-        if(this.waveCounterDireita < this.qtdWave){
+        if (this.waveCounterDireita < this.qtdWave) {
             waveDireita = this.wavesDireita[this.waveCounterDireita].tropas;
             waveSpeedDireita = this.wavesDireita[this.waveCounterDireita].velocidade;
         }
 
         let wave = [waveEsquerda, waveDireita];
         let waveSpeed = [waveSpeedEsquerda, waveSpeedDireita];
+        let waveConcat = waveEsquerda.concat(waveDireita);
 
-        for(let i=0; i < wave.length; i++)
+        for (let i = 0; i < wave.length; i++)
             updateLista(wave[i]);
         updateBottomBar(this, 3);
-        //updateTowers(this, time, delta, wave);
+        updateTowers(this, time, delta, waveConcat);
+            
         updateTroops(this, 3, time, delta, wave, waveSpeed);
         checkDeath(this);
-        
+
 
         if (waveEsquerda.length == 0 && this.waveCounterEsquerda < this.qtdWave)
             this.waveCounterEsquerda++;

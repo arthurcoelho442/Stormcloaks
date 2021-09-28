@@ -1,10 +1,10 @@
-export default class cenaCarregamento extends Phaser.Scene{
-    constructor(){
+export default class cenaCarregamento extends Phaser.Scene {
+    constructor() {
         super({
             key: "Carregamento"
         });
     }
-    preload(){
+    preload() {
         const larguraJogo = this.sys.canvas.width;
         const barraDeProgresso = this.add.graphics();
 
@@ -80,12 +80,12 @@ export default class cenaCarregamento extends Phaser.Scene{
 
         this.load.spritesheet("Tropa", "Imagens/Enemy_sheet_completaV4.png", { frameWidth: 21, frameHeight: 22 });
         this.load.image("Torre-do-Nivel", "Imagens/kings_tower.png");
-        
+
         this.load.image("Creditos-01", "Imagens/Creditos1.png");
         this.load.image("Creditos-02", "Imagens/Creditos2.png");
         this.load.image("End-game", "Imagens/End game.png");
 
-        this.load.spritesheet("Explosion", "Imagens/Explosion.png", { frameWidth: 50, frameHeight: 50});
+        this.load.spritesheet("Explosion", "Imagens/Explosion.png", { frameWidth: 50, frameHeight: 50 });
 
         this.load.image("QuadradoSelecao", "Imagens/selectedTroop.png");
         this.load.image("Borda", "Imagens/Borda_Level.png");

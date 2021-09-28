@@ -1,5 +1,5 @@
-export default class cenaMenu extends Phaser.Scene{
-    constructor(){
+export default class cenaMenu extends Phaser.Scene {
+    constructor() {
         super({
             key: "Menu"
         });
@@ -11,12 +11,12 @@ export default class cenaMenu extends Phaser.Scene{
         this.volMax = 0.15
         this.vol = 10
 
-        if(!(volume >=0 && volume <= 1))
-        volume = this.volMax;
+        if (!(volume >= 0 && volume <= 1))
+            volume = this.volMax;
         else
-            this.vol = Math.trunc(((volume*10)/this.volMax)+0.1);
+            this.vol = Math.trunc(((volume * 10) / this.volMax) + 0.1);
 
-        this.add.image(0,0,'backg').setOrigin(0, 0);
+        this.add.image(0, 0, 'backg').setOrigin(0, 0);
         const playButton = this.add.image(450, 400, 'Play3').setFrame(0);
         playButton.setInteractive({ cursor: 'pointer' })
 

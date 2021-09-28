@@ -19,8 +19,8 @@ export default class TorreDraggable extends Torre {
             this.dragging = true;
 
             if (dragX < 800 && dragY < 600) {   // só faz o snap dentro do canvas
-                dragX = Math.ceil(dragX/50) * 50 - 25
-                dragY = Math.ceil(dragY/50) * 50 - 25
+                dragX = Math.ceil(dragX / 50) * 50 - 25
+                dragY = Math.ceil(dragY / 50) * 50 - 25
             }
             gameObject.x = dragX;
             gameObject.y = dragY;

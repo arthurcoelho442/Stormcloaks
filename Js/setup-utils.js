@@ -53,9 +53,9 @@ export const setupStaticSprites = (scene, level) => {
     if (level <= 2)
         scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75, 0.75);
     else if (level == 3)
-        scene.backgroud = scene.add.image(300, 550, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33, 1);
+        scene.backgroud = scene.add.image(300, 549, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33, 1);
     else if (level == 4)
-        scene.backgroud = scene.add.image(300, 550, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.68, 1);
+        scene.backgroud = scene.add.image(300, 551, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.68, 1);
 
     scene.listaDeTorres = [];
     scene.torresDeCompra = [];
@@ -112,33 +112,33 @@ export const setupGrid = (scene, level) => {
         ]
     } else if (level === 3) {
         scene.map = [
-            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+            [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0],
+            [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0],
+            [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0],
+            [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0],
+            [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0],
+            [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0],
+            [0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0]
         ]
     } else if (level === 4) {
         scene.map = [
-            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            [0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+            [0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0],
+            [0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0],
+            [0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0],
+            [0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0],
+            [0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0],
+            [0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0],
         ]
     }
 }
@@ -171,15 +171,15 @@ export const setupWave = (scene, level) => {
     } else if (level === 3) {
         qtdTropas = 3;
         velocidade = 80;
-        vida = 10000;
+        vida = 1000;
         xTropa = [-10, 810]
         yTropa = 125;
         imgTropa = "Tropa";
         distanciarPelo = ["Esquerda", "Direita"];
     } else if (level === 4) {
         qtdTropas = 5;
-        velocidade = 50;
-        vida = 10000;
+        velocidade = 80;
+        vida = 1000;
         xTropa = [-10, 810, 175]
         yTropa = [75, 75, -10];
         imgTropa = "Tropa";
@@ -249,9 +249,9 @@ export const setupLevelUp = (scene) => {
         priceUpgradesTorreSniper
     ]
 
-    const valueUpgradesTorreBasica = [450, 400, 350, 300] // fire rate
+    const valueUpgradesTorreBasica = [400, 300, 225, 175] // fire rate
     const valueUpgradesTorreExp = [175, 225, 300, 350] // explosion damage
-    const valueUpgradesTorreSlow = [1200, 1400, 1600, 2000] // slow rate?
+    const valueUpgradesTorreSlow = [1200, 1500, 1800, 2300] // slow rate?
     const valueUpgradesTorreSniper = [[360, 625], [520, 1250], [680, 1875], [840, 2500]]
     const valueUpgrades = [
         valueUpgradesTorreBasica,
@@ -390,10 +390,13 @@ export const setupReset = (scene) => {
         scene.vida = scene.vidaMax;
         scene.dinheiro = scene.dinheiroMax;
         scene.pontuacao = 0;
-        scene.waveCounter = 0;
         scene.selectedTower = null;
         scene.listaDeTorres = [];
         scene.torresDeCompra = [];
+        scene.waveCounter = 0;
+        scene.waveCounterEsquerda = 0;
+        scene.waveCounterDireita = 0;
+        scene.waveCounterCima = 0;
         scene.scene.restart();
     }, scene);
 }
@@ -444,13 +447,13 @@ const ondragend = (scene, map, id) => {
                 firstAnimation = 4;
             } else if (id == 1) { // torre canhão
                 custo = 750;
-                raio = 190;
+                raio = 125;
                 dano = 125;
-                fireRate = 1000;
+                fireRate = 1200;
                 firstAnimation = 9;
             } else if (id == 2) { // torre de slow
                 custo = 650;
-                raio = 190;
+                raio = 240;
                 dano = 100;
                 fireRate = 1000;
                 firstAnimation = 14;
@@ -458,7 +461,7 @@ const ondragend = (scene, map, id) => {
                 custo = 1000;
                 raio = 540;
                 dano = 500;
-                fireRate = 1800;
+                fireRate = 2500;
                 firstAnimation = 19;
             }
 
