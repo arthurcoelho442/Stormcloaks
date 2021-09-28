@@ -298,7 +298,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                     wave.splice(index, 1);
                 }
                 tropa.destroi(i)
-                scene.dinheiro += dinhairoPorTropa - 45;
+                scene.dinheiro += dinhairoPorTropa - 35;
             }
         }
     }
