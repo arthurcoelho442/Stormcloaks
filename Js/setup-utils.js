@@ -28,13 +28,18 @@ export const setupStaticSprites = (scene, level) => {
     scene.levelUp = scene.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
     scene.levelUp.setInteractive({ cursor: 'pointer' });
     scene.levelUp.visible = false;
-    //var endLeveling = scene.physics.add.image(850,390,"Menu-Icon-10");
-    //endLeveling.visible = false;
+    scene.endLeveling = scene.physics.add.image(850,390,"Menu-Icon-10");
+    scene.levelUp.setInteractive();
+    scene.endLeveling.visible = false;
+
     scene.background.on('pointerdown', () => {
+        if (scene.selectedTower)
+            scene.selectedTower.imagemRaio.visible = false;
         scene.selectedTower = null;
         scene.selectionSquare.visible = false;
         scene.sell.visible = false;
         scene.levelUp.visible = false;
+        scene.endLeveling.visible = false;
     })
 
     scene.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
@@ -59,6 +64,13 @@ export const setupStaticSprites = (scene, level) => {
 
     scene.listaDeTorres = [];
     scene.torresDeCompra = [];
+
+    for (let i = 3; i < 8; i++) {
+        scene.anims.create({
+            key: 'Range-' + i.toString(),
+            frames: scene.anims.generateFrameNumbers("Range-Sniper", { start: i, end: i }),
+        });
+    }
 }
 
 export const setupMusic = (scene, musicName, volume) => {
@@ -266,9 +278,6 @@ export const setupLevelUp = (scene) => {
             descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
             descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id * 4));
         }
-        else{
-            descricao = scene.physics.add.image(800, 420, "Descricao-Update-Torre2").setOrigin(0, 0);
-        }
     })
     scene.levelUp.on('pointerout', () => {
         if (scene.selectedTower.level != 5)
@@ -357,7 +366,7 @@ export const setupLevelUp = (scene) => {
                     descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
                     descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id * 4));
                 } else{
-                    descricao = scene.physics.add.image(800, 420, "Descricao-Update-Torre2").setOrigin(0, 0);
+                    scene.endLeveling.visible = true;
                 }
             }
         }
@@ -438,6 +447,7 @@ const ondragend = (scene, map, id) => {
             let dano;
             let fireRate; // tempo entre os tiros, em ms
             let firstAnimation;
+            let imagemRaio;
 
             if (id == 0) {  // torre padrão
                 custo = 500;
@@ -459,9 +469,9 @@ const ondragend = (scene, map, id) => {
                 firstAnimation = 14;
             } else { // torre sniper
                 custo = 1000;
-                raio = 540;
+                raio = 200;
                 dano = 500;
-                fireRate = 2500;
+                fireRate = 1500;
                 firstAnimation = 19;
             }
 
@@ -477,6 +487,7 @@ const ondragend = (scene, map, id) => {
                     y: scene.torresDeCompra[id].y,
                     imagem: "Torre-Default-" + String(id + 1),
                     raio: raio,
+                    imagemRaio: "Range-" + id.toString(),
                     dano: dano,
                     fireRate: fireRate,
                     totalSpentOn: custo,
@@ -496,11 +507,14 @@ const ondragend = (scene, map, id) => {
                     scene.selectedTower = torre;
                     scene.selectionSquare.x = coordenadaX - 25;
                     scene.selectionSquare.y = coordenadaY - 25;
+                    torre.imagemRaio.visible = true;
                     scene.selectionSquare.visible = true;
                     scene.sell.visible = true;
-                    scene.levelUp.visible = true;
+                    if(scene.selectedTower.level == 5)
+                        scene.endLeveling.visible = true;
+                    else
+                        scene.levelUp.visible = true;
                 })
-
 
                 // add nova torre
                 scene.listaDeTorres.push(torre)
@@ -523,6 +537,7 @@ export const setupTowerDraggables = (scene) => {
             imagem: "Menu-Icon-" + String(i + 1),
             map: scene.map,
             id: i,
+            imagemRaio: "Range-" + i.toString(),
             ondragend: ondragend
         });
 

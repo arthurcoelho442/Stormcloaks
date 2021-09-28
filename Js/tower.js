@@ -1,6 +1,6 @@
 export default class Torre extends Phaser.GameObjects.Container {
     constructor(data) {
-        let { cena, id, x, y, imagem, raio, dano, fireRate, totalSpentOn, currAnimation } = data;
+        let { cena, id, x, y, imagem, raio, imagemRaio, dano, fireRate, totalSpentOn, currAnimation } = data;
         //let sprite = new Phaser.GameObjects.Sprite(cena, 0, 0, imagem);//a sprite esta iniciada sem fisica
         let sprite = cena.physics.add.sprite(0, 0, imagem);
         super(cena, x, y, [sprite]);
@@ -8,6 +8,8 @@ export default class Torre extends Phaser.GameObjects.Container {
         this.id = id;
         this.sprite = sprite;
         this.raio = raio;
+        this.imagemRaio = this.cena.add.image(x, y, imagemRaio);
+        this.imagemRaio.visible = false;
         this.cena.add.existing(this);
         this.fireRate = fireRate; // o tempo de recarga total
         this.currFireRate = 500; // o contador do tempo de recarga
@@ -50,6 +52,7 @@ export default class Torre extends Phaser.GameObjects.Container {
     }
 
     destroy() {
+        this.imagemRaio.destroy();
         this.sprite.destroy();
     }
 }
