@@ -132,7 +132,7 @@ export const updateTowers = (scene, time, delta, wave) => {
 }
 
 export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
-    const dinhairoPorTropa = 60;
+    const dinhairoPorTropa = 75;
     for (let i = 0; i < wave.length && level === 1; i++) {
         let danoVida = scene.waveCounter+1;
         if (wave[i] == null)
@@ -298,7 +298,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                     wave.splice(index, 1);
                 }
                 tropa.destroi(i)
-                scene.dinheiro += dinhairoPorTropa;
+                scene.dinheiro += dinhairoPorTropa - 25;
             }
         }
     }
