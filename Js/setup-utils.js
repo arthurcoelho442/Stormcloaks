@@ -13,7 +13,7 @@ export const setupStaticSprites = (scene, level) => {
 
     scene.background = scene.physics.add.sprite(0, 0, mapa).setOrigin(0, 0);
     scene.background.setInteractive();
-    scene.grid = scene.add.image(0, 0, "Grid").setOrigin(0, 0);
+   // scene.grid = scene.add.image(0, 0, "Grid").setOrigin(0, 0);
 
     scene.selectionSquare = scene.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
     scene.selectionSquare.visible = false;
