@@ -483,6 +483,9 @@ const ondragend = (scene, map, id) => {
 
                 torre.sprite.setInteractive()
                 torre.sprite.on('pointerdown', () => {
+                    if (scene.selectedTower) {
+                        scene.selectedTower.imagemRaio.visible = false;
+                    }
                     scene.selectedTower = torre;
                     scene.selectionSquare.x = coordenadaX - 25;
                     scene.selectionSquare.y = coordenadaY - 25;

@@ -132,7 +132,7 @@ export const updateTowers = (scene, time, delta, wave) => {
 }
 
 export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
-    const dinhairoPorTropa = 60;
+    const dinhairoPorTropa = 75;
     for (let i = 0; i < wave.length && level === 1; i++) {
         let danoVida = scene.waveCounter+1;
         if (wave[i] == null)
@@ -234,7 +234,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             } else if (pos.x <= 125 && pos.y <= 600) {
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(velocidade);
-            } if (pos.x >= 120 && pos.x <= 430 && pos.y >= 225 && pos.y <= 230) {
+            } if (pos.x <= 125 && pos.y >= 225 && pos.y <= 230) {
                 sprite.rotation += rotation;
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
@@ -298,7 +298,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                     wave.splice(index, 1);
                 }
                 tropa.destroi(i)
-                scene.dinheiro += dinhairoPorTropa;
+                scene.dinheiro += dinhairoPorTropa - 25;
             }
         }
     }
