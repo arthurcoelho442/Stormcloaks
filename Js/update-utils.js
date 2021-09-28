@@ -132,13 +132,15 @@ export const updateTowers = (scene, time, delta, wave) => {
 }
 
 export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
+    const dinhairoPorTropa = 40;
     for (let i = 0; i < wave.length && level === 1; i++) {
+        let danoVida = scene.waveCounter+1;
         if (wave[i] == null)
             continue;
         let tropa = wave[i]
         tropa.update(time, delta)
         let velocidade = waveSpeed;
-        let sprite = tropa.sprite
+        let sprite = tropa.sprite;
         let pos = sprite.getCenter();
         let rotation = 0.05;
 
@@ -182,18 +184,18 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 
         //Marca pontuação
         if (tropa.vida == 0)
-            scene.pontuacao += 100;
+            scene.dinheiro += dinhairoPorTropa;
 
         //Exclusão da tropa
         if (pos.y >= 563) {
-            scene.vida--;
+            scene.vida -= danoVida;
             sprite.anims.stop();
             wave.splice(wave.indexOf(tropa), 1);
             tropa.destroi(i)
         }
 
         if (tropa.vida >= tropa.vidaMax / 2) {
-            let tamanho = tropa.vida / tropa.vidaMax;
+            let tamanho = 0.2 + tropa.vida / tropa.vidaMax;
             sprite.setScale(tamanho, tamanho);
         }
 
@@ -204,11 +206,12 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 wave.splice(index, 1);
             }
             tropa.destroi(i)
-            scene.dinheiro += 75
+            scene.dinheiro += dinhairoPorTropa;
         }
     }
 
     for (let i = 0; i < wave.length && level === 2; i++) {
+        let danoVida = scene.waveCounter+1;
         if (wave[i] == null)
             continue;
         let tropa = wave[i]
@@ -235,7 +238,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             } else if (pos.x <= 125 && pos.y <= 600) {
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(velocidade);
-            } if (pos.x <= 125 && pos.y >= 225) {
+            } if (pos.x >= 120 && pos.x <= 430 && pos.y >= 225 && pos.y <= 230) {
                 sprite.rotation += rotation;
                 sprite.setVelocityX(velocidade);
                 sprite.setVelocityY(0);
@@ -255,7 +258,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             } if (pos.x >= 675 && pos.y <= 600) {
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(velocidade);
-            } if (pos.x >= 675 && pos.y >= 525) {
+            } if (pos.x >= 375 && pos.x <= 680 && pos.y >= 525) {
                 sprite.rotation -= rotation;
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
@@ -263,7 +266,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 sprite.setVelocityX(0);
                 sprite.setVelocityY(-velocidade);
                 setTimeout(function () { tropa.loop = false; }, 1000);
-            } else if (pos.x <= 375 && pos.y >= 525) {
+            } else if (pos.x >= 375 && pos.y >= 525) {
                 sprite.rotation -= rotation;
                 sprite.setVelocityX(-velocidade);
                 sprite.setVelocityY(0);
@@ -281,14 +284,14 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 
             //Exclusão da tropa
             if (pos.y >= 563) {
-                scene.vida--;
+                scene.vida-=danoVida;
                 sprite.anims.stop();
                 wave.splice(wave.indexOf(tropa), 1);
                 tropa.destroi(i)
             }
 
             if (tropa.vida >= tropa.vidaMax / 2) {
-                let tamanho = tropa.vida / tropa.vidaMax;
+                let tamanho = 0.2 + tropa.vida / tropa.vidaMax;
                 sprite.setScale(tamanho, tamanho);
             }
 
@@ -299,7 +302,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                     wave.splice(index, 1);
                 }
                 tropa.destroi(i)
-                scene.dinheiro += 75
+                scene.dinheiro += dinhairoPorTropa;
             }
         }
     }
@@ -310,6 +313,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
         let waveSpeedEsquerda = waveSpeed[0];
         let waveSpeedDireita = waveSpeed[1];
         for (let i = 0; i < waveEsquerda.length && scene.qtdWave > scene.waveCounterEsquerda; i++) {
+            let danoVida = scene.waveCounterEsquerda+1;
             if (waveEsquerda[i] == null)
                 continue;
             let tropa = waveEsquerda[i]
@@ -354,11 +358,15 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 
             //Marca pontuação
             if (tropa.vida == 0)
-                scene.pontuacao += 100;
+                scene.dinheiro += dinhairoPorTropa;
 
+            if (tropa.vida >= tropa.vidaMax / 2) {
+                let tamanho = 0.2 + tropa.vida / tropa.vidaMax;
+                sprite.setScale(tamanho, tamanho);
+            }
             //Exclusão da tropa
             if (pos.y >= 563) {
-                scene.vida--;
+                scene.vida-=danoVida;
                 sprite.anims.stop();
                 waveEsquerda.splice(waveEsquerda.indexOf(tropa), 1);
                 tropa.destroi(i)
@@ -379,7 +387,8 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 scene.dinheiro += 75
             }
         }
-        for (let i = 0; i < waveDireita.length && scene.qtdWave > scene.waveCounterDireita && scene.waveCounterEsquerda >= 2; i++) {
+        for (let i = 0; i < waveDireita.length && scene.qtdWave > scene.waveCounterDireita && scene.waveCounterEsquerda >= 1; i++) {
+            let danoVida = scene.waveCounterDireita+1;
             if (waveDireita[i] == null)
                 continue;
             let tropa = waveDireita[i]
@@ -423,11 +432,14 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             }
             //Marca pontuação
             if (tropa.vida == 0)
-                scene.pontuacao += 100;
-
+                scene.dinheiro += dinhairoPorTropa;
+            if (tropa.vida >= tropa.vidaMax / 2) {
+                let tamanho = 0.2+ tropa.vida / tropa.vidaMax;
+                sprite.setScale(tamanho, tamanho);
+            }
             //Exclusão da tropa
             if (pos.y >= 563) {
-                scene.vida--;
+                scene.vida-=danoVida;
                 sprite.anims.stop();
                 waveDireita.splice(waveDireita.indexOf(tropa), 1);
                 tropa.destroi(i)
@@ -457,6 +469,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
         let waveSpeedDireita = waveSpeed[1];
         let waveSpeedCima = waveSpeed[2];
         for (let i = 0; i < waveEsquerda.length && scene.qtdWave > scene.waveCounterEsquerda; i++) {
+            let danoVida = scene.waveCounterEsquerda+1;
             if (waveEsquerda[i] == null)
                 continue;
             let tropa = waveEsquerda[i]
@@ -477,13 +490,15 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 
             if (sprite && sprite != undefined) {
                 //Movimentação da tropa
-                if (pos.x <= 0 && pos.y <= 75) {
+                if (pos.x <= 175 && pos.y <= 75) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 175 && pos.x <= 180 && pos.y >= 0) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 175 && pos.x <= 180 && pos.y >= 425 && pos.y <= 430) {
+                } if (pos.x >= 175 && pos.x <= 600 && pos.y >= 425 && pos.y <= 430) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 625 && pos.y >= 425 && pos.y <= 430) {
@@ -493,10 +508,12 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 } if (pos.x >= 625 && pos.y >= 425 && tropa.loop) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 625 && pos.y >= 175 && pos.y <= 180) {
+                } if (pos.x >= 200 && pos.x <=650 && pos.y >= 175 && pos.y <= 180) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
-                } if (pos.x >= 625 && pos.y >= 525) {
+                } if (pos.x >= 350 && pos.x <= 650 && pos.y >= 525) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x <= 325 && pos.y >= 525) {
@@ -507,11 +524,14 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 
             //Marca pontuação
             if (tropa.vida == 0)
-                scene.pontuacao += 100;
-
+                scene.dinheiro += dinhairoPorTropa;
+            if (tropa.vida >= tropa.vidaMax / 2) {
+                let tamanho = 0.2 + tropa.vida / tropa.vidaMax;
+                sprite.setScale(tamanho, tamanho);
+            }
             //Exclusão da tropa
             if (pos.y >= 563) {
-                scene.vida--;
+                scene.vida-=danoVida;
                 sprite.anims.stop();
                 waveEsquerda.splice(waveEsquerda.indexOf(tropa), 1);
                 tropa.destroi(i)
@@ -533,6 +553,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             }
         }
         for (let i = 0; i < waveDireita.length && scene.qtdWave > scene.waveCounterDireita && scene.waveCounterEsquerda >= 1; i++) {
+            let danoVida = scene.waveCounterDireita+1;
             if (waveDireita[i] == null)
                 continue;
             let tropa = waveDireita[i]
@@ -553,13 +574,15 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 
             if (sprite && sprite != undefined) {
                 //Movimentação da tropa
-                if (pos.x <= 0 && pos.y <= 75) {
-                    sprite.setVelocityX(velocidade);
+                if (pos.x >= 200 && pos.y <= 75) {
+                    sprite.rotation -= rotation;
+                    sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
-                } if (pos.x >= 175 && pos.x <= 180 && pos.y >= 0) {
+                }if (pos.x >= 175 && pos.x <= 180 && pos.y >= 0) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 175 && pos.x <= 180 && pos.y >= 425 && pos.y <= 430) {
+                }  if (pos.x >= 175 && pos.x <= 600 && pos.y >= 425 && pos.y <= 430) {
+                    sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
                 } if (pos.x >= 625 && pos.y >= 425 && pos.y <= 430) {
@@ -569,13 +592,15 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 } if (pos.x >= 625 && pos.y >= 425 && tropa.loop) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 625 && pos.y <= 175) {
+                } if (pos.x >= 200 && pos.x <=650 && pos.y >= 175 && pos.y <= 180) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
-                } if (pos.x >= 625 && pos.y >= 525) {
+                } if (pos.x >= 350 && pos.x <= 650 && pos.y >= 525) {
+                    sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
-                } if (pos.x <= 525 && pos.y >= 525) {
+                }if (pos.x <= 525 && pos.y >= 525) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
                 }
@@ -583,11 +608,14 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 
             //Marca pontuação
             if (tropa.vida == 0)
-                scene.pontuacao += 100;
-
+                scene.dinheiro += dinhairoPorTropa;
+            if (tropa.vida >= tropa.vidaMax / 2) {
+                let tamanho = 0.2 + tropa.vida / tropa.vidaMax;
+                sprite.setScale(tamanho, tamanho);
+            }
             //Exclusão da tropa
             if (pos.y >= 563) {
-                scene.vida--;
+                scene.vida-=danoVida;
                 sprite.anims.stop();
                 waveDireita.splice(waveDireita.indexOf(tropa), 1);
                 tropa.destroi(i)
@@ -609,6 +637,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
             }
         }
         for (let i = 0; i < waveCima.length && scene.qtdWave > scene.waveCounterCima && scene.waveCounterDireita >= 1; i++) {
+            let danoVida = scene.waveCounterCima+1;
             if (waveCima[i] == null)
                 continue;
             let tropa = waveCima[i]
@@ -636,7 +665,7 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 } if (pos.x >= 175 && pos.x <= 180 && pos.y <= 600) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 175 && pos.x <= 180 && pos.y >= 425 && pos.y <= 430) {
+                } if (pos.x >= 175 && pos.x <= 600 && pos.y >= 425 && pos.y <= 430) {
                     sprite.rotation += rotation;
                     sprite.setVelocityX(velocidade);
                     sprite.setVelocityY(0);
@@ -647,11 +676,11 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
                 } if (pos.x >= 625 && pos.y >= 425 && tropa.loop) {
                     sprite.setVelocityX(0);
                     sprite.setVelocityY(velocidade);
-                } if (pos.x >= 625 && pos.y <= 175) {
+                } if (pos.x >= 200 && pos.x <=650 && pos.y >= 175 && pos.y <= 180) {
                     sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
-                } if (pos.x >= 625 && pos.y >= 525) {
+                } if (pos.x >= 350 && pos.x <= 650 && pos.y >= 525) {
                     sprite.rotation -= rotation;
                     sprite.setVelocityX(-velocidade);
                     sprite.setVelocityY(0);
@@ -663,11 +692,14 @@ export const updateTroops = (scene, level, time, delta, wave, waveSpeed) => {
 
             //Marca pontuação
             if (tropa.vida == 0)
-                scene.pontuacao += 100;
-
+                scene.dinheiro += dinhairoPorTropa;
+            if (tropa.vida >= tropa.vidaMax / 2) {
+                let tamanho = 0.2 + tropa.vida / tropa.vidaMax;
+                //sprite.setScale(tamanho, tamanho);
+            }
             //Exclusão da tropa
             if (pos.y >= 563) {
-                scene.vida--;
+                scene.vida-=danoVida;
                 sprite.anims.stop();
                 waveCima.splice(waveCima.indexOf(tropa), 1);
                 tropa.destroi(i)

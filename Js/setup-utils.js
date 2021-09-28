@@ -29,8 +29,10 @@ export const setupStaticSprites = (scene, level) => {
     scene.levelUp = scene.physics.add.sprite(800, 360, "Menu-Icon-9").setOrigin(0, 0);
     scene.levelUp.setInteractive({ cursor: 'pointer' });
     scene.levelUp.visible = false;
-    //var endLeveling = scene.physics.add.image(850,390,"Menu-Icon-10");
-    //endLeveling.visible = false;
+    scene.endLeveling = scene.physics.add.image(850,390,"Menu-Icon-10");
+    scene.levelUp.setInteractive();
+    scene.endLeveling.visible = false;
+
     scene.background.on('pointerdown', () => {
         if (scene.selectedTower)
             scene.selectedTower.imagemRaio.visible = false;
@@ -38,6 +40,7 @@ export const setupStaticSprites = (scene, level) => {
         scene.selectionSquare.visible = false;
         scene.sell.visible = false;
         scene.levelUp.visible = false;
+        scene.endLeveling.visible = false;
     })
 
     scene.add.image(550, 610, "Vidas").setOrigin(0, 0).setScale(0.7, 0.7);
@@ -56,9 +59,9 @@ export const setupStaticSprites = (scene, level) => {
     if (level <= 2)
         scene.background = scene.add.image(70, 563, "Torre-do-Nivel").setOrigin(0, 0).setScale(0.75, 0.75);
     else if (level == 3)
-        scene.backgroud = scene.add.image(300, 550, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33, 1);
+        scene.backgroud = scene.add.image(300, 549, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.33, 1);
     else if (level == 4)
-        scene.backgroud = scene.add.image(300, 555, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.68, 1);
+        scene.backgroud = scene.add.image(300, 551, "Torre-do-Nivel").setOrigin(0, 0).setScale(1.68, 1);
 
     scene.listaDeTorres = [];
     scene.torresDeCompra = [];
@@ -269,9 +272,6 @@ export const setupLevelUp = (scene) => {
             descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
             descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id * 4));
         }
-        else{
-            descricao = scene.physics.add.image(800, 420, "Descricao-Update-Torre2").setOrigin(0, 0);
-        }
     })
     scene.levelUp.on('pointerout', () => {
         if (scene.selectedTower.level != 5)
@@ -343,7 +343,7 @@ export const setupLevelUp = (scene) => {
                     descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
                     descricao.setFrame((scene.selectedTower.level - 1) + (scene.selectedTower.id * 4));
                 } else{
-                    descricao = scene.physics.add.image(800, 420, "Descricao-Update-Torre2").setOrigin(0, 0);
+                    scene.endLeveling.visible = true;
                 }
             }
         }
@@ -376,10 +376,13 @@ export const setupReset = (scene) => {
         scene.vida = scene.vidaMax;
         scene.dinheiro = scene.dinheiroMax;
         scene.pontuacao = 0;
-        scene.waveCounter = 0;
         scene.selectedTower = null;
         scene.listaDeTorres = [];
         scene.torresDeCompra = [];
+        scene.waveCounter = 0;
+        scene.waveCounterEsquerda = 0;
+        scene.waveCounterDireita = 0;
+        scene.waveCounterCima = 0;
         scene.scene.restart();
     }, scene);
 }
@@ -433,7 +436,7 @@ const ondragend = (scene, map, id) => {
                 custo = 750;
                 raio = 125;
                 dano = 125;
-                fireRate = 1000;
+                fireRate = 1200;
                 firstAnimation = 9;
             } else if (id == 2) { // torre de slow
                 custo = 650;
@@ -484,7 +487,10 @@ const ondragend = (scene, map, id) => {
                     torre.imagemRaio.visible = true;
                     scene.selectionSquare.visible = true;
                     scene.sell.visible = true;
-                    scene.levelUp.visible = true;
+                    if(scene.selectedTower.level == 5)
+                        scene.endLeveling.visible = true;
+                    else
+                        scene.levelUp.visible = true;
                 })
 
                 // add nova torre
