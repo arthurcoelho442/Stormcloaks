@@ -34,9 +34,9 @@ export default class cenaMenu extends Phaser.Scene {
         })
 
         var confButton = this.add.text(340, 480, 'Configurações do volume');
-        var scoreButton = this.add.text(400, 520, 'Creditos');
+        var cerdButton = this.add.text(400, 520, 'Creditos');
         confButton.setInteractive({ cursor: 'pointer' })
-        scoreButton.setInteractive({ cursor: 'pointer' })
+        cerdButton.setInteractive({ cursor: 'pointer' })
 
         confButton.on('pointerover', () => {
             confButton.setTint(0x000000);
@@ -45,11 +45,11 @@ export default class cenaMenu extends Phaser.Scene {
             confButton.setTint(0xffffff);
         })
 
-        scoreButton.on('pointerover', () => {
-            scoreButton.setTint(0x000000);
+        cerdButton.on('pointerover', () => {
+            cerdButton.setTint(0x000000);
         })
-        scoreButton.on('pointerout', () => {
-            scoreButton.setTint(0xffffff);
+        cerdButton.on('pointerout', () => {
+            cerdButton.setTint(0xffffff);
         })
 
         confButton.on('pointerdown', () => {
@@ -57,7 +57,7 @@ export default class cenaMenu extends Phaser.Scene {
             this.scene.stop();
         })
 
-        scoreButton.on('pointerdown', () => {
+        cerdButton.on('pointerdown', () => {
             this.scene.start("Creditos", this.music.volume);
             this.scene.stop();
             this.music.destroy();
