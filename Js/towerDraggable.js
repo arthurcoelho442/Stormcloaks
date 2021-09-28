@@ -23,7 +23,6 @@ export default class TorreDraggable extends Torre {
                 dragY = Math.ceil(dragY / 50) * 50 - 25
             }
             if (this.id === gameObject.id) {
-                console.log(this.id)
                 this.imagemRaio.visible = true;
                 this.imagemRaio.x = dragX;
                 this.imagemRaio.y = dragY;

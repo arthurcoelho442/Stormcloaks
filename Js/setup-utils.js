@@ -13,7 +13,8 @@ export const setupStaticSprites = (scene, level) => {
 
     scene.background = scene.physics.add.sprite(0, 0, mapa).setOrigin(0, 0);
     scene.background.setInteractive();
-   // scene.grid = scene.add.image(0, 0, "Grid").setOrigin(0, 0);
+    scene.background.setDepth(-2);
+    scene.grid = scene.add.image(0, 0, "Grid").setOrigin(0, 0);
 
     scene.selectionSquare = scene.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
     scene.selectionSquare.visible = false;
@@ -64,13 +65,6 @@ export const setupStaticSprites = (scene, level) => {
 
     scene.listaDeTorres = [];
     scene.torresDeCompra = [];
-
-    for (let i = 3; i < 8; i++) {
-        scene.anims.create({
-            key: 'Range-' + i.toString(),
-            frames: scene.anims.generateFrameNumbers("Range-Sniper", { start: i, end: i }),
-        });
-    }
 }
 
 export const setupMusic = (scene, musicName, volume) => {
@@ -294,73 +288,56 @@ export const setupLevelUp = (scene) => {
                     scene.dinheiro -= priceUpgrades[scene.selectedTower.id][scene.selectedTower.level - 1];
                     scene.selectedTower.level++;
                     if (scene.selectedTower.id === 0) {
-                        console.log('upgrade na torre básica')
                         if (scene.selectedTower.level === 2) {
-                            console.log('pro level 2')
                             scene.selectedTower.fireRate = valueUpgrades[0][0]
                         } else if (scene.selectedTower.level === 3) {
-                            console.log('pro level 3')
                             scene.selectedTower.fireRate = valueUpgrades[0][1]
                         } else if (scene.selectedTower.level === 4) {
-                            console.log('pro level 4')
                             scene.selectedTower.fireRate = valueUpgrades[0][2]
                         } else if (scene.selectedTower.level === 5) {
-                            console.log('pro level 5')
                             scene.selectedTower.fireRate = valueUpgrades[0][3]
                         }
                     } else if (scene.selectedTower.id === 1) {
-                        console.log('upgrade na torre explosiva')
                         if (scene.selectedTower.level === 2) {
-                            console.log('pro level 2')
                             scene.selectedTower.danoExp = valueUpgrades[1][0]
                         } else if (scene.selectedTower.level === 3) {
-                            console.log('pro level 3')
                             scene.selectedTower.danoExp = valueUpgrades[1][1]
                         } else if (scene.selectedTower.level === 4) {
-                            console.log('pro level 4')
                             scene.selectedTower.danoExp = valueUpgrades[1][2]
                         } else if (scene.selectedTower.level === 5) {
-                            console.log('pro level 5')
                             scene.selectedTower.danoExp = valueUpgrades[1][3]
                         }
                     } else if (scene.selectedTower.id === 2) {
-                        console.log('upgrade na torre de slow')
                         if (scene.selectedTower.level === 2) {
-                            console.log('pro level 2')
                             scene.selectedTower.slowTimer = valueUpgrades[2][0]
                         } else if (scene.selectedTower.level === 3) {
-                            console.log('pro level 3')
                             scene.selectedTower.slowTimer = valueUpgrades[2][0]
                         } else if (scene.selectedTower.level === 4) {
-                            console.log('pro level 4')
                             scene.selectedTower.slowTimer = valueUpgrades[2][0]
                         } else if (scene.selectedTower.level === 5) {
-                            console.log('pro level 5')
                             scene.selectedTower.slowTimer = valueUpgrades[2][0]
                         }
                     } else if (scene.selectedTower.id === 3) {
-                        console.log('upgrade na torre sniper')
                         if (scene.selectedTower.level === 2) {
-                            console.log('pro level 2')
                             scene.selectedTower.raio = valueUpgrades[3][0][0]
                             scene.selectedTower.dano = valueUpgrades[3][0][1]
+                            scene.selectedTower.imagemRaio.setFrame(1);
                         } else if (scene.selectedTower.level === 3) {
-                            console.log('pro level 3')
                             scene.selectedTower.raio = valueUpgrades[3][1][0]
                             scene.selectedTower.dano = valueUpgrades[3][1][1]
+                            scene.selectedTower.imagemRaio.setFrame(2);
                         } else if (scene.selectedTower.level === 4) {
-                            console.log('pro level 4')
                             scene.selectedTower.raio = valueUpgrades[3][2][0]
                             scene.selectedTower.dano = valueUpgrades[3][2][1]
+                            scene.selectedTower.imagemRaio.setFrame(3);
                         } else if (scene.selectedTower.level === 5) {
-                            console.log('pro level 5')
                             scene.selectedTower.raio = valueUpgrades[3][3][0]
                             scene.selectedTower.dano = valueUpgrades[3][3][1]
+                            scene.selectedTower.imagemRaio.setFrame(4);
                         }
                     }
                     scene.selectedTower.currentAnimation--;
                     scene.selectedTower.sprite.anims.play("Torre-" + scene.selectedTower.currentAnimation);
-                    // console.log("tower leveled up! current level:", scene.selectedTower.level);
                 }
                 if (scene.selectedTower.level != 5) {
                     descricao = scene.physics.add.sprite(800, 420, "Descricao-Update-Torre").setOrigin(0, 0);
@@ -528,7 +505,6 @@ const ondragend = (scene, map, id) => {
 }
 
 export const setupTowerDraggables = (scene) => {
-    console.log('setting up draggable towers')
     for (let i = 0; i < 4; i++) {
         const torreCompra = new TorreDraggable({
             cena: scene,

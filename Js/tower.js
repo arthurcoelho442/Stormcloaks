@@ -8,7 +8,8 @@ export default class Torre extends Phaser.GameObjects.Container {
         this.id = id;
         this.sprite = sprite;
         this.raio = raio;
-        this.imagemRaio = this.cena.add.image(x, y, imagemRaio);
+        this.imagemRaio = imagemRaio !== "Range-3" ? cena.physics.add.sprite(x, y, imagemRaio) : this.allRadius = cena.physics.add.sprite(x, y, "Range-Sniper");
+        this.imagemRaio.setDepth(-1)
         this.imagemRaio.visible = false;
         this.cena.add.existing(this);
         this.fireRate = fireRate; // o tempo de recarga total
