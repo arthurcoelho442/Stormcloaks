@@ -762,7 +762,7 @@ export const updateLista = (wave) => {
 }
 
 export const checkDeath = (scene) => {
-    if (scene.vida == 0) {
+    if (scene.vida <= 0) {
         scene.scene.start("Gameover", scene.music.volume);
         scene.scene.stop();
         scene.music.mute = true;

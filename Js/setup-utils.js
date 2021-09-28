@@ -16,6 +16,8 @@ export const setupStaticSprites = (scene, level) => {
     scene.background.setDepth(-2);
     scene.grid = scene.add.image(0, 0, "Grid").setOrigin(0, 0);
 
+    scene.add.image(0, 600, "Barra-Preta").setOrigin(0, 0);
+
     scene.selectionSquare = scene.add.image(50, 50, "QuadradoSelecao").setOrigin(0, 0);
     scene.selectionSquare.visible = false;
 
