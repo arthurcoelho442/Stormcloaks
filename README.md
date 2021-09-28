@@ -15,3 +15,4 @@ Torutial:
 - Cada inimigo que uma torre do player destruir, irá gerar Odara coins;
 - Cada level up vale uma certa quantidade de Odara coins;
 - Vender uma torre retorna uma quantidade referente ao valor de sua compra (não incluso valores gastos em upgrade);
+- link para o jogo: https://arthurcoelho442.github.io/Stormcloaks/
